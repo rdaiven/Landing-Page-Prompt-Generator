@@ -69,7 +69,7 @@ export const sectionConfigs = {
             'Short Strip': {
                 fields: [
                     {
-                        name: 'items', label: 'Trust Items', type: 'collection', min: 3, max: 4, fields: [
+                        name: 'items', label: 'Trust Items (Text)', type: 'collection', min: 3, max: 4, fields: [
                             { name: 'text', label: 'Text', type: 'text', default: '5.0 Rating' }
                         ]
                     }
@@ -81,11 +81,31 @@ export const sectionConfigs = {
                         { text: 'Certified Experts' }
                     ]
                 }
+            },
+            'Logo Grid': {
+                fields: [
+                    { name: 'heading', label: 'Featured In (Optional)', type: 'text', default: 'As Featured In' },
+                    {
+                        name: 'items', label: 'Logos/Badges', type: 'collection', min: 4, max: 6, fields: [
+                            { name: 'alt', label: 'Alt Text', type: 'text', default: 'Vogue' },
+                            { name: 'text', label: 'Label (if no logo)', type: 'text', default: '' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    heading: 'As Featured In',
+                    items: [
+                        { alt: 'Vogue', text: 'Vogue' },
+                        { alt: 'Allure', text: 'Allure' },
+                        { alt: 'Elle', text: 'Elle' },
+                        { alt: 'Harper\'s Bazaar', text: 'Harper\'s Bazaar' }
+                    ]
+                }
             }
         }
     },
     problemConcern: {
-        label: "Confirm Relevance (Filter)",
+        label: "Problem/Relevance",
         icon: "🎯",
         layouts: {
             'Bullets': {
@@ -105,11 +125,31 @@ export const sectionConfigs = {
                         { text: 'Looking for quick recovery?' }
                     ]
                 }
+            },
+            'Feature Grid': {
+                fields: [
+                    { name: 'heading', label: 'Section Heading', type: 'text', default: 'Common Concerns' },
+                    {
+                        name: 'items', label: 'Concern Cards', type: 'collection', min: 3, max: 6, fields: [
+                            { name: 'title', label: 'Title', type: 'text', default: 'Stubborn Areas' },
+                            { name: 'description', label: 'Description', type: 'textarea', default: 'Exercise and diet resistant fat pockets.' },
+                            { name: 'icon', label: 'Icon (Emoji)', type: 'text', default: '🏋️' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    heading: 'Common Concerns',
+                    items: [
+                        { title: 'Stubborn Areas', description: 'Fat pockets that just won\'t shift.', icon: '🎯' },
+                        { title: 'Busy Schedule', description: 'No time for long recovery periods.', icon: '⏰' },
+                        { title: 'Safety Concerns', description: 'Worried about invasive surgeries.', icon: '🛡️' }
+                    ]
+                }
             }
         }
     },
     treatmentLogic: {
-        label: "How it Works (Logic)",
+        label: "How it Works / Key Benefits",
         icon: "💡",
         layouts: {
             'Simple': {
@@ -120,6 +160,30 @@ export const sectionConfigs = {
                     { name: 'feature2', label: 'Feature 2', type: 'text', default: 'Expert Care' },
                     { name: 'feature3', label: 'Feature 3', type: 'text', default: 'Personalized Plans' }
                 ]
+            },
+            'Detailed Split': {
+                fields: [
+                    { name: 'heading', label: 'Heading', type: 'text', default: 'The Science Behind It' },
+                    { name: 'subheading', label: 'Subheading', type: 'text', default: 'FDA-Cleared Technology' },
+                    { name: 'description', label: 'Deep Dive Text', type: 'textarea', default: 'Using controlled cooling to eliminate fat cells gently and effectively, without harming surrounding tissue.' },
+                    { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Diagram of coolsculpting process' },
+                    {
+                        name: 'benefits', label: 'Key Benefits', type: 'collection', min: 3, max: 3, fields: [
+                            { name: 'text', label: 'Benefit', type: 'text', default: 'Clinically Proven' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    heading: 'The Science Behind It',
+                    subheading: 'FDA-Cleared Technology',
+                    description: 'Using controlled cooling to eliminate fat cells gently and effectively.',
+                    imagePrompt: 'Scientific diagram of process',
+                    benefits: [
+                        { text: 'Permanent Fat Reduction' },
+                        { text: 'Non-Surgical & Safe' },
+                        { text: 'Natural-Looking Results' }
+                    ]
+                }
             }
         }
     },
@@ -138,9 +202,30 @@ export const sectionConfigs = {
                 ],
                 defaultData: {
                     items: [
-                        { title: 'Consultation', description: 'Metus poten. Urna sed in.' },
-                        { title: 'Treatment', description: 'Metus poten. Urna sed in.' },
-                        { title: 'Results', description: 'Metus poten. Urna sed in.' }
+                        { title: 'Consultation', description: 'We map out your plan.' },
+                        { title: 'Treatment', description: 'Relax while we treat.' },
+                        { title: 'Results', description: 'See changes in weeks.' }
+                    ]
+                }
+            },
+            'Timeline': {
+                fields: [
+                    { name: 'heading', label: 'Timeline Heading', type: 'text', default: 'Your Journey' },
+                    {
+                        name: 'items', label: 'Milestones', type: 'collection', min: 4, max: 5, fields: [
+                            { name: 'time', label: 'Timeframe', type: 'text', default: 'Day 1' },
+                            { name: 'title', label: 'Event', type: 'text', default: 'Consultation' },
+                            { name: 'description', label: 'What happens', type: 'textarea', default: 'Initial mapping and photos.' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    heading: 'Your Journey to Results',
+                    items: [
+                        { time: 'Day 1', title: 'Consultation', description: 'In-depth assessment.' },
+                        { time: 'Day 7', title: 'Treatment', description: '1-hour session.' },
+                        { time: 'Week 4', title: 'Early Changes', description: 'Noticeable difference.' },
+                        { time: 'Week 12', title: 'Full Results', description: 'Optimal transformation.' }
                     ]
                 }
             }
@@ -156,6 +241,20 @@ export const sectionConfigs = {
                     { name: 'address', label: 'Address', type: 'textarea', default: '123 Luxury Lane, CA 90210' },
                     { name: 'hours', label: 'Hours', type: 'text', default: 'Mon-Sat: 9am - 6pm' }
                 ]
+            },
+            'Gallery Split': {
+                fields: [
+                    { name: 'location', label: 'Location Name', type: 'text', default: 'Manhattan Medical Spa' },
+                    { name: 'description', label: 'About the Space', type: 'textarea', default: 'A serene oasis in the city.' },
+                    { name: 'address', label: 'Address', type: 'textarea', default: '5th Ave, NY' },
+                    { name: 'imagePrompt', label: 'Gallery Image', type: 'text', default: 'Interior of waiting room' }
+                ],
+                defaultData: {
+                    location: 'Manhattan Medical Spa',
+                    description: 'Relax in our state-of-the-art facility featuring private suites.',
+                    address: '500 5th Ave, New York, NY',
+                    imagePrompt: 'Modern luxury spa interior'
+                }
             }
         }
     },
@@ -177,6 +276,26 @@ export const sectionConfigs = {
                         { question: 'Is it painful?', answer: 'Most patients report minimal discomfort.' },
                         { question: 'How long until I see results?', answer: 'Results are typically visible within 2 weeks.' },
                         { question: 'Is there downtime?', answer: 'No, you can return to work immediately.' }
+                    ]
+                }
+            },
+            'Accordion': {
+                fields: [
+                    { name: 'heading', label: 'Heading', type: 'text', default: 'Frequently Asked Questions' },
+                    {
+                        name: 'items', label: 'Q&A Items', type: 'collection', min: 4, max: 6, fields: [
+                            { name: 'question', label: 'Question', type: 'text', default: 'Cost?' },
+                            { name: 'answer', label: 'Answer', type: 'textarea', default: 'Starts at $500.' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    heading: 'Frequently Asked Questions',
+                    items: [
+                        { question: 'How much does it cost?', answer: 'Pricing depends on the treatment area.' },
+                        { question: 'Is it permanent?', answer: 'Yes, treated fat cells are gone for good.' },
+                        { question: 'Can I finance it?', answer: 'We offer payment plans via CareCredit.' },
+                        { question: 'Who performs the procedure?', answer: 'Our licensed medical aestheticians.' }
                     ]
                 }
             }

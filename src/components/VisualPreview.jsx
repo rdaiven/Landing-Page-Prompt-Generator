@@ -4,7 +4,10 @@ import HeroSection from './sections/HeroSection'
 import TrustPrimerSection from './sections/TrustPrimerSection'
 import ProblemConcernSection from './sections/ProblemConcernSection'
 import TreatmentLogicSection from './sections/TreatmentLogicSection'
+import ProcedureGuideSection from './sections/ProcedureGuideSection'
 import SocialProofSection from './sections/SocialProofSection'
+import ClinicDetailsSection from './sections/ClinicDetailsSection'
+import FAQSection from './sections/FAQSection'
 import ConversionSection from './sections/ConversionSection'
 import FooterSection from './sections/FooterSection'
 
@@ -38,9 +41,10 @@ const VisualPreview = ({ formData }) => {
             {renderSection('trustPrimer', TrustPrimerSection)}
             {renderSection('problemConcern', ProblemConcernSection)}
             {renderSection('treatmentLogic', TreatmentLogicSection)}
-            {/* TODO: Add ProcedureGuideSection when implemented */}
+            {renderSection('procedureGuide', ProcedureGuideSection)}
             {renderSection('socialProof', SocialProofSection)}
-            {/* TODO: Add ClinicDetails, FAQ when implemented */}
+            {renderSection('clinicDetails', ClinicDetailsSection)}
+            {renderSection('faq', FAQSection)}
             {renderSection('conversion', ConversionSection)}
             {renderSection('footer', FooterSection)}
         </div>

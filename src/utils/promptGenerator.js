@@ -46,19 +46,23 @@ Each section must adhere to the specific Goals and "Must Include" rules below.
             },
             trustPrimer: {
                 'Short Strip': 'LAYOUT: Single row flex-wrap. Logos grayscale with opacity-50, hover:opacity-100.',
-                'Logo Grid': 'LAYOUT: Simple grid. Mobile: 2 cols, Desktop: 4-6 cols. Gap-6.'
+                'Logo Grid': 'LAYOUT: Simple grid. Mobile 2-cols, Desktop 4-cols. Center logos vertically.'
             },
             problemConcern: {
                 'Bullets': 'STYLE: Standard checklist with checkmark icons. Vertical stack.',
-                'Feature Grid': 'LAYOUT: Mobile: 1 col, Desktop: 3 col grid. Each concern in a card with icon.'
+                'Feature Grid': 'LAYOUT: Card grid style. Icon top-left, bold title, light text description. Mobile 1-col, Desktop 3-col.'
             },
             treatmentLogic: {
                 'Simple': 'STYLE: Clean typography, ample whitespace. 1-col text focus.',
-                'Detailed': 'STYLE: 2-col layout on desktop: Diagram/Image Left, Explanation Text Right.'
+                'Detailed Split': 'LAYOUT: Split 50/50. Left: Benefits text + visual bullets. Right: Technical diagram or illustration.'
+            },
+            procedureGuide: {
+                '3-Step': 'LAYOUT: 3 simple columns. Numbered circle (1, 2, 3) centered above text.',
+                'Timeline': 'LAYOUT: Vertical timeline with connecting line. Alternating content or Left-aligned with line on left.'
             },
             socialProof: {
                 'Grid': 'LAYOUT: Responsive Grid (Mobile 1-col, Desktop 3-col). Cards with shadow-sm and rounded corners.',
-                'Carousel': 'LAYOUT: Horizontal scrolling container (overflow-x-auto). Cards snap to center. Hide scrollbar for aesthetics.',
+                'Carousel': 'LAYOUT: Horizontal scrolling container (overflow-x-auto). Cards snap to center. Use JS for nav buttons.',
                 'Testimonials': 'LAYOUT: Simple vertical list or grid. Focus on readability.',
                 'Before & After': 'STYLE: Side-by-side comparison images. Slider handle if possible, else stacked images.'
             },
@@ -67,12 +71,12 @@ Each section must adhere to the specific Goals and "Must Include" rules below.
                 'Benefit-Driven': 'LAYOUT: Split layout (Text Left, CTA Right). Focus on value proposition.'
             },
             clinicDetails: {
-                'Grid': 'LAYOUT: 2x2 Grid for gallery. Contact info below.',
-                'List': 'STYLE: Clean distinct rows for Location, Hours, Contact. Map embed full width.'
+                'Grid': 'LAYOUT: 3-column grid for Location, Hours, Contact. Map below.',
+                'Gallery Split': 'LAYOUT: 50/50 Split. Left: Large Interior Image (Mockup). Right: Details & Address.'
             },
             faq: {
-                'Objection-Only': 'STYLE: Accordion style (details/summary tags). Minimalist borders.',
-                'Comprehensive': 'LAYOUT: Categorized tabs or long scrolling list with jump links.'
+                'Objection-Only': 'STYLE: Simple list or grid of Q&A blocks.',
+                'Accordion': 'STYLE: Interactive accordion. Click to expand answer. Border separators.'
             },
             footer: {
                 'Minimal': 'STYLE: Simple centered branding and links. No background distraction.',

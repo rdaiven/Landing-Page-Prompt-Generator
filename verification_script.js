@@ -23,32 +23,62 @@ try {
         sections: sections
     };
 
-    // 3. Test New Layouts
-    // Set Hero to 'Full Width'
-    formData.sections.hero.layout = 'Full Width';
+    // 2. Validate Design Rules for new Phase 6 layouts
+    const checkDesignRules = () => {
+        console.log('\n--- Checking Design Rules for New Layouts ---');
+        const layoutTests = [
+            { section: 'trustPrimer', layout: 'Logo Grid', expected: 'LAYOUT: Simple grid' },
+            { section: 'problemConcern', layout: 'Feature Grid', expected: 'LAYOUT: Card grid style' },
+            { section: 'treatmentLogic', layout: 'Detailed Split', expected: 'LAYOUT: Split 50/50' },
+            { section: 'procedureGuide', layout: 'Timeline', expected: 'LAYOUT: Vertical timeline' },
+            { section: 'clinicDetails', layout: 'Gallery Split', expected: 'LAYOUT: 50/50 Split' },
+            { section: 'faq', layout: 'Accordion', expected: 'STYLE: Interactive accordion' }
+        ];
 
-    // Set Social Proof to 'Carousel'
-    formData.sections.socialProof.layout = 'Carousel';
+        let allPass = true;
+        layoutTests.forEach(test => {
+            // Base sections with all disabled
+            const baseSections = {
+                header: { layout: 'Sticky', data: {} },
+                hero: { enabled: false },
+                trustPrimer: { enabled: false },
+                problemConcern: { enabled: false },
+                treatmentLogic: { enabled: false },
+                procedureGuide: { enabled: false },
+                socialProof: { enabled: false },
+                conversion: { enabled: false },
+                clinicDetails: { enabled: false },
+                faq: { enabled: false },
+                footer: { enabled: false }
+            };
 
-    // 4. Generate Prompt
-    console.log("Generating prompt...");
-    const prompt = generatePrompt(formData);
+            // Enable and configure the specific section under test
+            baseSections[test.section] = {
+                enabled: true,
+                layout: test.layout,
+                data: { items: [], benefits: [] }
+            };
 
-    // 5. Verify Prompt Content
-    console.log("\n--- Generated Prompt Preview (Excerpt) ---");
-    console.log(prompt.substring(0, 500) + "...");
+            const mockData = {
+                brandName: 'Test Brand',
+                assets: [],
+                sections: baseSections
+            };
 
-    if (prompt.includes("Full Width")) {
-        console.log("✅ Success: Prompt contains 'Full Width' layout instruction.");
-    } else {
-        console.error("❌ Error: Prompt missing 'Full Width' layout instruction.");
+            const output = generatePrompt(mockData);
+            if (output.includes(test.expected)) {
+                console.log(`✅ ${test.section} (${test.layout}): Rule Found`);
+            } else {
+                console.error(`❌ ${test.section} (${test.layout}): Rule MISSING. Expected "${test.expected}"`);
+                console.log(`ACTUAL OUTPUT SNIPPET (${test.section}):\n`, output.split(test.section === 'clinicDetails' ? 'CLINIC DETAILS' : test.section === 'faq' ? 'FAQ' : 'SECTION')[1]?.substring(0, 300));
+                allPass = false;
+            }
+        });
+
+        if (allPass) console.log('All Layout Rules Verified.');
     }
 
-    if (prompt.includes("Carousel")) {
-        console.log("✅ Success: Prompt contains 'Carousel' layout instruction.");
-    } else {
-        console.error("❌ Error: Prompt missing 'Carousel' layout instruction.");
-    }
+    checkDesignRules();
 
     console.log("\nVerification Complete.");
 
