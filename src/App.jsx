@@ -99,7 +99,7 @@ function App() {
         />
       </div>
       <div className="preview-side">
-        <PreviewPanel prompt={prompt} />
+        <PreviewPanel prompt={prompt} formData={formData} />
       </div>
     </main>
   )
