@@ -103,6 +103,62 @@ export const sectionConfigs = {
             }
         }
     },
+    procedureGuide: {
+        label: "Procedure Guide (Steps)",
+        layouts: {
+            '3-Step': {
+                fields: [
+                    {
+                        name: 'items', label: 'Steps', type: 'collection', min: 3, max: 3, fields: [
+                            { name: 'title', label: 'Step Title', type: 'text', default: 'Consultation' },
+                            { name: 'description', label: 'Step Description', type: 'textarea', default: 'We discuss your goals.' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    items: [
+                        { title: 'Consultation', description: 'Metus poten. Urna sed in.' },
+                        { title: 'Treatment', description: 'Metus poten. Urna sed in.' },
+                        { title: 'Results', description: 'Metus poten. Urna sed in.' }
+                    ]
+                }
+            }
+        }
+    },
+    clinicDetails: {
+        label: "Visit Us (Details)",
+        layouts: {
+            'Grid': {
+                fields: [
+                    { name: 'location', label: 'Location Name', type: 'text', default: 'Beverly Hills Clinic' },
+                    { name: 'address', label: 'Address', type: 'textarea', default: '123 Luxury Lane, CA 90210' },
+                    { name: 'hours', label: 'Hours', type: 'text', default: 'Mon-Sat: 9am - 6pm' }
+                ]
+            }
+        }
+    },
+    faq: {
+        label: "Common Questions (FAQ)",
+        layouts: {
+            'Objection-Only': {
+                fields: [
+                    {
+                        name: 'items', label: 'Questions', type: 'collection', min: 3, max: 5, fields: [
+                            { name: 'question', label: 'Question', type: 'text', default: 'Is it painful?' },
+                            { name: 'answer', label: 'Answer', type: 'textarea', default: 'Most patients report minimal discomfort.' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    items: [
+                        { question: 'Is it painful?', answer: 'Most patients report minimal discomfort.' },
+                        { question: 'How long until I see results?', answer: 'Results are typically visible within 2 weeks.' },
+                        { question: 'Is there downtime?', answer: 'No, you can return to work immediately.' }
+                    ]
+                }
+            }
+        }
+    },
     socialProof: {
         label: "Real Results (Proof)",
         layouts: {

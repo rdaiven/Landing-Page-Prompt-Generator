@@ -38,9 +38,9 @@ const VisualPreview = ({ formData }) => {
             {renderSection('trustPrimer', TrustPrimerSection)}
             {renderSection('problemConcern', ProblemConcernSection)}
             {renderSection('treatmentLogic', TreatmentLogicSection)}
-            // TODO: Add ProcedureGuideSection when implemented
+            {/* TODO: Add ProcedureGuideSection when implemented */}
             {renderSection('socialProof', SocialProofSection)}
-            // TODO: Add ClinicDetails, FAQ when implemented
+            {/* TODO: Add ClinicDetails, FAQ when implemented */}
             {renderSection('conversion', ConversionSection)}
             {renderSection('footer', FooterSection)}
         </div>
