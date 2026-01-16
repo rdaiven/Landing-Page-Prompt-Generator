@@ -166,6 +166,22 @@ SPECIFIC LAYOUT INSTRUCTIONS:
             socialProof: {
                 'Testimonials': 'LAYOUT: Carousel/Slider on Mobile. Grid of 3 cards on Desktop.',
                 'Before & After': 'STYLE: Side-by-side comparison images. Slider handle if possible, else stacked images.'
+            },
+            conversion: {
+                'Urgency': 'STYLE: Floating bottom bar or sticky component. Highlighted countdown timer.',
+                'Benefit-Driven': 'LAYOUT: Split layout (Text Left, CTA Right). Focus on value proposition.'
+            },
+            clinicDetails: {
+                'Grid': 'LAYOUT: 2x2 Grid for gallery. Contact info below.',
+                'List': 'STYLE: Clean distinct rows for Location, Hours, Contact. Map embed full width.'
+            },
+            faq: {
+                'Objection-Only': 'STYLE: Accordion style (details/summary tags). Minimalist borders.',
+                'Comprehensive': 'LAYOUT: Categorized tabs or long scrolling list with jump links.'
+            },
+            footer: {
+                'Minimal': 'STYLE: Simple centered branding and links. No background distraction.',
+                'Detailed': 'LAYOUT: 4-column link grid. Newsletter signup form included.'
             }
         }
         return rules[section]?.[layout] ? `- DESIGN SPEC: ${rules[section][layout]}` : ''
