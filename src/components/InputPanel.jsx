@@ -21,6 +21,8 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
         vibe: "The emotional tone of the copy and design.",
         primaryColor: "Main brand color used for buttons and highlights.",
         secondaryColor: "Background or accent color.",
+        accentColor: "Used for success states, secondary highlights, or badges.",
+        neutralColor: "Used for backgrounds, borders, and subtle text.",
         audience: "Who is this for? e.g. 'Post-partum moms' or 'Men over 40'.",
         customContent: "Paste your specific copy, bullet points, or instructions for this section here."
     }
@@ -87,39 +89,70 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
             <section className="form-group">
                 <h3>Branding & Assets</h3>
                 <div className="color-grid">
-                    <div className="input-field">
-                        <label>
-                            Primary Color
-                            <span className="helper-icon" title={helpText.primaryColor}>?</span>
-                        </label>
-                        <div className="color-input-wrapper">
-                            <input
-                                type="color"
-                                value={formData.primaryColor || '#2563eb'}
-                                onChange={(e) => updateField('primaryColor', e.target.value)}
-                            />
+                    <div className="color-input-wrapper">
+                        <input
+                            type="color"
+                            value={formData.primaryColor || '#000000'}
+                            onChange={(e) => updateField('primaryColor', e.target.value)}
+                        />
+                        <div className="input-group">
+                            <label>Primary Color <span className="helper-icon" title={helpText.primaryColor}>?</span></label>
                             <input
                                 type="text"
-                                value={formData.primaryColor || '#2563eb'}
+                                placeholder="Hex or Name"
+                                value={formData.primaryColor}
                                 onChange={(e) => updateField('primaryColor', e.target.value)}
                             />
                         </div>
                     </div>
-                    <div className="input-field">
-                        <label>
-                            Secondary Color
-                            <span className="helper-icon" title={helpText.secondaryColor}>?</span>
-                        </label>
-                        <div className="color-input-wrapper">
-                            <input
-                                type="color"
-                                value={formData.secondaryColor || '#f8fafc'}
-                                onChange={(e) => updateField('secondaryColor', e.target.value)}
-                            />
+
+                    <div className="color-input-wrapper">
+                        <input
+                            type="color"
+                            value={formData.secondaryColor || '#ffffff'}
+                            onChange={(e) => updateField('secondaryColor', e.target.value)}
+                        />
+                        <div className="input-group">
+                            <label>Secondary Color <span className="helper-icon" title={helpText.secondaryColor}>?</span></label>
                             <input
                                 type="text"
-                                value={formData.secondaryColor || '#f8fafc'}
+                                placeholder="Hex or Name"
+                                value={formData.secondaryColor}
                                 onChange={(e) => updateField('secondaryColor', e.target.value)}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="color-input-wrapper">
+                        <input
+                            type="color"
+                            value={formData.accentColor || '#ffffff'}
+                            onChange={(e) => updateField('accentColor', e.target.value)}
+                        />
+                        <div className="input-group">
+                            <label>Accent Color <span className="helper-icon" title={helpText.accentColor}>?</span></label>
+                            <input
+                                type="text"
+                                placeholder="Hex or Name"
+                                value={formData.accentColor}
+                                onChange={(e) => updateField('accentColor', e.target.value)}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="color-input-wrapper">
+                        <input
+                            type="color"
+                            value={formData.neutralColor || '#f5f5f5'}
+                            onChange={(e) => updateField('neutralColor', e.target.value)}
+                        />
+                        <div className="input-group">
+                            <label>Neutral Color <span className="helper-icon" title={helpText.neutralColor}>?</span></label>
+                            <input
+                                type="text"
+                                placeholder="Hex or Name"
+                                value={formData.neutralColor}
+                                onChange={(e) => updateField('neutralColor', e.target.value)}
                             />
                         </div>
                     </div>

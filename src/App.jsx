@@ -7,9 +7,11 @@ function App() {
   const [formData, setFormData] = useState({
     brandName: '',
     topic: '',
-    vibe: 'Professional & Luxury',
-    primaryColor: '#2563eb',
-    secondaryColor: '#f8fafc',
+    vibe: '',
+    primaryColor: '',
+    secondaryColor: '',
+    accentColor: '',
+    neutralColor: '',
     audience: '',
     assets: [
       { type: 'image', url: '' }
