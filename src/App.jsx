@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import InputPanel from './components/InputPanel'
 import PreviewPanel from './components/PreviewPanel'
 import { generatePrompt } from './utils/promptGenerator'
+import { getInitialSectionState, sectionConfigs } from './utils/sectionConfig'
 
 function App() {
   const [formData, setFormData] = useState({
@@ -16,19 +17,7 @@ function App() {
     assets: [
       { type: 'image', url: '' }
     ],
-    sections: {
-      header: { enabled: true, layout: 'Sticky', content: '' },
-      hero: { enabled: true, layout: 'Split', content: '' },
-      trustPrimer: { enabled: true, layout: 'Short Strip', content: '' },
-      problemConcern: { enabled: true, layout: 'Bullets', content: '' },
-      treatmentLogic: { enabled: true, layout: 'Simple', content: '' },
-      procedureGuide: { enabled: true, layout: '3-Step', content: '' },
-      socialProof: { enabled: true, layout: 'Testimonials', content: '' },
-      conversion: { enabled: true, layout: 'Urgency', content: '' },
-      clinicDetails: { enabled: true, layout: 'Grid', content: '' },
-      faq: { enabled: true, layout: 'Objection-Only', content: '' },
-      footer: { enabled: true, layout: 'Minimal', content: '' }
-    }
+    sections: getInitialSectionState()
   })
 
   const [prompt, setPrompt] = useState('')
@@ -58,26 +47,46 @@ function App() {
   }
 
   const updateSectionLayout = (section, layout) => {
+    // When layout changes, we need to reset data to defaults for that layout
+    const config = sectionConfigs[section].layouts[layout];
+    const newData = {};
+
+    if (config.defaultData) {
+      Object.assign(newData, config.defaultData);
+    }
+
+    if (config.fields) {
+      config.fields.forEach(field => {
+        if (field.type !== 'collection' && newData[field.name] === undefined) {
+          newData[field.name] = field.default || '';
+        }
+      });
+    }
+
     setFormData(prev => ({
       ...prev,
       sections: {
         ...prev.sections,
         [section]: {
           ...prev.sections[section],
-          layout: layout
+          layout: layout,
+          data: newData
         }
       }
     }))
   }
 
-  const updateSectionContent = (section, content) => {
+  const updateSectionData = (section, fieldName, value) => {
     setFormData(prev => ({
       ...prev,
       sections: {
         ...prev.sections,
         [section]: {
           ...prev.sections[section],
-          content: content
+          data: {
+            ...prev.sections[section].data,
+            [fieldName]: value
+          }
         }
       }
     }))
@@ -95,7 +104,7 @@ function App() {
           updateField={updateField}
           toggleSection={toggleSection}
           updateSectionLayout={updateSectionLayout}
-          updateSectionContent={updateSectionContent}
+          updateSectionData={updateSectionData}
         />
       </div>
       <div className="preview-side">

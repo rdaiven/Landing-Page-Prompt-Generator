@@ -1,6 +1,22 @@
 export const generatePrompt = (data) => {
     const { brandName, topic, vibe, primaryColor, secondaryColor, accentColor, neutralColor, audience, assets, sections } = data
 
+    // Helper to format structured data into readable text for the prompt
+    const formatSectionData = (data) => {
+        if (!data || Object.keys(data).length === 0) return '';
+
+        return Object.entries(data).map(([key, value]) => {
+            // Handle arrays (collections like testimonials)
+            if (Array.isArray(value)) {
+                return `- ${key.toUpperCase()}:\n` + value.map(item =>
+                    `  * ` + Object.entries(item).map(([k, v]) => `${k}: "${v}"`).join(', ')
+                ).join('\n');
+            }
+            // Handle regular strings/text
+            return `- ${key.toUpperCase()}: "${value}"`;
+        }).join('\n');
+    }
+
     let p = `ACT AS A WORLD-CLASS CONVERSION COPYWRITER AND WEB DESIGNER.
   
 GOAL: Create a HIGH-CONVERSION landing page for "${brandName || '[BRAND NAME]'}" focusing on "${topic || '[TOPIC/SERVICE]'}".
@@ -72,7 +88,8 @@ Each section must adhere to the specific Goals and "Must Include" rules below.
                 ? '- Header MUST remain fixed/sticky at the top of the viewport at all times.'
                 : '- Header checks in at top but scrolls away with content (Static).'}
 - RESPONSIVENESS: On mobile, use a hamburger menu or simplified layout ensuring CTA is always visible/accessible (unless hidden by smart scroll).
-${sections.header.content ? `- SPECIFIC CONTENT/COPY: ${sections.header.content}` : ''}
+SPECIFIC CONTENT:
+${formatSectionData(sections.header.data)}
 
 `
 
@@ -86,7 +103,8 @@ ${sections.header.content ? `- SPECIFIC CONTENT/COPY: ${sections.header.content}
     - Primary CTA button.
     - Trust micro-signal (Optional).
 ${getDesignRules('hero', sections.hero.layout)}
-${sections.hero.content ? `- SPECIFIC CONTENT/COPY: ${sections.hero.content}` : ''}
+SPECIFIC CONTENT:
+${formatSectionData(sections.hero.data)}
 
 `
     }
@@ -96,7 +114,8 @@ ${sections.hero.content ? `- SPECIFIC CONTENT/COPY: ${sections.hero.content}` : 
 - GOAL: Provide instant assurance with 1-2 critical trust elements only.
 - ELEMENTS: Pick 1-2 from: 5-star rating, patient count, or doctor credentials.
 ${getDesignRules('trustPrimer', sections.trustPrimer.layout)}
-${sections.trustPrimer.content ? `- SPECIFIC CONTENT/COPY: ${sections.trustPrimer.content}` : ''}
+SPECIFIC CONTENT:
+${formatSectionData(sections.trustPrimer.data)}
 
 `
     }
@@ -107,7 +126,8 @@ ${sections.trustPrimer.content ? `- SPECIFIC CONTENT/COPY: ${sections.trustPrime
 - RULES: 3–5 bullets only. No paragraphs. No medical jargon.
 - TITLE: "Is this your concern?" or "This treatment may be right for you if..."
 ${getDesignRules('problemConcern', sections.problemConcern.layout)}
-${sections.problemConcern.content ? `- SPECIFIC CONTENT/COPY: ${sections.problemConcern.content}` : ''}
+SPECIFIC CONTENT:
+${formatSectionData(sections.problemConcern.data)}
 
 `
     }
@@ -117,7 +137,8 @@ ${sections.problemConcern.content ? `- SPECIFIC CONTENT/COPY: ${sections.problem
 - GOAL: Explain value with non-medical clarity. Outcome-focused simple biology.
 - STRUCTURE: Outcome focused. Avoid marketing hype. Simple clarity.
 ${getDesignRules('treatmentLogic', sections.treatmentLogic.layout)}
-${sections.treatmentLogic.content ? `- SPECIFIC CONTENT/COPY: ${sections.treatmentLogic.content}` : ''}
+SPECIFIC CONTENT:
+${formatSectionData(sections.treatmentLogic.data)}
 
 `
     }
@@ -126,7 +147,8 @@ ${sections.treatmentLogic.content ? `- SPECIFIC CONTENT/COPY: ${sections.treatme
         p += `5. WHAT TO EXPECT (Layout: ${sections.procedureGuide.layout})
 - GOAL: Reduce fear of the unknown.
 - STRUCTURE: Before session (prep), During session (sensation/duration), After session (results/aftercare).
-${sections.procedureGuide.content ? `- SPECIFIC CONTENT/COPY: ${sections.procedureGuide.content}` : ''}
+SPECIFIC CONTENT:
+${formatSectionData(sections.procedureGuide.data)}
 
 `
     }
@@ -136,7 +158,8 @@ ${sections.procedureGuide.content ? `- SPECIFIC CONTENT/COPY: ${sections.procedu
 - GOAL: Reinforce credibility. One real proof > five fake ones.
 - MINIMUM: Short testimonials (1-2 lines), Before & After thumbnails, Doctor endorsement video.
 ${getDesignRules('socialProof', sections.socialProof.layout)}
-${sections.socialProof.content ? `- SPECIFIC CONTENT/COPY: ${sections.socialProof.content}` : ''}
+SPECIFIC CONTENT:
+${formatSectionData(sections.socialProof.data)}
 
 `
     }
@@ -146,7 +169,8 @@ ${sections.socialProof.content ? `- SPECIFIC CONTENT/COPY: ${sections.socialProo
 - GOAL: Moment of commitment. Clear offer and logical CTA.
 - MUST INCLUDE: Urgency copy (discounted slots or time-bound), CTA Button, Reassurance (e.g., 'No payment required').
 ${getDesignRules('conversion', sections.conversion.layout)}
-${sections.conversion.content ? `- SPECIFIC CONTENT/COPY: ${sections.conversion.content}` : ''}
+SPECIFIC CONTENT:
+${formatSectionData(sections.conversion.data)}
 
 `
     }
@@ -156,7 +180,8 @@ ${sections.conversion.content ? `- SPECIFIC CONTENT/COPY: ${sections.conversion.
 - GOAL: Confirm legitimacy and demand.
 - MUST INCLUDE: Clinic name, Neutral descriptor, Location (City), Visual proof (Interior, Exterior, Doctor-in-clinic), Operating signals (Mon-Sat, by appointment).
 ${getDesignRules('clinicDetails', sections.clinicDetails.layout)}
-${sections.clinicDetails.content ? `- SPECIFIC CONTENT/COPY: ${sections.clinicDetails.content}` : ''}
+SPECIFIC CONTENT:
+${formatSectionData(sections.clinicDetails.data)}
 
 `
     }
@@ -166,7 +191,8 @@ ${sections.clinicDetails.content ? `- SPECIFIC CONTENT/COPY: ${sections.clinicDe
 - GOAL: Remove final friction points (Safety, Pain, Sessions, Eligibility).
 - RULE: Do NOT educate. Only answer silent objections stopping a book.
 ${getDesignRules('faq', sections.faq.layout)}
-${sections.faq.content ? `- SPECIFIC CONTENT/COPY: ${sections.faq.content}` : ''}
+SPECIFIC CONTENT:
+${formatSectionData(sections.faq.data)}
 
 `
     }
@@ -175,7 +201,8 @@ ${sections.faq.content ? `- SPECIFIC CONTENT/COPY: ${sections.faq.content}` : ''
         p += `10. FINAL DETAILS / FOOTER (Layout: ${sections.footer.layout})
 - INCLUDE: Clinic name, Location, Medical disclaimer (light tone), Privacy/ToS.
 ${getDesignRules('footer', sections.footer.layout)}
-${sections.footer.content ? `- SPECIFIC CONTENT/COPY: ${sections.footer.content}` : ''}
+SPECIFIC CONTENT:
+${formatSectionData(sections.footer.data)}
 
 `
     }

@@ -1,0 +1,43 @@
+import React from 'react'
+
+const SocialProofSection = ({ data, layout, theme }) => {
+    const { primaryColor, neutralColor } = theme;
+    const { heading, items } = data;
+
+    return (
+        <div className="mock-section mock-social-proof" style={{ backgroundColor: neutralColor || '#f9fafb', padding: '6rem 2rem' }}>
+            <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '4rem', fontFamily: 'var(--font-serif)' }}>
+                {heading}
+            </h2>
+
+            <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: '2rem',
+                maxWidth: '1200px',
+                margin: '0 auto'
+            }}>
+                {(items || []).map((item, i) => (
+                    <div key={i} style={{
+                        backgroundColor: '#fff',
+                        padding: '2rem',
+                        borderRadius: '8px',
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
+                        border: '1px solid #e5e7eb'
+                    }}>
+                        <div style={{ color: primaryColor, fontSize: '2rem', lineHeight: 1, marginBottom: '1rem' }}>"</div>
+                        <p style={{ fontSize: '1.1rem', lineHeight: '1.6', color: '#4b5563', marginBottom: '1.5rem', fontStyle: 'italic' }}>
+                            {item.quote}
+                        </p>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <div style={{ width: '40px', height: '40px', backgroundColor: '#e5e7eb', borderRadius: '50%' }}></div>
+                            <span style={{ fontWeight: '600', color: '#111827' }}>{item.author}</span>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+export default SocialProofSection

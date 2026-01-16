@@ -1,21 +1,10 @@
 import React from 'react'
 import Tooltip from './Tooltip'
+import { sectionConfigs } from '../utils/sectionConfig'
 
-const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout, updateSectionContent }) => {
-    const sectionLabels = {
-        header: "Navigation Header",
-        hero: "Immediate Hook (Hero)",
-        trustPrimer: "Assurance Strip (Trust)",
-        problemConcern: "Confirm Relevance (Filter)",
-        treatmentLogic: "How it Works (Logic)",
-        procedureGuide: "Procedure Guide (Steps)",
-        socialProof: "Real Results (Proof)",
-        conversion: "Check Availability (CTA)",
-        clinicDetails: "Visit Us (Details)",
-        faq: "Common Questions (FAQ)",
-        footer: "Footer"
-    }
+const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout, updateSectionData }) => {
 
+    // Help text remains the same...
     const helpText = {
         brandName: "The official name of the clinic or practice.",
         topic: "The specific treatment or service this page is selling (e.g. 'CoolSculpting' or 'Botox').",
@@ -25,21 +14,66 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
         accentColor: "Used for success states, secondary highlights, or badges.",
         neutralColor: "Used for backgrounds, borders, and subtle text.",
         audience: "Who is this for? e.g. 'Post-partum moms' or 'Men over 40'.",
-        customContent: "Paste your specific copy, bullet points, or instructions for this section here."
     }
 
-    const layoutOptions = {
-        header: ['Always Sticky', 'Smart Hide (Scroll Up to Show)', 'Static (Scrolls away)'],
-        hero: ['Split', 'Centered', 'Video-First'],
-        trustPrimer: ['Short Strip', 'Logo Grid'],
-        problemConcern: ['Bullets', 'Feature Grid'],
-        treatmentLogic: ['Simple', 'Detailed'],
-        procedureGuide: ['3-Step', 'Timeline'],
-        socialProof: ['Testimonials', 'Before & After', 'Mixed'],
-        conversion: ['Urgency', 'Benefit-Driven'],
-        clinicDetails: ['Grid', 'List'],
-        faq: ['Objection-Only', 'Comprehensive'],
-        footer: ['Minimal', 'Detailed']
+    const renderField = (sectionKey, field, value) => {
+        if (field.type === 'text') {
+            return (
+                <div key={field.name} className="dynamic-field">
+                    <label>{field.label}</label>
+                    <input
+                        type="text"
+                        value={value || ''}
+                        onChange={(e) => updateSectionData(sectionKey, field.name, e.target.value)}
+                        placeholder={field.default}
+                    />
+                </div>
+            )
+        }
+        if (field.type === 'textarea') {
+            return (
+                <div key={field.name} className="dynamic-field">
+                    <label>{field.label}</label>
+                    <textarea
+                        rows={3}
+                        value={value || ''}
+                        onChange={(e) => updateSectionData(sectionKey, field.name, e.target.value)}
+                        placeholder={field.default}
+                    />
+                </div>
+            )
+        }
+        if (field.type === 'collection') {
+            return (
+                <div key={field.name} className="dynamic-collection">
+                    <label>{field.label}</label>
+                    <div className="collection-items">
+                        {(value || []).map((item, index) => (
+                            <div key={index} className="collection-item">
+                                <span className="item-number">#{index + 1}</span>
+                                <div className="item-fields">
+                                    {field.fields.map(subField => (
+                                        <div key={subField.name} className="sub-field">
+                                            <input
+                                                type={subField.type === 'textarea' ? 'text' : subField.type} // Compact inputs for list items
+                                                placeholder={subField.label}
+                                                value={item[subField.name] || ''}
+                                                onChange={(e) => {
+                                                    const newValue = [...(value || [])];
+                                                    newValue[index] = { ...newValue[index], [subField.name]: e.target.value };
+                                                    updateSectionData(sectionKey, field.name, newValue);
+                                                }}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )
+        }
+        return null;
     }
 
     return (
@@ -173,98 +207,50 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
             </section>
 
             <section className="form-group">
-                <h3>Media Assets</h3>
-                <div className="asset-list">
-                    {formData.assets.map((asset, index) => (
-                        <div key={index} className="asset-item">
-                            <select
-                                value={asset.type}
-                                onChange={(e) => {
-                                    const newAssets = [...formData.assets];
-                                    newAssets[index].type = e.target.value;
-                                    updateField('assets', newAssets);
-                                }}
-                            >
-                                <option value="image">Image</option>
-                                <option value="video">Video</option>
-                            </select>
-                            <input
-                                type="text"
-                                placeholder={`${asset.type === 'image' ? 'Image' : 'Video'} URL`}
-                                value={asset.url}
-                                onChange={(e) => {
-                                    const newAssets = [...formData.assets];
-                                    newAssets[index].url = e.target.value;
-                                    updateField('assets', newAssets);
-                                }}
-                            />
-                            <button
-                                className="remove-asset"
-                                onClick={() => {
-                                    const newAssets = formData.assets.filter((_, i) => i !== index);
-                                    updateField('assets', newAssets);
-                                }}
-                            >
-                                &times;
-                            </button>
-                        </div>
-                    ))}
-                </div>
-                <button
-                    className="add-asset-btn"
-                    onClick={() => {
-                        updateField('assets', [...formData.assets, { type: 'image', url: '' }]);
-                    }}
-                >
-                    + Add Asset
-                </button>
-            </section>
-
-            <section className="form-group">
                 <h3>Page Sections & Layouts</h3>
                 <div className="sections-config-list">
-                    {Object.keys(formData.sections).map(sectionKey => (
-                        <div key={sectionKey} className={`section-config-item ${formData.sections[sectionKey].enabled ? 'active' : ''}`}>
-                            <div className="section-header">
-                                <label className="section-toggle">
-                                    <input
-                                        type="checkbox"
-                                        checked={formData.sections[sectionKey].enabled}
-                                        onChange={() => toggleSection(sectionKey)}
-                                    />
-                                    <span>{sectionLabels[sectionKey]}</span>
-                                </label>
-                            </div>
+                    {Object.keys(formData.sections).map(sectionKey => {
+                        const sectionData = formData.sections[sectionKey];
+                        const config = sectionConfigs[sectionKey];
+                        const currentLayoutConfig = config.layouts[sectionData.layout];
 
-                            {formData.sections[sectionKey].enabled && (
-                                <div className="section-settings">
-                                    <div className="section-layout-select">
-                                        <label>Layout Style</label>
-                                        <select
-                                            value={formData.sections[sectionKey].layout}
-                                            onChange={(e) => updateSectionLayout(sectionKey, e.target.value)}
-                                        >
-                                            {layoutOptions[sectionKey].map(opt => (
-                                                <option key={opt} value={opt}>{opt}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                    <div className="section-custom-content">
-                                        <label>
-                                            Custom Content / Instructions
-                                            <span className="helper-icon" title={helpText.customContent}>?</span>
-                                        </label>
-                                        <textarea
-                                            placeholder="Paste your copy or specific instructions for this section here..."
-                                            value={formData.sections[sectionKey].content || ''}
-                                            onChange={(e) => updateSectionContent(sectionKey, e.target.value)}
-                                            rows={3}
+                        return (
+                            <div key={sectionKey} className={`section-config-item ${sectionData.enabled ? 'active' : ''}`}>
+                                <div className="section-header">
+                                    <label className="section-toggle">
+                                        <input
+                                            type="checkbox"
+                                            checked={sectionData.enabled}
+                                            onChange={() => toggleSection(sectionKey)}
                                         />
-                                    </div>
+                                        <span>{config.label}</span>
+                                    </label>
                                 </div>
-                            )}
-                        </div>
-                    ))}
+
+                                {sectionData.enabled && (
+                                    <div className="section-settings">
+                                        <div className="section-layout-select">
+                                            <label>Layout Style</label>
+                                            <select
+                                                value={sectionData.layout}
+                                                onChange={(e) => updateSectionLayout(sectionKey, e.target.value)}
+                                            >
+                                                {Object.keys(config.layouts).map(opt => (
+                                                    <option key={opt} value={opt}>{opt}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+
+                                        <div className="dynamic-inputs">
+                                            {currentLayoutConfig.fields && currentLayoutConfig.fields.map(field =>
+                                                renderField(sectionKey, field, sectionData.data[field.name])
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )
+                    })}
                 </div>
             </section>
         </div>
