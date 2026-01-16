@@ -423,10 +423,23 @@ body {
   flex-direction: column;
   position: relative;
   min-height: 500px;
+  /* Ensure children can fill height */
+}
+
+.preview-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 .preview-content {
   padding: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  scroll-behavior: smooth;
 }
 
 .side-header {

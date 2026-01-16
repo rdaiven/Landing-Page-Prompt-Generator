@@ -2,6 +2,7 @@
 export const sectionConfigs = {
     header: {
         label: "Navigation Header",
+        icon: "🧭",
         layouts: {
             'Sticky': {
                 fields: [
@@ -19,6 +20,7 @@ export const sectionConfigs = {
     },
     hero: {
         label: "Immediate Hook (Hero)",
+        icon: "✨",
         layouts: {
             'Split': {
                 fields: [
@@ -36,6 +38,21 @@ export const sectionConfigs = {
                     { name: 'imagePrompt', label: 'Banner Image Description', type: 'text', default: 'Wide Banner Image' }
                 ]
             },
+            'Full Width': {
+                fields: [
+                    { name: 'headline', label: 'Headline', type: 'text', default: 'Radiance Define' },
+                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Luxury aesthetics for the modern individual.' },
+                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Discover More' },
+                    { name: 'imagePrompt', label: 'Background Image Description', type: 'text', default: 'High-res texture or landscape' }
+                ]
+            },
+            'Minimal': {
+                fields: [
+                    { name: 'headline', label: 'Headline', type: 'text', default: 'Simply Beautiful' },
+                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'No clutter. Just results.' },
+                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Get Started' }
+                ]
+            },
             'Video-First': {
                 fields: [
                     { name: 'videoUrl', label: 'Video URL (Placeholder)', type: 'text', default: '' },
@@ -47,6 +64,7 @@ export const sectionConfigs = {
     },
     trustPrimer: {
         label: "Assurance Strip (Trust)",
+        icon: "🏆",
         layouts: {
             'Short Strip': {
                 fields: [
@@ -68,6 +86,7 @@ export const sectionConfigs = {
     },
     problemConcern: {
         label: "Confirm Relevance (Filter)",
+        icon: "🎯",
         layouts: {
             'Bullets': {
                 fields: [
@@ -91,6 +110,7 @@ export const sectionConfigs = {
     },
     treatmentLogic: {
         label: "How it Works (Logic)",
+        icon: "💡",
         layouts: {
             'Simple': {
                 fields: [
@@ -105,6 +125,7 @@ export const sectionConfigs = {
     },
     procedureGuide: {
         label: "Procedure Guide (Steps)",
+        icon: "👣",
         layouts: {
             '3-Step': {
                 fields: [
@@ -127,6 +148,7 @@ export const sectionConfigs = {
     },
     clinicDetails: {
         label: "Visit Us (Details)",
+        icon: "🏥",
         layouts: {
             'Grid': {
                 fields: [
@@ -139,6 +161,7 @@ export const sectionConfigs = {
     },
     faq: {
         label: "Common Questions (FAQ)",
+        icon: "❓",
         layouts: {
             'Objection-Only': {
                 fields: [
@@ -161,12 +184,13 @@ export const sectionConfigs = {
     },
     socialProof: {
         label: "Real Results (Proof)",
+        icon: "💬",
         layouts: {
-            'Testimonials': {
+            'Grid': {
                 fields: [
                     { name: 'heading', label: 'Section Heading', type: 'text', default: 'Real Patient Results' },
                     {
-                        name: 'items', label: 'Testimonials', type: 'collection', min: 3, max: 3, fields: [
+                        name: 'items', label: 'Testimonials', type: 'collection', min: 3, max: 6, fields: [ // Allow more for grid
                             { name: 'quote', label: 'Quote', type: 'textarea', default: 'Amazing results!' },
                             { name: 'author', label: 'Name', type: 'text', default: 'Jane D.' }
                         ]
@@ -175,9 +199,31 @@ export const sectionConfigs = {
                 defaultData: {
                     heading: 'Real Patient Results',
                     items: [
-                        { quote: 'Incredible results after just one session!', author: 'Sarah J.' },
-                        { quote: 'The team changed my life.', author: 'Mike T.' },
-                        { quote: 'Highly recommend to everyone.', author: 'Emily R.' }
+                        { quote: 'Incredible results.', author: 'Sarah J.' },
+                        { quote: 'Changed my life.', author: 'Mike T.' },
+                        { quote: 'Highly recommend.', author: 'Emily R.' },
+                        { quote: 'Best decision ever.', author: 'Anna K.' },
+                        { quote: 'Professional staff.', author: 'David L.' },
+                        { quote: 'Will come again.', author: 'Sophia M.' }
+                    ]
+                }
+            },
+            'Carousel': {
+                fields: [
+                    { name: 'heading', label: 'Section Heading', type: 'text', default: 'Client Love' },
+                    {
+                        name: 'items', label: 'Testimonials', type: 'collection', min: 3, max: 5, fields: [
+                            { name: 'quote', label: 'Quote', type: 'textarea', default: 'Amazing results!' },
+                            { name: 'author', label: 'Name', type: 'text', default: 'Jane D.' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    heading: 'Client Love',
+                    items: [
+                        { quote: 'This place is magical.', author: 'Jessica' },
+                        { quote: 'I feel 10 years younger.', author: 'Robert' },
+                        { quote: 'Truly world class.', author: 'Amanda' }
                     ]
                 }
             }
@@ -185,6 +231,7 @@ export const sectionConfigs = {
     },
     conversion: {
         label: "Check Availability (CTA)",
+        icon: "🚀",
         layouts: {
             'Urgency': {
                 fields: [
@@ -197,6 +244,7 @@ export const sectionConfigs = {
     },
     footer: {
         label: "Footer",
+        icon: "🏁",
         layouts: {
             'Minimal': {
                 fields: [

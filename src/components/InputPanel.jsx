@@ -3,6 +3,15 @@ import Tooltip from './Tooltip'
 import { sectionConfigs } from '../utils/sectionConfig'
 
 const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout, updateSectionData }) => {
+    const [expandedSection, setExpandedSection] = React.useState(null);
+
+    const toggleAccordion = (sectionKey) => {
+        if (expandedSection === sectionKey) {
+            setExpandedSection(null);
+        } else {
+            setExpandedSection(sectionKey);
+        }
+    }
 
     // Help text remains the same...
     const helpText = {
@@ -78,10 +87,12 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
 
     return (
         <div className="input-panel">
-            <section className="form-group">
-                <h3>Brand Information</h3>
+            <section className="form-group" style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: '#0f172a' }}>
+                    🏷️ Brand Information
+                </h3>
                 <div className="input-field">
-                    <label>
+                    <label style={{ display: 'flex', alignItems: 'center' }}>
                         Brand Name
                         <Tooltip text={helpText.brandName} />
                     </label>
@@ -90,28 +101,31 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                         placeholder="e.g. Venus Future Aesthetics"
                         value={formData.brandName}
                         onChange={(e) => updateField('brandName', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', marginTop: '0.5rem' }}
                     />
                 </div>
-                <div className="input-field">
-                    <label>
+                <div className="input-field" style={{ marginTop: '1rem' }}>
+                    <label style={{ display: 'flex', alignItems: 'center' }}>
                         Topic / Service
-                        <span className="helper-icon" title={helpText.topic}>?</span>
+                        <Tooltip text={helpText.topic} />
                     </label>
                     <input
                         type="text"
                         placeholder="e.g. Cryoslim Treatment"
                         value={formData.topic}
                         onChange={(e) => updateField('topic', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', marginTop: '0.5rem' }}
                     />
                 </div>
-                <div className="input-field">
-                    <label>
+                <div className="input-field" style={{ marginTop: '1rem' }}>
+                    <label style={{ display: 'flex', alignItems: 'center' }}>
                         Brand Vibe
-                        <span className="helper-icon" title={helpText.vibe}>?</span>
+                        <Tooltip text={helpText.vibe} />
                     </label>
                     <select
                         value={formData.vibe}
                         onChange={(e) => updateField('vibe', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', marginTop: '0.5rem' }}
                     >
                         <option>Professional & Luxury</option>
                         <option>Modern Tech</option>
@@ -121,119 +135,179 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                 </div>
             </section>
 
-            <section className="form-group">
-                <h3>Branding & Assets</h3>
-                <div className="color-grid">
+            <section className="form-group" style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', border: '1px solid #e2e8f0', marginTop: '2rem' }}>
+                <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: '#0f172a' }}>
+                    🎨 Branding & Assets
+                </h3>
+                <div className="color-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                     <div className="color-input-wrapper">
-                        <input
-                            type="color"
-                            value={formData.primaryColor || '#000000'}
-                            onChange={(e) => updateField('primaryColor', e.target.value)}
-                        />
-                        <div className="input-group">
-                            <label>Primary Color <span className="helper-icon" title={helpText.primaryColor}>?</span></label>
+                        <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                            Primary <Tooltip text={helpText.primaryColor} />
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <input
+                                type="color"
+                                value={formData.primaryColor || '#000000'}
+                                onChange={(e) => updateField('primaryColor', e.target.value)}
+                                style={{ height: '38px', width: '38px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                            />
                             <input
                                 type="text"
-                                placeholder="Hex or Name"
+                                placeholder="Hex"
                                 value={formData.primaryColor}
                                 onChange={(e) => updateField('primaryColor', e.target.value)}
+                                style={{ flex: 1, padding: '0.5rem', borderRadius: '6px', border: '1px solid #cbd5e1' }}
                             />
                         </div>
                     </div>
 
                     <div className="color-input-wrapper">
-                        <input
-                            type="color"
-                            value={formData.secondaryColor || '#ffffff'}
-                            onChange={(e) => updateField('secondaryColor', e.target.value)}
-                        />
-                        <div className="input-group">
-                            <label>Secondary Color <span className="helper-icon" title={helpText.secondaryColor}>?</span></label>
+                        <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                            Secondary <Tooltip text={helpText.secondaryColor} />
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <input
+                                type="color"
+                                value={formData.secondaryColor || '#ffffff'}
+                                onChange={(e) => updateField('secondaryColor', e.target.value)}
+                                style={{ height: '38px', width: '38px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                            />
                             <input
                                 type="text"
-                                placeholder="Hex or Name"
+                                placeholder="Hex"
                                 value={formData.secondaryColor}
                                 onChange={(e) => updateField('secondaryColor', e.target.value)}
+                                style={{ flex: 1, padding: '0.5rem', borderRadius: '6px', border: '1px solid #cbd5e1' }}
                             />
                         </div>
                     </div>
 
                     <div className="color-input-wrapper">
-                        <input
-                            type="color"
-                            value={formData.accentColor || '#ffffff'}
-                            onChange={(e) => updateField('accentColor', e.target.value)}
-                        />
-                        <div className="input-group">
-                            <label>Accent Color <span className="helper-icon" title={helpText.accentColor}>?</span></label>
+                        <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                            Accent <Tooltip text={helpText.accentColor} />
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <input
+                                type="color"
+                                value={formData.accentColor || '#ffffff'}
+                                onChange={(e) => updateField('accentColor', e.target.value)}
+                                style={{ height: '38px', width: '38px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                            />
                             <input
                                 type="text"
-                                placeholder="Hex or Name"
+                                placeholder="Hex"
                                 value={formData.accentColor}
                                 onChange={(e) => updateField('accentColor', e.target.value)}
+                                style={{ flex: 1, padding: '0.5rem', borderRadius: '6px', border: '1px solid #cbd5e1' }}
                             />
                         </div>
                     </div>
 
                     <div className="color-input-wrapper">
-                        <input
-                            type="color"
-                            value={formData.neutralColor || '#f5f5f5'}
-                            onChange={(e) => updateField('neutralColor', e.target.value)}
-                        />
-                        <div className="input-group">
-                            <label>Neutral Color <span className="helper-icon" title={helpText.neutralColor}>?</span></label>
+                        <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                            Neutral <Tooltip text={helpText.neutralColor} />
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <input
+                                type="color"
+                                value={formData.neutralColor || '#f5f5f5'}
+                                onChange={(e) => updateField('neutralColor', e.target.value)}
+                                style={{ height: '38px', width: '38px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                            />
                             <input
                                 type="text"
-                                placeholder="Hex or Name"
+                                placeholder="Hex"
                                 value={formData.neutralColor}
                                 onChange={(e) => updateField('neutralColor', e.target.value)}
+                                style={{ flex: 1, padding: '0.5rem', borderRadius: '6px', border: '1px solid #cbd5e1' }}
                             />
                         </div>
                     </div>
                 </div>
-                <div className="input-field">
-                    <label>
+                <div className="input-field" style={{ marginTop: '1rem' }}>
+                    <label style={{ display: 'flex', alignItems: 'center' }}>
                         Target Audience
-                        <span className="helper-icon" title={helpText.audience}>?</span>
+                        <Tooltip text={helpText.audience} />
                     </label>
                     <input
                         type="text"
                         placeholder="e.g. Busy professionals in their 30s"
                         value={formData.audience}
                         onChange={(e) => updateField('audience', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', marginTop: '0.5rem' }}
                     />
                 </div>
             </section>
 
-            <section className="form-group">
-                <h3>Page Sections & Layouts</h3>
-                <div className="sections-config-list">
+            <section className="form-group" style={{ marginTop: '2rem' }}>
+                <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: '#0f172a' }}>
+                    📑 Page Sections & Layouts
+                </h3>
+                <div className="sections-config-list" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {Object.keys(formData.sections).map(sectionKey => {
                         const sectionData = formData.sections[sectionKey];
                         const config = sectionConfigs[sectionKey];
                         const currentLayoutConfig = config.layouts[sectionData.layout];
+                        const isExpanded = expandedSection === sectionKey;
 
                         return (
-                            <div key={sectionKey} className={`section-config-item ${sectionData.enabled ? 'active' : ''}`}>
-                                <div className="section-header">
-                                    <label className="section-toggle">
-                                        <input
-                                            type="checkbox"
-                                            checked={sectionData.enabled}
-                                            onChange={() => toggleSection(sectionKey)}
-                                        />
-                                        <span>{config.label}</span>
-                                    </label>
+                            <div
+                                key={sectionKey}
+                                className={`section-config-item ${sectionData.enabled ? 'enabled' : 'disabled'}`}
+                                style={{
+                                    border: sectionData.enabled ? '1px solid #cbd5e1' : '1px solid #e2e8f0',
+                                    borderRadius: '8px',
+                                    background: sectionData.enabled ? '#fff' : '#f8fafc',
+                                    transition: 'all 0.2s',
+                                    overflow: 'hidden'
+                                }}
+                            >
+                                <div
+                                    className="section-header"
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        padding: '1rem',
+                                        cursor: 'pointer',
+                                        background: isExpanded ? '#f1f5f9' : 'transparent',
+                                        borderBottom: isExpanded ? '1px solid #e2e8f0' : 'none'
+                                    }}
+                                    onClick={() => toggleAccordion(sectionKey)}
+                                >
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                        <div onClick={(e) => e.stopPropagation()}>
+                                            <input
+                                                type="checkbox"
+                                                checked={sectionData.enabled}
+                                                onChange={() => {
+                                                    toggleSection(sectionKey);
+                                                    if (!sectionData.enabled) {
+                                                        setExpandedSection(sectionKey);
+                                                    }
+                                                }}
+                                                style={{ width: '1.2rem', height: '1.2rem', cursor: 'pointer' }}
+                                            />
+                                        </div>
+                                        <span style={{ fontSize: '1.1rem', fontWeight: 600, color: sectionData.enabled ? '#0f172a' : '#94a3b8' }}>
+                                            {config.icon} {config.label}
+                                        </span>
+                                    </div>
+                                    <div style={{ color: '#64748b', transform: isExpanded ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
+                                        ▼
+                                    </div>
                                 </div>
 
-                                {sectionData.enabled && (
-                                    <div className="section-settings">
-                                        <div className="section-layout-select">
-                                            <label>Layout Style</label>
+                                {isExpanded && sectionData.enabled && (
+                                    <div className="section-settings" style={{ padding: '1.5rem', background: '#fff' }}>
+                                        <div className="section-layout-select" style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid #e2e8f0' }}>
+                                            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 600, color: '#334155' }}>
+                                                Layout Style
+                                            </label>
                                             <select
                                                 value={sectionData.layout}
                                                 onChange={(e) => updateSectionLayout(sectionKey, e.target.value)}
+                                                style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '1rem', backgroundColor: '#f8fafc' }}
                                             >
                                                 {Object.keys(config.layouts).map(opt => (
                                                     <option key={opt} value={opt}>{opt}</option>
@@ -246,6 +320,12 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                                 renderField(sectionKey, field, sectionData.data[field.name])
                                             )}
                                         </div>
+                                    </div>
+                                )}
+
+                                {isExpanded && !sectionData.enabled && (
+                                    <div style={{ padding: '2rem', textAlign: 'center', color: '#64748b', fontStyle: 'italic', fontSize: '0.9rem' }}>
+                                        Enable this section to customize its content.
                                     </div>
                                 )}
                             </div>

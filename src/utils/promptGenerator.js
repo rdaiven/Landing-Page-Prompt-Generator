@@ -38,9 +38,11 @@ Each section must adhere to the specific Goals and "Must Include" rules below.
     const getDesignRules = (section, layout) => {
         const rules = {
             hero: {
-                'Split': 'LAYOUT: Mobile = Stacked (Image Top, Text Bottom). Desktop = 2-Column Grid (50/50). content-center.',
+                'Split': 'LAYOUT: Mobile = Stacked (Image Top, Text Bottom). Desktop = 2-Column Grid (50/50). content-center. Background color: Secondary.',
                 'Centered': 'LAYOUT: Text centered in max-w-4xl container. Background image with heavy overlay or gradient fade.',
-                'Video-First': 'LAYOUT: Video aspect-ratio 16:9 takes full width or 60% of viewport. Headline overlay or immediately below.'
+                'Video-First': 'LAYOUT: Video aspect-ratio 16:9 takes full width or 60% of viewport. Headline overlay or immediately below.',
+                'Full Width': 'LAYOUT: Full viewport height (100vh) background image with semi-transparent dark overlay. White text centered over image.',
+                'Minimal': 'LAYOUT: High-end editorial style. Left-aligned text, ample whitespace. Small decorative visual or color block instead of large hero image.'
             },
             trustPrimer: {
                 'Short Strip': 'LAYOUT: Single row flex-wrap. Logos grayscale with opacity-50, hover:opacity-100.',
@@ -55,7 +57,9 @@ Each section must adhere to the specific Goals and "Must Include" rules below.
                 'Detailed': 'STYLE: 2-col layout on desktop: Diagram/Image Left, Explanation Text Right.'
             },
             socialProof: {
-                'Testimonials': 'LAYOUT: Carousel/Slider on Mobile. Grid of 3 cards on Desktop.',
+                'Grid': 'LAYOUT: Responsive Grid (Mobile 1-col, Desktop 3-col). Cards with shadow-sm and rounded corners.',
+                'Carousel': 'LAYOUT: Horizontal scrolling container (overflow-x-auto). Cards snap to center. Hide scrollbar for aesthetics.',
+                'Testimonials': 'LAYOUT: Simple vertical list or grid. Focus on readability.',
                 'Before & After': 'STYLE: Side-by-side comparison images. Slider handle if possible, else stacked images.'
             },
             conversion: {
@@ -209,7 +213,12 @@ ${formatSectionData(sections.footer.data)}
 
     p += `---
 DESIGN RULES:
-- Use HSL colors based on the BRANDING COLORS provided.
+- STRICTLY USE the provided Hex Codes for colors. Do not hallucinate other colors.
+  - Primary: ${primaryColor || 'Use default black/dark'}
+  - Secondary: ${secondaryColor || 'Use default white/light'}
+  - Accent: ${accentColor || 'Use default accent'}
+  - Neutral: ${neutralColor || 'Use default gray'}
+- Use HSL values derived from these hex codes for CSS variables if needed for transparency (e.g., --primary: 220 90% 56%; --primary-10: 220 90% 56% / 0.1;).
 - Typography: Use Playfair Display for headers and Inter for body.
 - Contrast: Ensure accessibility and high-contrast for CTA buttons.
 - Modern aesthetics: Subtle gradients, glassmorphism for containers, and smooth micro-animations.

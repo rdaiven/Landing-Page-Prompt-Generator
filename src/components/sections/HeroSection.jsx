@@ -79,6 +79,58 @@ const HeroSection = ({ data, layout, theme }) => {
         )
     }
 
+    if (layout === 'Full Width') {
+        return (
+            <div className="mock-section mock-hero-full" style={{ position: 'relative', height: '80vh', minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', textAlign: 'center' }}>
+                <img
+                    src={getPlaceholder(1600, 900, imagePrompt || 'Full Width Background')}
+                    alt="Background"
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
+                />
+                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.4)', zIndex: 1 }}></div>
+                <div style={{ position: 'relative', zIndex: 2, maxWidth: '900px', padding: '2rem' }}>
+                    <h1 style={{ fontSize: '4.5rem', marginBottom: '1.5rem', fontFamily: 'var(--font-serif)', lineHeight: 1.1 }}>{headline}</h1>
+                    <p style={{ fontSize: '1.5rem', marginBottom: '3rem', opacity: 0.9 }}>{subheadline}</p>
+                    <button style={{
+                        backgroundColor: primaryColor || '#fff',
+                        color: primaryColor ? '#fff' : '#000',
+                        padding: '1.2rem 3.5rem',
+                        border: 'none',
+                        borderRadius: '2px',
+                        fontSize: '1.1rem',
+                        letterSpacing: '1px',
+                        textTransform: 'uppercase',
+                        fontWeight: '600',
+                        cursor: 'pointer'
+                    }}>
+                        {ctaText}
+                    </button>
+                </div>
+            </div>
+        )
+    }
+
+    if (layout === 'Minimal') {
+        return (
+            <div className="mock-section mock-hero-minimal" style={{ backgroundColor: '#fff', padding: '8rem 2rem', textAlign: 'left', maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '4rem' }}>
+                <div style={{ flex: 1 }}>
+                    <span style={{ display: 'inline-block', padding: '0.25rem 1rem', borderRadius: '50px', background: secondaryColor || '#f3f4f6', color: primaryColor || '#000', fontSize: '0.9rem', marginBottom: '2rem', fontWeight: 600 }}>New Arrival</span>
+                    <h1 style={{ fontSize: '3.5rem', marginBottom: '1.5rem', fontFamily: 'var(--font-serif)', color: '#111' }}>{headline}</h1>
+                    <p style={{ fontSize: '1.1rem', color: '#666', marginBottom: '2rem', maxWidth: '500px' }}>{subheadline}</p>
+                    <button style={{ backgroundColor: 'transparent', border: `2px solid ${primaryColor || '#000'}`, color: primaryColor || '#000', padding: '0.75rem 2rem', borderRadius: '4px', fontSize: '1rem', fontWeight: 600, cursor: 'pointer' }}>
+                        {ctaText} &rarr;
+                    </button>
+                </div>
+                <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                    {/* Minimal geometric decoration instead of big image */}
+                    <div style={{ width: '300px', height: '400px', backgroundColor: secondaryColor || '#eee', borderRadius: '200px 200px 0 0', position: 'relative' }}>
+                        <div style={{ position: 'absolute', bottom: '-20px', left: '-20px', width: '100px', height: '100px', borderRadius: '50%', background: primaryColor || '#000', opacity: 0.2 }}></div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     return null;
 }
 
