@@ -1,4 +1,5 @@
 import React from 'react'
+import Tooltip from './Tooltip'
 
 const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout, updateSectionContent }) => {
     const sectionLabels = {
@@ -48,7 +49,7 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                 <div className="input-field">
                     <label>
                         Brand Name
-                        <span className="helper-icon" title={helpText.brandName}>?</span>
+                        <Tooltip text={helpText.brandName} />
                     </label>
                     <input
                         type="text"
