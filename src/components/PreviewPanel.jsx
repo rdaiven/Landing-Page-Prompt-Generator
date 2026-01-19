@@ -95,8 +95,10 @@ const PreviewPanel = ({ prompt, formData }) => {
                                 </button>
                             </div>
                         </div>
-                        <div className={`viewport-container viewport-${viewport}`} style={{ flex: 1, overflowY: 'auto' }}>
-                            <VisualPreview formData={formData} />
+                        <div className="viewport-scroll-wrapper">
+                            <div className={`viewport-container viewport-${viewport}`}>
+                                <VisualPreview formData={formData} />
+                            </div>
                         </div>
                     </>
                 ) : (

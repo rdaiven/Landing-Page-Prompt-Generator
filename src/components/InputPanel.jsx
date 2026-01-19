@@ -147,7 +147,7 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
 
     return (
         <div className="input-panel">
-            <div className="tabs-header" style={{ display: 'flex', gap: '1rem', borderBottom: '1px solid var(--border)', marginBottom: '2rem' }}>
+            <div className="panel-tabs">
                 <button
                     onClick={() => setActiveTab('settings')}
                     className={`tab-btn ${activeTab === 'settings' ? 'active' : ''}`}
@@ -164,12 +164,12 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
 
             {activeTab === 'settings' && (
                 <div className="fade-in">
-                    <section className="form-group" style={{ background: 'var(--surface)', padding: '1.5rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
-                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', fontSize: '1.1rem', color: 'var(--text-main)' }}>
+                    <section className="form-section">
+                        <h3 className="section-title">
                             Brand Information
                         </h3>
-                        <div className="input-field">
-                            <label style={{ display: 'flex', alignItems: 'center' }}>
+                        <div className="input-group">
+                            <label className="input-label">
                                 Brand Name
                                 <Tooltip text={helpText.brandName} />
                             </label>
@@ -180,8 +180,8 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                 onChange={(e) => updateField('brandName', e.target.value)}
                             />
                         </div>
-                        <div className="input-field" style={{ marginTop: '1.25rem' }}>
-                            <label style={{ display: 'flex', alignItems: 'center' }}>
+                        <div className="input-group">
+                            <label className="input-label">
                                 Topic / Service
                                 <Tooltip text={helpText.topic} />
                             </label>
@@ -192,8 +192,8 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                 onChange={(e) => updateField('topic', e.target.value)}
                             />
                         </div>
-                        <div className="input-field" style={{ marginTop: '1.25rem' }}>
-                            <label style={{ display: 'flex', alignItems: 'center' }}>
+                        <div className="input-group">
+                            <label className="input-label">
                                 Brand Vibe
                                 <Tooltip text={helpText.vibe} />
                             </label>
@@ -209,13 +209,13 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                         </div>
                     </section>
 
-                    <section className="form-group" style={{ background: 'var(--surface)', padding: '1.5rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', marginTop: '2rem' }}>
-                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', fontSize: '1.1rem', color: 'var(--text-main)' }}>
+                    <section className="form-section">
+                        <h3 className="section-title">
                             Branding & Assets
                         </h3>
                         <div className="color-grid">
                             <div className="color-input-wrapper">
-                                <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                                <label className="input-label">
                                     Primary <Tooltip text={helpText.primaryColor} />
                                 </label>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -223,49 +223,49 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                         type="color"
                                         value={formData.primaryColor || '#000000'}
                                         onChange={(e) => updateField('primaryColor', e.target.value)}
-                                        style={{ width: '100%', height: '42px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+                                        className="color-input-refined"
                                     />
                                 </div>
                             </div>
 
                             <div className="color-input-wrapper">
-                                <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                                <label className="input-label">
                                     Secondary <Tooltip text={helpText.secondaryColor} />
                                 </label>
                                 <input
                                     type="color"
                                     value={formData.secondaryColor || '#ffffff'}
                                     onChange={(e) => updateField('secondaryColor', e.target.value)}
-                                    style={{ width: '100%', height: '42px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+                                    className="color-input-refined"
                                 />
                             </div>
 
                             <div className="color-input-wrapper">
-                                <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                                <label className="input-label">
                                     Accent <Tooltip text={helpText.accentColor} />
                                 </label>
                                 <input
                                     type="color"
                                     value={formData.accentColor || '#ffffff'}
                                     onChange={(e) => updateField('accentColor', e.target.value)}
-                                    style={{ width: '100%', height: '42px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+                                    className="color-input-refined"
                                 />
                             </div>
 
                             <div className="color-input-wrapper">
-                                <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                                <label className="input-label">
                                     Neutral <Tooltip text={helpText.neutralColor} />
                                 </label>
                                 <input
                                     type="color"
                                     value={formData.neutralColor || '#f5f5f5'}
                                     onChange={(e) => updateField('neutralColor', e.target.value)}
-                                    style={{ width: '100%', height: '42px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+                                    className="color-input-refined"
                                 />
                             </div>
                         </div>
-                        <div className="input-field" style={{ marginTop: '1rem' }}>
-                            <label style={{ display: 'flex', alignItems: 'center' }}>
+                        <div className="input-group" style={{ marginTop: '1rem' }}>
+                            <label className="input-label">
                                 Target Audience
                                 <Tooltip text={helpText.audience} />
                             </label>
@@ -277,7 +277,7 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                             />
                         </div>
                         <div className="color-presets" style={{ marginTop: '1rem' }}>
-                            <label style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#64748b' }}>Quick Palettes</label>
+                            <label className="quick-palettes-label">Quick Palettes</label>
                             <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
                                 {[
                                     { name: 'Luxury', primary: '#1a1a1a', secondary: '#ffffff', accent: '#d4af37', neutral: '#f9f9f9' },
@@ -303,14 +303,9 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                             updateField('accentColor', preset.accent);
                                             updateField('neutralColor', preset.neutral);
                                         }}
-                                        style={{
-                                            display: 'flex', alignItems: 'center', gap: '0.5rem',
-                                            padding: '0.25rem 0.5rem',
-                                            border: '1px solid #e2e8f0', borderRadius: '999px',
-                                            background: '#fff', cursor: 'pointer', fontSize: '0.8rem'
-                                        }}
+                                        className="palette-btn"
                                     >
-                                        <div style={{ display: 'flex', borderRadius: '50%', overflow: 'hidden', width: '16px', height: '16px' }}>
+                                        <div className="palette-preview">
                                             <div style={{ background: preset.primary, flex: 1 }}></div>
                                             <div style={{ background: preset.accent, flex: 1 }}></div>
                                         </div>
@@ -322,7 +317,7 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                     </section>
 
                     {/* Actions Toolbar */}
-                    <div className="actions-toolbar" style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid #e2e8f0', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                    <div className="actions-toolbar">
                         <button onClick={onReset} className="btn-secondary" style={{ borderColor: '#ef4444', color: '#ef4444' }}>
                             Reset Application
                         </button>

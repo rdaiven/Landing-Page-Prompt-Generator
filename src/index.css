@@ -34,12 +34,26 @@ body {
   /* Mobile Default */
 }
 
-/* Mobile: Tabbed Interface */
+/* Mobile Nav Bar */
+.mobile-nav {
+  height: 56px;
+  /* Compact height */
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.25rem;
+  /* Reduced padding */
+  z-index: 50;
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
 .input-side,
 .preview-side {
   width: 100%;
-  height: calc(100vh - 64px);
-  /* Minus mobile nav height */
+  height: calc(100vh - 56px);
+  /* Adjusted for new nav height */
   flex-shrink: 0;
 }
 
@@ -68,13 +82,13 @@ body {
 
 /* Mobile Nav Bar */
 .mobile-nav {
-  height: 64px;
+  height: 56px;
   background: var(--surface);
   border-top: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 0.5rem;
+  padding: 0.25rem;
   z-index: 50;
   box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05);
 }
@@ -260,6 +274,102 @@ body {
   /* Let children handle scroll */
   position: relative;
   background: #f8fafc;
+}
+
+@media (max-width: 640px) {
+  .preview-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1rem;
+    overflow-x: hidden;
+    /* Prevent header itself from causing scroll */
+  }
+
+  /* Grid Layout for Header Controls */
+  .header-controls {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  /* Guide Button - Left */
+  .header-controls .help-btn {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+  }
+
+  /* View Toggle - Center */
+  .header-controls .view-toggle {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    /* Ensure it is displayed */
+    width: auto;
+    justify-self: center;
+  }
+
+  /* Copy Button - Right */
+  .header-controls .copy-btn {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    width: auto;
+    padding: 0.5rem 0.75rem;
+    /* Slightly smaller on mobile */
+  }
+
+  .header-controls .view-toggle .toggle-btn {
+    padding: 0.35rem 0.75rem;
+  }
+
+  /* Viewport Toolbar */
+  .viewport-toolbar {
+    overflow-x: auto;
+    justify-content: center !important;
+    white-space: nowrap;
+    padding: 0.5rem !important;
+    flex-shrink: 0;
+  }
+
+  /* Scrollable Container for Viewports on Mobile */
+  .viewport-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    /* Main scroll is horizontal here */
+    align-items: flex-start;
+    padding: 0;
+    width: 100%;
+    display: block;
+    /* Ensure block so it can scroll */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Force desktop/tablet to be wide so they trigger scroll */
+  .viewport-desktop {
+    width: 1280px !important;
+    /* Standard Desktop */
+    min-width: 1280px !important;
+    max-width: none !important;
+    margin: 0;
+    transform-origin: top left;
+  }
+
+  .viewport-tablet {
+    width: 768px !important;
+    min-width: 768px !important;
+    max-width: none !important;
+    margin: 0;
+  }
+
+  .viewport-mobile {
+    width: 100% !important;
+    max-width: 375px;
+    margin: 0 auto;
+  }
 }
 
 /* Code View Styles */
@@ -672,6 +782,15 @@ button {
 }
 
 /* Viewport Simulation Tools */
+.viewport-scroll-wrapper {
+  flex: 1;
+  width: 100%;
+  overflow: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
 .viewport-container {
   margin: 0 auto;
   transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
@@ -710,6 +829,105 @@ button {
   padding: 2rem;
 }
 
+/* Refactored Input Panel Utilities */
+.panel-tabs {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.form-section {
+  background: var(--surface);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--text-main);
+  margin-top: 0;
+}
+
+.input-group {
+  margin-bottom: 1.25rem;
+}
+
+.input-group:last-child {
+  margin-bottom: 0;
+}
+
+.input-label {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.color-input-refined {
+  width: 100%;
+  height: 42px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: none;
+}
+
+.quick-palettes-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.palette-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.palette-btn:hover {
+  border-color: var(--primary);
+  background: var(--surface-alt);
+}
+
+.palette-preview {
+  display: flex;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.actions-toolbar {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .mock-nav,
 .mock-nav-group,
 .mock-nav-links {
@@ -744,15 +962,21 @@ button {
 /* We will use Media Queries for the actual Mobile App View (Screen < 1024px) */
 @media (max-width: 768px) {
 
-  /* Hide Desktop View Toggles on Mobile Device */
-  .preview-header .header-controls .view-toggle {
-    display: none;
-  }
-
   /* Fix Preview Panel padding for Mobile Nav */
   .preview-content {
-    padding-bottom: 80px;
-    /* Space for bottom nav */
+    padding-bottom: 60px;
+    /* Reduced from 80px */
+  }
+
+  .preview-header {
+    padding: 0.75rem !important;
+    /* Compact header */
+    gap: 0.75rem !important;
+  }
+
+  .viewport-toolbar {
+    padding: 0.25rem !important;
+    /* Compact toolbar */
   }
 
   /* Mock Header Responsive */
@@ -957,4 +1181,63 @@ button {
 body {
   overflow-x: hidden;
   width: 100vw;
+}
+
+/* Tooltips */
+.tooltip-container {
+  position: relative;
+  display: inline-flex;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+.tooltip-trigger {
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  padding: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.tooltip-trigger:hover,
+.tooltip-trigger.active {
+  color: var(--primary);
+}
+
+.tooltip-bubble {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1e293b;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  width: max-content;
+  max-width: 280px;
+  z-index: 1000;
+  box-shadow: var(--shadow-lg);
+  line-height: 1.5;
+  text-align: center;
+  pointer-events: none;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.tooltip-bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #1e293b transparent transparent transparent;
 }
