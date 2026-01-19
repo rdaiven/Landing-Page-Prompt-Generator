@@ -14,25 +14,29 @@ import FooterSection from './sections/FooterSection'
 import { getContrastColor } from '../utils/colors'
 
 const VisualPreview = ({ formData }) => {
-    const { primaryColor, secondaryColor, accentColor, neutralColor, sections } = formData
+    const { primaryColor, secondaryColor, accentColor, neutralColor, sections, brandName, topic } = formData
 
     const theme = {
         primaryColor,
         secondaryColor,
         accentColor,
-        neutralColor
+        neutralColor,
+        brandName,
+        topic
     }
 
     const renderSection = (key, Component) => {
         const sectionData = sections[key];
         if (!sectionData || !sectionData.enabled) return null;
         return (
-            <Component
-                key={key}
-                data={sectionData.data}
-                layout={sectionData.layout}
-                theme={theme}
-            />
+            <div id={`section-${key}`} key={key}>
+                <Component
+                    data={sectionData.data}
+                    layout={sectionData.layout}
+                    theme={theme}
+                    isScrollTarget={true}
+                />
+            </div>
         )
     }
 

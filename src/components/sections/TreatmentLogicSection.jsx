@@ -43,16 +43,120 @@ const TreatmentLogicSection = ({ data, layout, theme }) => {
         )
     }
 
+    if (layout === 'Bento Grid') {
+        const items = data.items || [];
+        return (
+            <div style={{ padding: '6rem 2rem', backgroundColor: '#fff' }}>
+                <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                    <h2 style={{ fontSize: '2.5rem', marginBottom: '3rem', fontFamily: 'var(--font-serif)', textAlign: 'center' }}>{heading}</h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gridAutoRows: '200px', gap: '1.5rem' }}>
+                        {items.map((item, i) => (
+                            <div key={i} style={{
+                                gridColumn: i === 0 ? 'span 2' : i === 3 ? 'span 2' : 'span 1',
+                                gridRow: i === 0 ? 'span 2' : 'span 1',
+                                background: item.type === 'Image' ? '#e5e7eb' : theme.surface || '#f9fafb',
+                                padding: '1.5rem',
+                                borderRadius: '16px',
+                                border: '1px solid #e5e7eb',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'flex-end'
+                            }}>
+                                <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>{item.title}</h3>
+                                <p style={{ fontSize: '0.9rem', color: '#6b7280' }}>{item.text}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (layout === 'Feature Cards') {
+        const items = data.items || [];
+        return (
+            <div style={{ padding: '6rem 2rem', backgroundColor: '#f9fafb' }}>
+                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                    <h2 style={{ fontSize: '2.5rem', marginBottom: '3rem', fontFamily: 'var(--font-serif)', textAlign: 'center' }}>{heading}</h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+                        {items.map((item, i) => (
+                            <div key={i} style={{
+                                padding: '2rem',
+                                background: '#fff',
+                                borderRadius: '12px',
+                                border: '1px solid #e5e7eb',
+                                textAlign: 'left',
+                                transition: 'transform 0.2s',
+                                cursor: 'default'
+                            }}>
+                                <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>{item.icon}</div>
+                                <h3 style={{ fontSize: '1.25rem', marginBottom: '0.75rem', fontWeight: 600 }}>{item.title}</h3>
+                                <p style={{ color: '#6b7280', lineHeight: 1.6 }}>{item.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (layout === 'Interactive Hotspots') {
+        const hotspots = data.hotspots || [];
+        return (
+            <div style={{ padding: '6rem 2rem', backgroundColor: '#fff' }}>
+                <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
+                    <h2 style={{ fontSize: '2.5rem', marginBottom: '3rem', fontFamily: 'var(--font-serif)' }}>{heading}</h2>
+                    <div style={{
+                        position: 'relative',
+                        height: '500px',
+                        background: '#f3f4f6',
+                        borderRadius: '24px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        overflow: 'hidden'
+                    }}>
+                        <span style={{ fontSize: '1.5rem', color: '#9ca3af' }}>{data.imagePrompt}</span>
+                        {/* Mock Hotspots */}
+                        {hotspots.map((h, i) => (
+                            <div key={i} style={{
+                                position: 'absolute',
+                                left: `${20 + (i * 20)}%`,
+                                top: `${30 + (i * 15)}%`,
+                                width: '32px',
+                                height: '32px',
+                                borderRadius: '50%',
+                                background: theme.accentColor || '#3b82f6',
+                                border: '4px solid rgba(255,255,255,0.8)',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: 'white',
+                                fontWeight: 'bold',
+                                boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+                            }}
+                                title={`${h.label}: ${h.description}`}
+                            >
+                                +
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        )
+    }
     return (
         <div style={{ padding: '6rem 2rem', backgroundColor: '#f3f4f6' }}>
             <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
                 <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontFamily: 'var(--font-serif)' }}>{heading}</h2>
                 <p style={{ fontSize: '1.1rem', color: '#4b5563', marginBottom: '4rem', lineHeight: '1.6' }}>{description}</p>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', textAlign: 'left', maxWidth: '600px', margin: '0 auto' }}>
                     {features.map((f, i) => (
-                        <div key={i} style={{ padding: '2rem', backgroundColor: '#fff', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
-                            <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{f}</div>
+                        <div key={i} style={{ padding: '1.5rem', backgroundColor: '#fff', borderRadius: '12px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <div style={{ color: theme.primaryColor || '#000', fontWeight: 'bold' }}>0{i + 1}</div>
+                            <div style={{ fontWeight: '500', fontSize: '1.1rem' }}>{f}</div>
                         </div>
                     ))}
                 </div>

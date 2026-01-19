@@ -122,13 +122,32 @@ function App() {
     const dataStr = JSON.stringify(formData, null, 2);
     const blob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
+
+    // Smart Filename Generation
+    const cleanBrand = (formData.brandName || 'MyBrand').replace(/[^a-z0-9]/gi, '_');
+    const cleanTopic = (formData.topic || 'LandingPage').replace(/[^a-z0-9]/gi, '_');
+    const date = new Date().toISOString().slice(0, 10);
+    const filename = `prompt_config_${cleanBrand}_${cleanTopic}_${date}.json`;
+
     const link = document.createElement('a');
     link.href = url;
-    link.download = `prompt_config_${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = filename;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+  }
+
+  const handleSectionClick = (sectionKey) => {
+    // Determine the ID of the element to scroll to
+    const elementId = `section-${sectionKey}`;
+
+    // We need to find the element within the PreviewViewport if possible, or just global
+    // Since VisualPreview renders these IDs, we can look for them.
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   const handleImport = (event) => {
@@ -172,6 +191,7 @@ function App() {
           onReset={handleReset}
           onExport={handleExport}
           onImport={handleImport}
+          onSectionClick={handleSectionClick}
         />
       </div>
       <div className="preview-side">

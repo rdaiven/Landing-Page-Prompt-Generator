@@ -2,7 +2,7 @@ import React from 'react'
 import Tooltip from './Tooltip'
 import { sectionConfigs } from '../utils/sectionConfig'
 
-const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout, updateSectionData, onReset, onExport, onImport }) => {
+const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout, updateSectionData, onReset, onExport, onImport, onSectionClick }) => {
     const [activeTab, setActiveTab] = React.useState('settings');
     const [expandedSection, setExpandedSection] = React.useState(null);
 
@@ -11,6 +11,9 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
             setExpandedSection(null);
         } else {
             setExpandedSection(sectionKey);
+            if (onSectionClick) {
+                onSectionClick(sectionKey);
+            }
         }
     }
 
@@ -54,13 +57,39 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
             )
         }
         if (field.type === 'collection') {
+            const items = value || [];
             return (
                 <div key={field.name} className="dynamic-collection">
-                    <label>{field.label}</label>
+                    <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        {field.label}
+                        <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{items.length} / {field.max}</span>
+                    </label>
                     <div className="collection-items">
-                        {(value || []).map((item, index) => (
-                            <div key={index} className="collection-item">
+                        {items.map((item, index) => (
+                            <div key={index} className="collection-item" style={{ position: 'relative', paddingRight: '2rem' }}>
                                 <span className="item-number">#{index + 1}</span>
+                                <button
+                                    onClick={() => {
+                                        const newValue = [...items];
+                                        newValue.splice(index, 1);
+                                        updateSectionData(sectionKey, field.name, newValue);
+                                    }}
+                                    style={{
+                                        position: 'absolute',
+                                        top: '0.5rem',
+                                        right: '0.5rem',
+                                        background: 'transparent',
+                                        border: 'none',
+                                        color: '#ef4444',
+                                        cursor: 'pointer',
+                                        fontSize: '1.2rem',
+                                        fontWeight: 'bold',
+                                        lineHeight: 1
+                                    }}
+                                    title="Remove Item"
+                                >
+                                    ×
+                                </button>
                                 <div className="item-fields">
                                     {field.fields.map(subField => (
                                         <div key={subField.name} className="sub-field">
@@ -69,7 +98,7 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                                 placeholder={subField.label}
                                                 value={item[subField.name] || ''}
                                                 onChange={(e) => {
-                                                    const newValue = [...(value || [])];
+                                                    const newValue = [...items];
                                                     newValue[index] = { ...newValue[index], [subField.name]: e.target.value };
                                                     updateSectionData(sectionKey, field.name, newValue);
                                                 }}
@@ -79,6 +108,29 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                 </div>
                             </div>
                         ))}
+                        {items.length < (field.max || 10) && (
+                            <button
+                                onClick={() => {
+                                    const newItem = {};
+                                    field.fields.forEach(f => newItem[f.name] = f.default || '');
+                                    updateSectionData(sectionKey, field.name, [...items, newItem]);
+                                }}
+                                style={{
+                                    width: '100%',
+                                    padding: '0.75rem',
+                                    marginTop: '0.5rem',
+                                    background: 'var(--surface-alt)',
+                                    border: '1px dashed var(--border)',
+                                    borderRadius: 'var(--radius)',
+                                    color: 'var(--primary)',
+                                    cursor: 'pointer',
+                                    fontWeight: 600,
+                                    fontSize: '0.9rem'
+                                }}
+                            >
+                                + Add {field.label.slice(0, -1) || 'Item'}
+                            </button>
+                        )}
                     </div>
                 </div>
             )

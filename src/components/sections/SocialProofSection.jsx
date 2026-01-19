@@ -80,7 +80,7 @@ const SocialProofSection = ({ data, layout, theme }) => {
                         →
                     </button>
                 </div>
-            ) : (
+            ) : layout === 'Grid' ? (
                 <div style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
@@ -111,6 +111,72 @@ const SocialProofSection = ({ data, layout, theme }) => {
                         </div>
                     ))}
                 </div>
+            ) : layout === 'Wall of Love' ? (
+                <div style={{
+                    columns: '3 300px',
+                    gap: '1.5rem',
+                    maxWidth: '1200px',
+                    margin: '0 auto'
+                }}>
+                    {(data.items || []).map((item, i) => (
+                        <div key={i} style={{
+                            breakInside: 'avoid',
+                            background: '#fff',
+                            padding: '1.5rem',
+                            borderRadius: '16px',
+                            marginBottom: '1.5rem',
+                            border: '1px solid #f3f4f6'
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                                <div style={{ width: '32px', height: '32px', background: primaryColor || '#000', borderRadius: '50%', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>
+                                    {item.user.charAt(1).toUpperCase()}
+                                </div>
+                                <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>{item.user}</span>
+                            </div>
+                            <p style={{ fontSize: '0.95rem', lineHeight: 1.5, color: '#374151' }}>{item.text}</p>
+                        </div>
+                    ))}
+                </div>
+            ) : layout === 'Video Highlight' ? (
+                <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                    <div style={{
+                        aspectRatio: '16/9',
+                        background: '#000',
+                        borderRadius: '24px',
+                        marginBottom: '3rem',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center'
+                    }}>
+                        <span style={{ color: 'white', fontSize: '1.25rem' }}>▶ {data.mainVideo}</span>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+                        {(data.thumbnails || []).map((vid, i) => (
+                            <div key={i} style={{ cursor: 'pointer' }}>
+                                <div style={{ aspectRatio: '16/9', background: '#e5e7eb', borderRadius: '12px', marginBottom: '0.75rem' }}></div>
+                                <h4 style={{ fontWeight: 600, fontSize: '0.95rem' }}>{vid.name}'s Story</h4>
+                                <span style={{ fontSize: '0.85rem', color: '#6b7280' }}>{vid.duration}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ) : layout === 'Stat-Backed Trust' ? (
+                <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }}>
+                    {(data.stats || []).map((stat, i) => (
+                        <div key={i} style={{
+                            textAlign: 'center',
+                            padding: '2rem',
+                            background: 'white',
+                            borderRadius: '16px',
+                            boxShadow: '0 4px 10px rgba(0,0,0,0.03)'
+                        }}>
+                            <div style={{ fontSize: '3rem', fontWeight: 800, color: primaryColor || '#000', marginBottom: '0.5rem', lineHeight: 1 }}>{stat.value}</div>
+                            <div style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.5rem' }}>{stat.label}</div>
+                            <div style={{ fontSize: '0.85rem', color: '#6b7280' }}>{stat.small}</div>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                // Fallback (Grid again if needed, or null)
+                null
             )}
         </div>
     )

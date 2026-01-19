@@ -379,34 +379,35 @@ export const sectionConfigs = {
                     address: '500 5th Ave, New York, NY',
                     imagePrompt: 'Modern luxury spa interior'
                 }
-            },
-            'Map Overlay': {
-                fields: [
-                    { name: 'location', label: 'Location', type: 'text', default: 'Downtown Clinic' },
-                    { name: 'address', label: 'Address', type: 'text', default: '123 Market St' },
-                    { name: 'googleMapsUrl', label: 'Map Embed URL (Placeholder)', type: 'text', default: 'https://maps.google.com/...' }
-                ]
-            },
-            'Minimal List': {
-                fields: [
-                    { name: 'heading', label: 'Heading', type: 'text', default: 'Visit Us' },
-                    {
-                        name: 'details', label: 'Details', type: 'collection', min: 3, max: 3, fields: [
-                            { name: 'label', label: 'Label', type: 'text', default: 'Phone' },
-                            { name: 'value', label: 'Value', type: 'text', default: '555-0123' }
-                        ]
-                    }
-                ]
-            },
-            'Business Card': {
-                fields: [
-                    { name: 'clinicName', label: 'Clinic Name', type: 'text', default: 'Luxe Med' },
-                    { name: 'tagline', label: 'Tagline', type: 'text', default: 'Premier Aesthetics' },
-                    { name: 'contactInfo', label: 'Contact', type: 'textarea', default: 'email@example.com\n555-0123' }
-                ]
             }
+        },
+        'Map Overlay': {
+            fields: [
+                { name: 'location', label: 'Location', type: 'text', default: 'Downtown Clinic' },
+                { name: 'address', label: 'Address', type: 'text', default: '123 Market St' },
+                { name: 'googleMapsUrl', label: 'Map Embed URL (Placeholder)', type: 'text', default: 'https://maps.google.com/...' }
+            ]
+        },
+        'Minimal List': {
+            fields: [
+                { name: 'heading', label: 'Heading', type: 'text', default: 'Visit Us' },
+                {
+                    name: 'details', label: 'Details', type: 'collection', min: 3, max: 3, fields: [
+                        { name: 'label', label: 'Label', type: 'text', default: 'Phone' },
+                        { name: 'value', label: 'Value', type: 'text', default: '555-0123' }
+                    ]
+                }
+            ]
+        },
+        'Business Card': {
+            fields: [
+                { name: 'clinicName', label: 'Clinic Name', type: 'text', default: 'Luxe Med' },
+                { name: 'tagline', label: 'Tagline', type: 'text', default: 'Premier Aesthetics' },
+                { name: 'contactInfo', label: 'Contact', type: 'textarea', default: 'email@example.com\n555-0123' }
+            ]
         }
-    },
+    }
+},
     faq: {
         label: "Common Questions (FAQ)",
         icon: "❓",
@@ -538,18 +539,7 @@ export const sectionConfigs = {
                             { name: 'user', label: 'User', type: 'text', default: '@user' }
                         ]
                     }
-                ],
-                defaultData: {
-                    heading: 'What Everyone is Saying',
-                    items: [
-                        { text: 'Finally found a clinic I trust.', user: '@sarahstyle' },
-                        { text: 'The results speak for themselves.', user: '@mike_fitness' },
-                        { text: 'Professional, clean, and friendly.', user: '@jenny_bg' },
-                        { text: 'Booked my second session immediately.', user: '@alex_does_life' },
-                        { text: 'So worth the investment.', user: '@wellness_queen' },
-                        { text: '10/10 experience.', user: '@hannah_b' }
-                    ]
-                }
+                ]
             },
             'Video Highlight': {
                 fields: [
@@ -561,16 +551,7 @@ export const sectionConfigs = {
                             { name: 'duration', label: 'Duration', type: 'text', default: '2:30' }
                         ]
                     }
-                ],
-                defaultData: {
-                    heading: 'Client Stories',
-                    mainVideo: 'Video of Patient Transformation',
-                    thumbnails: [
-                        { name: 'Jessica', duration: '3:45' },
-                        { name: 'Michael', duration: '2:15' },
-                        { name: 'Ashley', duration: '4:20' }
-                    ]
-                }
+                ]
             },
             'Stat-Backed Trust': {
                 fields: [
@@ -582,16 +563,7 @@ export const sectionConfigs = {
                             { name: 'small', label: 'Small Text', type: 'text', default: 'Based on 500 reviews' }
                         ]
                     }
-                ],
-                defaultData: {
-                    heading: 'Proven Results',
-                    stats: [
-                        { value: '98%', label: 'Patient Satisfaction', small: 'Based on post-op surveys' },
-                        { value: '5k+', label: 'Procedures Performed', small: 'Since 2020' },
-                        { value: '15', label: 'Industry Awards', small: 'For excellence in care' },
-                        { value: '0', label: 'Wait Time', small: 'With scheduled appointments' }
-                    ]
-                }
+                ]
             }
         }
     },

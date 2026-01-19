@@ -9,19 +9,42 @@ export const generatePrompt = (data) => {
             // Handle arrays (collections like testimonials)
             if (Array.isArray(value)) {
                 return `- ${key.toUpperCase()}:\n` + value.map(item =>
-                    `  * ` + Object.entries(item).map(([k, v]) => `${k}: "${v}"`).join(', ')
+                    `  * ` + Object.entries(item).map(([k, v]) => `${k}: "${v || `[Generate high-quality ${k} content based on topic: ${topic}]`}"`).join(', ')
                 ).join('\n');
             }
             // Handle regular strings/text
-            return `- ${key.toUpperCase()}: "${value}"`;
+            return `- ${key.toUpperCase()}: "${value || `[GENERATE high-converting copy for ${key} relevant to ${topic || 'the brand'}]`}"`;
         }).join('\n');
     }
 
+    // Helper to infer vibe from color if missing
+    const getVibeFromColor = (hex) => {
+        if (!hex) return 'Professional & Trustworthy';
+        // Simple hex analysis
+        const c = hex.substring(1);      // strip #
+        const rgb = parseInt(c, 16);   // convert rrggbb to decimal
+        const r = (rgb >> 16) & 0xff;  // extract red
+        const g = (rgb >> 8) & 0xff;  // extract green
+        const b = (rgb >> 0) & 0xff;  // extract blue
+
+        // Simple dominant color logic
+        if (r > g && r > b) return 'Warm, Energetic, & Bold';
+        if (b > r && b > g) return 'Calm, Professional, & Medical';
+        if (g > r && g > b) return 'Natural, Organic, & Serene';
+        if (r > 200 && g > 200 && b > 200) return 'Clean, Minimalist, & Airy';
+        if (r < 50 && g < 50 && b < 50) return 'Luxury, Exclusive, & Modern';
+        return 'Professional & Balanced';
+    }
+
+    const finalVibe = vibe || getVibeFromColor(primaryColor);
+    const finalBrand = brandName || 'The Clinic';
+    const finalTopic = topic || 'Aesthetic Treatments';
+
     let p = `ACT AS A WORLD-CLASS CONVERSION COPYWRITER AND WEB DESIGNER.
   
-GOAL: Create a HIGH-CONVERSION landing page for "${brandName || '[BRAND NAME]'}" focusing on "${topic || '[TOPIC/SERVICE]'}".
-TARGET AUDIENCE: ${audience || 'General audience interested in ' + (topic || 'the brand')}
-BRAND VIBE: ${vibe}
+GOAL: Create a HIGH-CONVERSION landing page for "${finalBrand}" focusing on "${finalTopic}".
+TARGET AUDIENCE: ${audience || 'General audience interested in ' + finalTopic}
+BRAND VIBE: ${finalVibe}
 BRANDING COLORS: Primary: ${primaryColor || 'AI Decision'}, Secondary: ${secondaryColor || 'AI Decision'}, Accent: ${accentColor || 'AI Decision'}, Neutral: ${neutralColor || 'AI Decision'}
 ASSETS TO USE:
 ${assets.filter(a => a.url).map(a => `- ${a.type.toUpperCase()}: ${a.url}`).join('\n') || 'None provided. Use relevant placeholders.'}
@@ -29,6 +52,13 @@ ${assets.filter(a => a.url).map(a => `- ${a.type.toUpperCase()}: ${a.url}`).join
 INSTRUCTIONS:
 Generate a complete, comprehensive landing page mockup code (HTML/CSS) following the "SELF-BOOKING TEMPLATE - LONG" structure. 
 Each section must adhere to the specific Goals and "Must Include" rules below.
+
+IMPORTANT: "STRICT LAYOUT COMPLIANCE"
+- You must follow the defined "DESIGN SPEC" for each section exactly.
+- If a section says "Split Layout", do NOT make it centered.
+- If a section says "Grid", do NOT make it a list.
+- Do NOT hallucinate new layouts. Stick to the requested structure.
+- If data fields are marked [GENERATE...], you MUST write creative, high-quality, conversion-focused copy for that slot. Do not leave it as a placeholder.
 
 ---
 
@@ -54,29 +84,47 @@ Each section must adhere to the specific Goals and "Must Include" rules below.
             },
             treatmentLogic: {
                 'Simple': 'STYLE: Clean typography, ample whitespace. 1-col text focus.',
-                'Detailed Split': 'LAYOUT: Split 50/50. Left: Benefits text + visual bullets. Right: Technical diagram or illustration.'
+                'Detailed Split': 'LAYOUT: Split 50/50. Left: Benefits text + visual bullets. Right: Technical diagram or illustration.',
+                'Bento Grid': 'LAYOUT: Grid of boxy "bento" style cards of varying sizes (spans). Rounded corners, partial borders. Modern tech aesthetic.',
+                'Feature Cards': 'LAYOUT: Horizontal row of equal height cards. Icon focus. Minimalist borders.',
+                'Interactive Hotspots': 'LAYOUT: Central large image with absolute positioned "Hotspot" dots. Hovering usually reveals tooltips (describe as such).'
             },
             procedureGuide: {
                 '3-Step': 'LAYOUT: 3 simple columns. Numbered circle (1, 2, 3) centered above text.',
-                'Timeline': 'LAYOUT: Vertical timeline with connecting line. Alternating content or Left-aligned with line on left.'
+                'Timeline': 'LAYOUT: Vertical timeline with connecting line. Alternating content or Left-aligned with line on left.',
+                'Vertical Tabs': 'LAYOUT: Left side list of tabs/steps, Right side content panel that changes. (Implement as standard flex/grid for static preview).',
+                'Masonry Steps': 'LAYOUT: Masonry layout (columns count depends on screen size). Fluid logical flow.',
+                'Carousel Steps': 'LAYOUT: Swipeable cards for mobile. Horizontal scroll snap. Progress dots.'
             },
             socialProof: {
                 'Grid': 'LAYOUT: Responsive Grid (Mobile 1-col, Desktop 3-col). Cards with shadow-sm and rounded corners.',
                 'Carousel': 'LAYOUT: Horizontal scrolling container (overflow-x-auto). Cards snap to center. Use JS for nav buttons.',
                 'Testimonials': 'LAYOUT: Simple vertical list or grid. Focus on readability.',
-                'Before & After': 'STYLE: Side-by-side comparison images. Slider handle if possible, else stacked images.'
+                'Before & After': 'STYLE: Side-by-side comparison images. Slider handle if possible, else stacked images.',
+                'Wall of Love': 'LAYOUT: Dense masonry grid of tweets/reviews. Varying heights. "Infinite scroll" feel.',
+                'Video Highlight': 'LAYOUT: Large featured video player + row of smaller thumbnails below.',
+                'Stat-Backed Trust': 'LAYOUT: Row of large numbers (Typography focus) with explanatory text below. Icons optional.'
             },
             conversion: {
                 'Urgency': 'STYLE: Floating bottom bar or sticky component. Highlighted countdown timer.',
-                'Benefit-Driven': 'LAYOUT: Split layout (Text Left, CTA Right). Focus on value proposition.'
+                'Benefit-Driven': 'LAYOUT: Split layout (Text Left, CTA Right). Focus on value proposition.',
+                'Split Booking': 'LAYOUT: 50/50 Split. Image on one side (warm reception), Form/CTA on other.',
+                'Sticky Bar': 'LAYOUT: Fixed position at bottom (or top) of screen. Slim bar with Text + Button.',
+                'FloatUI - Simple': 'LAYOUT: Minimal clean centered section. Price badge -> Heading -> Subtext -> Button.'
             },
             clinicDetails: {
                 'Grid': 'LAYOUT: 3-column grid for Location, Hours, Contact. Map below.',
-                'Gallery Split': 'LAYOUT: 50/50 Split. Left: Large Interior Image (Mockup). Right: Details & Address.'
+                'Gallery Split': 'LAYOUT: 50/50 Split. Left: Large Interior Image (Mockup). Right: Details & Address.',
+                'Map Overlay': 'LAYOUT: Full height background map. Floating card/modal on top (Left or Right) containing address/details.',
+                'Minimal List': 'LAYOUT: Simple clean list, left aligned. Icons + Text. No heavy backgrounds.',
+                'Business Card': 'LAYOUT: Centered "Card" style container. Shadowed. Contains Logo, Address, Contact. mimicking a physical card.'
             },
             faq: {
                 'Objection-Only': 'STYLE: Simple list or grid of Q&A blocks.',
-                'Accordion': 'STYLE: Interactive accordion. Click to expand answer. Border separators.'
+                'Accordion': 'STYLE: Interactive accordion. Click to expand answer. Border separators.',
+                'Side-by-Side Category': 'LAYOUT: Left col: Category Menu. Right col: List of Questions for that category.',
+                'Grid Cards': 'LAYOUT: Grid of simple cards, each containing one Q&A pair. Exposed answers (no click needed).',
+                'Search + List': 'LAYOUT: Large Search Bar at top. List of popular questions below.'
             },
             footer: {
                 'Minimal': 'STYLE: Simple centered branding and links. No background distraction.',
