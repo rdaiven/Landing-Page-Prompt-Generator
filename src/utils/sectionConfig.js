@@ -15,6 +15,12 @@ export const sectionConfigs = {
                     { name: 'navLinks', label: 'Navigation Links', type: 'text', default: 'About, Services, FAQ' },
                     { name: 'ctaText', label: 'Header Button Text', type: 'text', default: 'Book Now' }
                 ]
+            },
+            'Centered Logo': {
+                fields: [
+                    { name: 'navLinks', label: 'Navigation Links', type: 'text', default: 'Home, About, Services, Contact' },
+                    { name: 'ctaText', label: 'Button Text', type: 'text', default: 'Get Started' }
+                ]
             }
         }
     },
@@ -58,6 +64,22 @@ export const sectionConfigs = {
                     { name: 'videoUrl', label: 'Video URL (Placeholder)', type: 'text', default: '' },
                     { name: 'headline', label: 'Headline', type: 'text', default: 'See Real Results' },
                     { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Watch Success Stories' }
+                ]
+            },
+            'FloatUI - Centered': {
+                fields: [
+                    { name: 'priceText', label: 'Price Badge', type: 'text', default: 'Starts at $49/mo' },
+                    { name: 'headline', label: 'Headline', type: 'text', default: 'Build your SaaS solution with ease' },
+                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Sed ut perspiciatis unde omnis iste natus voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.' },
+                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Get started' },
+                ]
+            },
+            'Marketing Split': {
+                fields: [
+                    { name: 'headline', label: 'Headline', type: 'text', default: 'Data to enrich your online business' },
+                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.' },
+                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Get started' },
+                    { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Product Dashboard' }
                 ]
             }
         }
@@ -145,6 +167,38 @@ export const sectionConfigs = {
                         { title: 'Safety Concerns', description: 'Worried about invasive surgeries.', icon: '🛡️' }
                     ]
                 }
+            },
+            'Cards Grid': {
+                fields: [
+                    { name: 'heading', label: 'Section Heading', type: 'text', default: 'Why This Matters' },
+                    {
+                        name: 'items', label: 'Cards', type: 'collection', min: 3, max: 4, fields: [
+                            { name: 'title', label: 'Card Title', type: 'text', default: 'Efficiency' },
+                            { name: 'text', label: 'Card Text', type: 'text', default: 'We save you time.' },
+                        ]
+                    }
+                ],
+                defaultData: {
+                    heading: 'Why This Matters',
+                    items: [
+                        { title: 'Efficiency', text: 'We respect your time and schedule.' },
+                        { title: 'Quality', text: 'Top-tier materials and care.' },
+                        { title: 'Comfort', text: 'Pain-free experience guaranteed.' }
+                    ]
+                }
+            },
+            'FloatUI - Grid': {
+                fields: [
+                    { name: 'heading', label: 'Section Heading', type: 'text', default: 'Everything you need' },
+                    { name: 'subheading', label: 'Subheading', type: 'textarea', default: 'Loyal customers, automated sales, and more.' },
+                    {
+                        name: 'items', label: 'Features', type: 'collection', min: 3, max: 6, fields: [
+                            { name: 'title', label: 'Title', type: 'text', default: 'Fast Refresh' },
+                            { name: 'description', label: 'Description', type: 'textarea', default: 'Reliable and fast updates.' },
+                            { name: 'icon', label: 'Icon (Emoji/SVG path)', type: 'text', default: '⚡' }
+                        ]
+                    }
+                ]
             }
         }
     },
@@ -358,6 +412,28 @@ export const sectionConfigs = {
                     { name: 'subtext', label: 'Subtext', type: 'textarea', default: 'Limited availability for new patients this month.' },
                     { name: 'ctaText', label: 'Button Text', type: 'text', default: 'Book My Appointment' }
                 ]
+            },
+            'Split Booking': {
+                fields: [
+                    { name: 'heading', label: 'Headline', type: 'text', default: 'Secure Your Spot' },
+                    { name: 'subtext', label: 'Details', type: 'textarea', default: 'Our experts are ready to guide you.' },
+                    { name: 'ctaText', label: 'Button Label', type: 'text', default: 'Check Availability' },
+                    { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Reception area' }
+                ]
+            },
+            'Sticky Bar': {
+                fields: [
+                    { name: 'heading', label: 'Short Text', type: 'text', default: 'Limited Time Offer' },
+                    { name: 'ctaText', label: 'Button Label', type: 'text', default: 'Claim Offer' }
+                ]
+            },
+            'FloatUI - Simple': {
+                fields: [
+                    { name: 'priceText', label: 'Price Text', type: 'text', default: 'Plans from $19/mo' },
+                    { name: 'heading', label: 'Headline', type: 'text', default: 'Ready to get started?' },
+                    { name: 'subtext', label: 'Subtext', type: 'textarea', default: 'Join thousands of satisfied customers today.' },
+                    { name: 'ctaText', label: 'Button Text', type: 'text', default: 'Start Now' }
+                ]
             }
         }
     },
@@ -369,6 +445,14 @@ export const sectionConfigs = {
                 fields: [
                     { name: 'copyright', label: 'Copyright Text', type: 'text', default: '© 2024 All rights reserved.' },
                     { name: 'links', label: 'Footer Links', type: 'text', default: 'Privacy, Terms, Contact' }
+                ]
+            },
+            'Expanded': {
+                fields: [
+                    { name: 'copyright', label: 'Copyright Text', type: 'text', default: '© 2024 Brand Name.' },
+                    { name: 'column1', label: 'Column 1 Title', type: 'text', default: 'Company' },
+                    { name: 'column2', label: 'Column 2 Title', type: 'text', default: 'Resources' },
+                    { name: 'address', label: 'Address', type: 'textarea', default: '123 Main St, City, State' }
                 ]
             }
         }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-
 import VisualPreview from './VisualPreview'
+import TutorialModal from './TutorialModal'
 
 const PreviewPanel = ({ prompt, formData }) => {
-    const [showTutorial, setShowTutorial] = useState(true)
+    const [isTutorialOpen, setIsTutorialOpen] = useState(false)
     const [copied, setCopied] = useState(false)
     const [viewMode, setViewMode] = useState('visual') // 'code' or 'visual'
 
@@ -21,6 +21,15 @@ const PreviewPanel = ({ prompt, formData }) => {
                     Live Output
                 </div>
                 <div className="header-controls">
+                    <button
+                        className="help-btn"
+                        onClick={() => setIsTutorialOpen(true)}
+                        title="How to use"
+                    >
+                        <span style={{ fontSize: '1.2rem', marginRight: '0.25rem' }}>💡</span>
+                        Guide
+                    </button>
+
                     <div className="view-toggle">
                         <button
                             className={`toggle-btn ${viewMode === 'visual' ? 'active' : ''}`}
@@ -47,32 +56,14 @@ const PreviewPanel = ({ prompt, formData }) => {
                 {viewMode === 'visual' ? (
                     <VisualPreview formData={formData} />
                 ) : (
-                    <>
-                        {showTutorial && (
-                            <div className="tutorial-card">
-                                <div className="tutorial-header">
-                                    <h3>🚀 How to use this prompt</h3>
-                                    <button onClick={() => setShowTutorial(false)} className="tutorial-close">&times;</button>
-                                </div>
-                                <ol className="tutorial-steps">
-                                    <li><strong>Customize Settings</strong>: Tweak branding & sections on the left.</li>
-                                    <li><strong>Copy Prompt</strong>: Click the button top-right to grab the code.</li>
-                                    <li><strong>Open AI Tool</strong>: Go to ChatGPT (GPT-4o) or Gemini 1.5 Pro.</li>
-                                    <li>
-                                        <strong>Select "Canvas"</strong>: <span className="highlight">IMPORTANT!</span> Enable "Canvas" mode for the best coding workspace experience.
-                                        <div className="tutorial-images">
-                                            <img src="/tutorial/gemini-canvas.png" alt="Gemini Canvas" title="Gemini Canvas" />
-                                            <img src="/tutorial/chatgpt-canvas.png" alt="ChatGPT Canvas" title="ChatGPT Canvas" />
-                                        </div>
-                                    </li>
-                                    <li><strong>Paste & Run</strong>: Watch your high-conversion landing page appear!</li>
-                                </ol>
-                            </div>
-                        )}
-                        <pre>{prompt}</pre>
-                    </>
+                    <pre>{prompt}</pre>
                 )}
             </div>
+
+            <TutorialModal
+                isOpen={isTutorialOpen}
+                onClose={() => setIsTutorialOpen(false)}
+            />
         </div>
     )
 }

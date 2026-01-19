@@ -25,23 +25,23 @@ const Tooltip = ({ text }) => {
                 onClick={() => setIsVisible(!isVisible)}
                 aria-label="More information"
                 style={{
-                    background: isVisible ? '#2563eb' : '#e2e8f0',
-                    color: isVisible ? '#fff' : '#64748b',
+                    background: 'transparent',
+                    color: isVisible ? '#3b82f6' : '#94a3b8',
                     border: 'none',
-                    borderRadius: '50%',
-                    width: '20px',
-                    height: '20px',
-                    fontSize: '0.75rem',
-                    fontWeight: 'bold',
+                    padding: 0,
+                    width: '16px',
+                    height: '16px',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    transition: 'all 0.2s',
+                    transition: 'color 0.2s',
                     lineHeight: 1
                 }}
             >
-                ?
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" style={{ width: '100%', height: '100%' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                </svg>
             </button>
             {isVisible && (
                 <div className="tooltip-bubble" style={{

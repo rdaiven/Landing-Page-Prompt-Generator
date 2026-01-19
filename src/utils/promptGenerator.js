@@ -231,6 +231,10 @@ DESIGN RULES:
 - Ensure touch targets (buttons) are at least 44px height for mobile.
 - Use Flexbox/Grid for layout. Default to single-column flex-col for mobile, then switch to multi-column grid/flex-row for larger screens.
 - Avoid fixed widths. Use max-width and percentages/fractions.
+- CONTRAST RULE:
+  - If the Background Color (Secondary/Primary) is DARK (e.g., Black, Navy), the Text Color MUST be WHITE.
+  - If the Background Color is LIGHT, the Text Color MUST be BLACK or Dark Gray.
+  - Do NOT create dark text on dark backgrounds.
 `
 
     return p

@@ -1,9 +1,99 @@
 import React from 'react'
 
 const ConversionSection = ({ data, layout, theme }) => {
-    const { primaryColor, accentColor } = theme;
+    const { primaryColor, secondaryColor, accentColor } = theme;
     const { heading, subtext, ctaText } = data;
 
+    if (layout === 'Split Booking') {
+        return (
+            <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#fff', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
+                <div style={{ flex: 1, padding: '4rem 2rem', textAlign: 'left' }}>
+                    <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', fontFamily: 'var(--font-serif)', color: '#111827' }}>{heading}</h2>
+                    <p style={{ fontSize: '1.1rem', marginBottom: '2rem', color: '#4b5563' }}>{subtext}</p>
+                    <button style={{
+                        backgroundColor: primaryColor || '#1d4ed8',
+                        color: '#fff',
+                        padding: '1rem 2.5rem',
+                        border: 'none',
+                        borderRadius: '4px',
+                        fontSize: '1rem',
+                        fontWeight: '600',
+                        cursor: 'pointer'
+                    }}>
+                        {ctaText}
+                    </button>
+                </div>
+                <div style={{ flex: 1, height: '400px', backgroundColor: '#e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                    {/* Placeholder for split image */}
+                    <div style={{ color: '#9ca3af', fontStyle: 'italic' }}>Image: {data.imagePrompt || 'Reception'}</div>
+                </div>
+            </div>
+        )
+    }
+
+    if (layout === 'FloatUI - Simple') {
+        return (
+            <div className="py-14" style={{ backgroundColor: secondaryColor || '#ffffff' }}>
+                <div className="max-w-screen-xl mx-auto px-4 md:px-8">
+                    <div className="items-center gap-x-12 sm:px-4 md:px-0 lg:flex">
+                        <div className="flex-1 sm:hidden lg:block">
+                            <div className="w-full h-full bg-gray-100 rounded-lg min-h-[300px] flex items-center justify-center text-gray-400">
+                                Image Placeholder
+                            </div>
+                        </div>
+                        <div className="max-w-xl px-4 space-y-3 mt-6 sm:px-0 md:mt-0 lg:max-w-2xl">
+                            {data.priceText && (
+                                <span className="text-[var(--primary)] font-semibold text-sm tracking-wider uppercase">
+                                    {data.priceText}
+                                </span>
+                            )}
+                            <h3 className="text-gray-800 text-3xl font-semibold sm:text-4xl" style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary)' }}>
+                                {heading}
+                            </h3>
+                            <p className="text-gray-600 text-lg">
+                                {subtext}
+                            </p>
+                            <div className="mt-6">
+                                <button className="inline-block py-2 px-4 text-white font-medium bg-[var(--primary)] duration-150 hover:bg-[var(--primary)-hover] rounded-lg shadow-md hover:shadow-none">
+                                    {ctaText}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (layout === 'Sticky Bar') {
+        return (
+            <div style={{
+                position: 'sticky', bottom: '0', left: '0', right: '0',
+                backgroundColor: '#fff',
+                borderTop: `4px solid ${primaryColor || '#1d4ed8'}`,
+                padding: '1rem 2rem',
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                boxShadow: '0 -4px 6px -1px rgba(0, 0, 0, 0.1)',
+                zIndex: 100
+            }}>
+                <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827' }}>{heading}</span>
+                <button style={{
+                    backgroundColor: primaryColor || '#1d4ed8',
+                    color: '#fff',
+                    padding: '0.75rem 2rem',
+                    border: 'none',
+                    borderRadius: '999px',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer'
+                }}>
+                    {ctaText}
+                </button>
+            </div>
+        )
+    }
+
+    // Default 'Urgency' Layout
     return (
         <div style={{
             padding: '8rem 2rem',

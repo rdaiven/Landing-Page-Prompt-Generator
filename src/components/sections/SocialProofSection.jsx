@@ -1,7 +1,7 @@
 import React from 'react'
 
 const SocialProofSection = ({ data, layout, theme }) => {
-    const { primaryColor, neutralColor } = theme;
+    const { primaryColor, secondaryColor, neutralColor } = theme;
     const { heading, items } = data;
 
     const scrollLeft = () => {
@@ -51,17 +51,19 @@ const SocialProofSection = ({ data, layout, theme }) => {
                                 scrollSnapAlign: 'center',
                                 flexShrink: 0
                             }}>
-                                <div style={{ marginBottom: '1.5rem', color: primaryColor || '#000' }}>
-                                    ★★★★★
+                                <div style={{ marginBottom: '1.5rem', color: primaryColor || '#000', display: 'flex', gap: '0.2rem' }}>
+                                    {'★'.repeat(5)}
                                 </div>
-                                <p style={{ fontSize: '1.25rem', lineHeight: '1.5', color: '#1f2937', marginBottom: '2rem', fontFamily: 'var(--font-serif)' }}>
+                                <p style={{ fontSize: '1.15rem', lineHeight: '1.6', color: '#374151', marginBottom: '2rem', fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>
                                     "{item.quote}"
                                 </p>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', borderTop: '1px solid #f3f4f6', paddingTop: '1.5rem' }}>
-                                    <div style={{ width: '48px', height: '48px', backgroundColor: secondaryColor || '#e5e7eb', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: primaryColor }}>
-                                        {item.author.charAt(0)}
-                                    </div>
-                                    <span style={{ fontWeight: '700', color: '#111827' }}>{item.author}</span>
+                                    <img
+                                        src={`https://ui-avatars.com/api/?name=${encodeURIComponent(item.author)}&background=random&color=fff`}
+                                        alt={item.author}
+                                        style={{ width: '48px', height: '48px', borderRadius: '50%' }}
+                                    />
+                                    <span style={{ fontWeight: '700', color: '#111827', fontSize: '0.95rem' }}>{item.author}</span>
                                 </div>
                             </div>
                         ))}
@@ -99,8 +101,12 @@ const SocialProofSection = ({ data, layout, theme }) => {
                                 {item.quote}
                             </p>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                <div style={{ width: '40px', height: '40px', backgroundColor: '#e5e7eb', borderRadius: '50%' }}></div>
-                                <span style={{ fontWeight: '600', color: '#111827' }}>{item.author}</span>
+                                <img
+                                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(item.author)}&background=random&color=fff`}
+                                    alt={item.author}
+                                    style={{ width: '40px', height: '40px', borderRadius: '50%' }}
+                                />
+                                <span style={{ fontWeight: '600', color: '#111827', fontSize: '0.9rem' }}>{item.author}</span>
                             </div>
                         </div>
                     ))}

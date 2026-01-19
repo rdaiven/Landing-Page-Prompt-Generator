@@ -11,6 +11,8 @@ import FAQSection from './sections/FAQSection'
 import ConversionSection from './sections/ConversionSection'
 import FooterSection from './sections/FooterSection'
 
+import { getContrastColor } from '../utils/colors'
+
 const VisualPreview = ({ formData }) => {
     const { primaryColor, secondaryColor, accentColor, neutralColor, sections } = formData
 
@@ -35,18 +37,69 @@ const VisualPreview = ({ formData }) => {
     }
 
     return (
-        <div className="visual-preview-container" style={{ fontFamily: 'var(--font-sans)', color: '#333' }}>
-            {renderSection('header', HeaderSection)}
-            {renderSection('hero', HeroSection)}
-            {renderSection('trustPrimer', TrustPrimerSection)}
-            {renderSection('problemConcern', ProblemConcernSection)}
-            {renderSection('treatmentLogic', TreatmentLogicSection)}
-            {renderSection('procedureGuide', ProcedureGuideSection)}
-            {renderSection('socialProof', SocialProofSection)}
-            {renderSection('clinicDetails', ClinicDetailsSection)}
-            {renderSection('faq', FAQSection)}
-            {renderSection('conversion', ConversionSection)}
-            {renderSection('footer', FooterSection)}
+        <div className="visual-preview-container" style={{
+            fontFamily: 'var(--font-sans)',
+            color: getContrastColor(secondaryColor || '#fff'),
+            backgroundColor: '#fff',
+            borderRadius: '12px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            overflow: 'hidden',
+            margin: '2rem auto',
+            maxWidth: '1200px',
+            border: '1px solid rgba(255, 255, 255, 0.5)',
+            '--primary': theme.primaryColor || '#000',
+            '--secondary': theme.secondaryColor || '#fff',
+            '--accent': theme.accentColor || '#3b82f6',
+            '--neutral': theme.neutralColor || '#f3f4f6',
+        }}>
+            <div className="browser-chrome" style={{
+                background: '#f1f5f9',
+                padding: '0.75rem 1rem',
+                borderBottom: '1px solid #e2e8f0',
+                display: 'flex',
+                gap: '1rem',
+                alignItems: 'center',
+                borderTopLeftRadius: '12px',
+                borderTopRightRadius: '12px'
+            }}>
+                <div style={{ display: 'flex', gap: '0.4rem' }}>
+                    <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444', border: '1px solid #dc2626' }}></div>
+                    <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#f59e0b', border: '1px solid #d97706' }}></div>
+                    <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#10b981', border: '1px solid #059669' }}></div>
+                </div>
+                <div style={{
+                    flex: 1,
+                    textAlign: 'center',
+                    background: '#fff',
+                    margin: '0 1rem',
+                    padding: '0.4rem 1rem',
+                    borderRadius: '8px',
+                    fontSize: '0.85rem',
+                    color: '#64748b',
+                    border: '1px solid #e2e8f0',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem'
+                }}>
+                    <span style={{ opacity: 0.5 }}>🔒</span> preview.yoursite.com
+                </div>
+            </div>
+
+            <div className="preview-viewport" style={{ maxHeight: '800px', overflowY: 'auto' }}>
+                {renderSection('header', HeaderSection)}
+                {renderSection('hero', HeroSection)}
+                {renderSection('trustPrimer', TrustPrimerSection)}
+                {renderSection('problemConcern', ProblemConcernSection)}
+                {renderSection('treatmentLogic', TreatmentLogicSection)}
+                {renderSection('procedureGuide', ProcedureGuideSection)}
+                {renderSection('socialProof', SocialProofSection)}
+                {renderSection('clinicDetails', ClinicDetailsSection)}
+                {renderSection('faq', FAQSection)}
+                {renderSection('conversion', ConversionSection)}
+                {renderSection('footer', FooterSection)}
+            </div>
         </div>
     )
 }

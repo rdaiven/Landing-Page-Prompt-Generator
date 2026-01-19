@@ -88,50 +88,45 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
 
     return (
         <div className="input-panel">
-            <div className="tabs-header" style={{ display: 'flex', gap: '2rem', borderBottom: '2px solid #e2e8f0', marginBottom: '2rem' }}>
+            <div className="tabs-header" style={{ display: 'flex', gap: '1rem', borderBottom: '1px solid var(--border)', marginBottom: '2rem' }}>
                 <button
                     onClick={() => setActiveTab('settings')}
                     style={{
-                        padding: '0.75rem 0',
+                        padding: '0.75rem 1rem',
                         border: 'none',
-                        borderBottom: activeTab === 'settings' ? '2px solid #3b82f6' : '2px solid transparent',
-                        marginBottom: '-2px',
-                        color: activeTab === 'settings' ? '#3b82f6' : '#64748b',
+                        borderBottom: activeTab === 'settings' ? '2px solid var(--primary)' : '2px solid transparent',
+                        marginBottom: '-1px',
+                        color: activeTab === 'settings' ? 'var(--primary)' : 'var(--text-muted)',
                         fontWeight: 600,
-                        fontSize: '1rem',
-                        cursor: 'pointer',
+                        fontSize: '0.95rem',
                         background: 'none',
-                        transition: 'all 0.2s'
                     }}
                 >
-                    ⚙️ Global Settings
+                    Global Settings
                 </button>
                 <button
                     onClick={() => setActiveTab('content')}
                     style={{
-                        padding: '0.75rem 0',
+                        padding: '0.75rem 1rem',
                         border: 'none',
-                        borderBottom: activeTab === 'content' ? '2px solid #3b82f6' : '2px solid transparent',
-                        marginBottom: '-2px',
-                        color: activeTab === 'content' ? '#3b82f6' : '#64748b',
+                        borderBottom: activeTab === 'content' ? '2px solid var(--primary)' : '2px solid transparent',
+                        marginBottom: '-1px',
+                        color: activeTab === 'content' ? 'var(--primary)' : 'var(--text-muted)',
                         fontWeight: 600,
-                        fontSize: '1rem',
-                        cursor: 'pointer',
+                        fontSize: '0.95rem',
                         background: 'none',
-                        transition: 'all 0.2s'
                     }}
                 >
-                    📝 Page Sections
+                    Page Sections
                 </button>
             </div>
 
             {activeTab === 'settings' && (
                 <div className="fade-in">
-                    <section className="form-group" style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: '#0f172a' }}>
-                            🏷️ Brand Information
+                    <section className="form-group" style={{ background: 'var(--surface)', padding: '1.5rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
+                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', fontSize: '1.1rem', color: 'var(--text-main)' }}>
+                            Brand Information
                         </h3>
-                        {/* ... fields ... */}
                         <div className="input-field">
                             <label style={{ display: 'flex', alignItems: 'center' }}>
                                 Brand Name
@@ -142,10 +137,9 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                 placeholder="e.g. Venus Future Aesthetics"
                                 value={formData.brandName}
                                 onChange={(e) => updateField('brandName', e.target.value)}
-                                style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', marginTop: '0.5rem' }}
                             />
                         </div>
-                        <div className="input-field" style={{ marginTop: '1rem' }}>
+                        <div className="input-field" style={{ marginTop: '1.25rem' }}>
                             <label style={{ display: 'flex', alignItems: 'center' }}>
                                 Topic / Service
                                 <Tooltip text={helpText.topic} />
@@ -155,10 +149,9 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                 placeholder="e.g. Cryoslim Treatment"
                                 value={formData.topic}
                                 onChange={(e) => updateField('topic', e.target.value)}
-                                style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', marginTop: '0.5rem' }}
                             />
                         </div>
-                        <div className="input-field" style={{ marginTop: '1rem' }}>
+                        <div className="input-field" style={{ marginTop: '1.25rem' }}>
                             <label style={{ display: 'flex', alignItems: 'center' }}>
                                 Brand Vibe
                                 <Tooltip text={helpText.vibe} />
@@ -166,7 +159,6 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                             <select
                                 value={formData.vibe}
                                 onChange={(e) => updateField('vibe', e.target.value)}
-                                style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', marginTop: '0.5rem' }}
                             >
                                 <option>Professional & Luxury</option>
                                 <option>Modern Tech</option>
@@ -176,13 +168,13 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                         </div>
                     </section>
 
-                    <section className="form-group" style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', border: '1px solid #e2e8f0', marginTop: '2rem' }}>
-                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: '#0f172a' }}>
-                            🎨 Branding & Assets
+                    <section className="form-group" style={{ background: 'var(--surface)', padding: '1.5rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', marginTop: '2rem' }}>
+                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', fontSize: '1.1rem', color: 'var(--text-main)' }}>
+                            Branding & Assets
                         </h3>
-                        <div className="color-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div className="color-grid">
                             <div className="color-input-wrapper">
-                                <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                                <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
                                     Primary <Tooltip text={helpText.primaryColor} />
                                 </label>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -190,79 +182,45 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                         type="color"
                                         value={formData.primaryColor || '#000000'}
                                         onChange={(e) => updateField('primaryColor', e.target.value)}
-                                        style={{ height: '38px', width: '38px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Hex"
-                                        value={formData.primaryColor}
-                                        onChange={(e) => updateField('primaryColor', e.target.value)}
-                                        style={{ flex: 1, padding: '0.5rem', borderRadius: '6px', border: '1px solid #cbd5e1' }}
+                                        style={{ width: '100%', height: '42px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
                                     />
                                 </div>
                             </div>
 
                             <div className="color-input-wrapper">
-                                <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                                <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
                                     Secondary <Tooltip text={helpText.secondaryColor} />
                                 </label>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                    <input
-                                        type="color"
-                                        value={formData.secondaryColor || '#ffffff'}
-                                        onChange={(e) => updateField('secondaryColor', e.target.value)}
-                                        style={{ height: '38px', width: '38px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Hex"
-                                        value={formData.secondaryColor}
-                                        onChange={(e) => updateField('secondaryColor', e.target.value)}
-                                        style={{ flex: 1, padding: '0.5rem', borderRadius: '6px', border: '1px solid #cbd5e1' }}
-                                    />
-                                </div>
+                                <input
+                                    type="color"
+                                    value={formData.secondaryColor || '#ffffff'}
+                                    onChange={(e) => updateField('secondaryColor', e.target.value)}
+                                    style={{ width: '100%', height: '42px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+                                />
                             </div>
 
                             <div className="color-input-wrapper">
-                                <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                                <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
                                     Accent <Tooltip text={helpText.accentColor} />
                                 </label>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                    <input
-                                        type="color"
-                                        value={formData.accentColor || '#ffffff'}
-                                        onChange={(e) => updateField('accentColor', e.target.value)}
-                                        style={{ height: '38px', width: '38px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Hex"
-                                        value={formData.accentColor}
-                                        onChange={(e) => updateField('accentColor', e.target.value)}
-                                        style={{ flex: 1, padding: '0.5rem', borderRadius: '6px', border: '1px solid #cbd5e1' }}
-                                    />
-                                </div>
+                                <input
+                                    type="color"
+                                    value={formData.accentColor || '#ffffff'}
+                                    onChange={(e) => updateField('accentColor', e.target.value)}
+                                    style={{ width: '100%', height: '42px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+                                />
                             </div>
 
                             <div className="color-input-wrapper">
-                                <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                                <label style={{ display: 'flex', alignItems: 'center', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
                                     Neutral <Tooltip text={helpText.neutralColor} />
                                 </label>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                    <input
-                                        type="color"
-                                        value={formData.neutralColor || '#f5f5f5'}
-                                        onChange={(e) => updateField('neutralColor', e.target.value)}
-                                        style={{ height: '38px', width: '38px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Hex"
-                                        value={formData.neutralColor}
-                                        onChange={(e) => updateField('neutralColor', e.target.value)}
-                                        style={{ flex: 1, padding: '0.5rem', borderRadius: '6px', border: '1px solid #cbd5e1' }}
-                                    />
-                                </div>
+                                <input
+                                    type="color"
+                                    value={formData.neutralColor || '#f5f5f5'}
+                                    onChange={(e) => updateField('neutralColor', e.target.value)}
+                                    style={{ width: '100%', height: '42px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+                                />
                             </div>
                         </div>
                         <div className="input-field" style={{ marginTop: '1rem' }}>
@@ -275,7 +233,6 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                 placeholder="e.g. Busy professionals in their 30s"
                                 value={formData.audience}
                                 onChange={(e) => updateField('audience', e.target.value)}
-                                style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', marginTop: '0.5rem' }}
                             />
                         </div>
                         <div className="color-presets" style={{ marginTop: '1rem' }}>
@@ -286,6 +243,16 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                     { name: 'Medical', primary: '#0ea5e9', secondary: '#ffffff', accent: '#0284c7', neutral: '#f1f5f9' },
                                     { name: 'Organic', primary: '#166534', secondary: '#f0fdf4', accent: '#d97706', neutral: '#fff7ed' },
                                     { name: 'Dark', primary: '#000000', secondary: '#111111', accent: '#3b82f6', neutral: '#1f2937' },
+                                    { name: 'Pastel', primary: '#fca5a5', secondary: '#fff1f2', accent: '#fda4af', neutral: '#fff5f5' },
+                                    { name: 'Vibrant', primary: '#7c3aed', secondary: '#ffffff', accent: '#db2777', neutral: '#f5f3ff' },
+                                    { name: 'Corporate', primary: '#1e3a8a', secondary: '#ffffff', accent: '#3b82f6', neutral: '#f8fafc' },
+                                    { name: 'Mono', primary: '#333333', secondary: '#ffffff', accent: '#555555', neutral: '#eeeeee' },
+
+                                    // New Trending Palettes
+                                    { name: 'Startup', primary: '#2563eb', secondary: '#ffffff', accent: '#f59e0b', neutral: '#f3f4f6' },
+                                    { name: 'Warm', primary: '#e76f51', secondary: '#fdf6ec', accent: '#2a9d8f', neutral: '#fff1e6' },
+                                    { name: 'Ocean', primary: '#0077b6', secondary: '#f0f9ff', accent: '#03045e', neutral: '#e0f2fe' },
+                                    { name: 'Cyber', primary: '#7209b7', secondary: '#0f0518', accent: '#4cc9f0', neutral: '#1a1025' },
                                 ].map(preset => (
                                     <button
                                         key={preset.name}
@@ -314,15 +281,15 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                     </section>
 
                     {/* Actions Toolbar */}
-                    <div className="actions-toolbar" style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid #e2e8f0', display: 'flex', gap: '1rem' }}>
-                        <button onClick={onReset} style={{ padding: '0.75rem 1.5rem', borderRadius: '6px', border: '1px solid #ef4444', color: '#ef4444', background: '#fff', cursor: 'pointer', fontWeight: 600 }}>
-                            Reset Data
+                    <div className="actions-toolbar" style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid #e2e8f0', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                        <button onClick={onReset} className="btn-secondary" style={{ borderColor: '#ef4444', color: '#ef4444' }}>
+                            Reset Application
                         </button>
-                        <button onClick={onExport} style={{ padding: '0.75rem 1.5rem', borderRadius: '6px', border: '1px solid #cbd5e1', color: '#334155', background: '#fff', cursor: 'pointer', fontWeight: 600 }}>
-                            Export Config
+                        <button onClick={onExport} className="btn-primary">
+                            Save Template
                         </button>
-                        <label style={{ padding: '0.75rem 1.5rem', borderRadius: '6px', border: '1px solid #cbd5e1', color: '#334155', background: '#fff', cursor: 'pointer', fontWeight: 600, display: 'inline-block' }}>
-                            Import Config
+                        <label className="btn-secondary" style={{ display: 'inline-flex', cursor: 'pointer' }}>
+                            Load Template
                             <input type="file" accept=".json" onChange={onImport} style={{ display: 'none' }} />
                         </label>
                     </div>
@@ -332,10 +299,10 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
             {activeTab === 'content' && (
                 <div className="fade-in">
                     <section className="form-group">
-                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: '#0f172a' }}>
-                            📑 Page Sections & Layouts
+                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', fontSize: '1.1rem', color: 'var(--text-main)' }}>
+                            Layout & Content
                         </h3>
-                        <div className="sections-config-list" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div className="sections-config-list" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                             {Object.keys(formData.sections).map(sectionKey => {
                                 const sectionData = formData.sections[sectionKey];
                                 const config = sectionConfigs[sectionKey];
@@ -347,9 +314,9 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                         key={sectionKey}
                                         className={`section-config-item ${sectionData.enabled ? 'enabled' : 'disabled'}`}
                                         style={{
-                                            border: sectionData.enabled ? '1px solid #cbd5e1' : '1px solid #e2e8f0',
-                                            borderRadius: '8px',
-                                            background: sectionData.enabled ? '#fff' : '#f8fafc',
+                                            border: sectionData.enabled ? '1px solid var(--border)' : '1px dashed var(--border)',
+                                            borderRadius: 'var(--radius)',
+                                            background: sectionData.enabled ? 'var(--surface)' : 'var(--surface-alt)',
                                             transition: 'all 0.2s',
                                             overflow: 'hidden'
                                         }}
@@ -362,8 +329,8 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                                 justifyContent: 'space-between',
                                                 padding: '1rem',
                                                 cursor: 'pointer',
-                                                background: isExpanded ? '#f1f5f9' : 'transparent',
-                                                borderBottom: isExpanded ? '1px solid #e2e8f0' : 'none'
+                                                background: isExpanded ? 'var(--surface-alt)' : 'transparent',
+                                                borderBottom: isExpanded ? '1px solid var(--border)' : 'none'
                                             }}
                                             onClick={() => toggleAccordion(sectionKey)}
                                         >
@@ -378,28 +345,36 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                                                 setExpandedSection(sectionKey);
                                                             }
                                                         }}
-                                                        style={{ width: '1.2rem', height: '1.2rem', cursor: 'pointer' }}
+                                                        style={{ width: '1.2rem', height: '1.2rem', cursor: 'pointer', accentColor: 'var(--primary)' }}
                                                     />
                                                 </div>
-                                                <span style={{ fontSize: '1.1rem', fontWeight: 600, color: sectionData.enabled ? '#0f172a' : '#94a3b8' }}>
+                                                <span style={{ fontSize: '1rem', fontWeight: 600, color: sectionData.enabled ? 'var(--text-main)' : 'var(--text-muted)' }}>
                                                     {config.icon} {config.label}
                                                 </span>
                                             </div>
-                                            <div style={{ color: '#64748b', transform: isExpanded ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
+                                            <div style={{ color: 'var(--text-muted)', transform: isExpanded ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
                                                 ▼
                                             </div>
                                         </div>
 
                                         {isExpanded && sectionData.enabled && (
-                                            <div className="section-settings" style={{ padding: '1.5rem', background: '#fff' }}>
-                                                <div className="section-layout-select" style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid #e2e8f0' }}>
-                                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 600, color: '#334155' }}>
-                                                        Layout Style
+                                            <div className="section-settings" style={{ padding: '1.5rem', background: 'var(--surface)' }}>
+                                                <div className="section-layout-select" style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid var(--border)' }}>
+                                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                                        Select Layout
                                                     </label>
                                                     <select
                                                         value={sectionData.layout}
                                                         onChange={(e) => updateSectionLayout(sectionKey, e.target.value)}
-                                                        style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '1rem', backgroundColor: '#f8fafc' }}
+                                                        style={{
+                                                            width: '100%',
+                                                            padding: '0.75rem',
+                                                            borderRadius: 'var(--radius)',
+                                                            border: '1px solid var(--border)',
+                                                            fontSize: '0.95rem',
+                                                            backgroundColor: 'var(--surface-alt)',
+                                                            cursor: 'pointer'
+                                                        }}
                                                     >
                                                         {Object.keys(config.layouts).map(opt => (
                                                             <option key={opt} value={opt}>{opt}</option>
@@ -416,7 +391,7 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                         )}
 
                                         {isExpanded && !sectionData.enabled && (
-                                            <div style={{ padding: '2rem', textAlign: 'center', color: '#64748b', fontStyle: 'italic', fontSize: '0.9rem' }}>
+                                            <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)', fontStyle: 'italic', fontSize: '0.9rem' }}>
                                                 Enable this section to customize its content.
                                             </div>
                                         )}

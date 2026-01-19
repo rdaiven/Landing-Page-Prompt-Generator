@@ -31,6 +31,57 @@ const ProblemConcernSection = ({ data, layout, theme }) => {
                             </div>
                         ))}
                     </div>
+                ) : layout === 'Cards Grid' ? (
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                        gap: '2rem'
+                    }}>
+                        {(items || []).map((item, i) => (
+                            <div key={i} style={{
+                                background: '#fff',
+                                padding: '2.5rem',
+                                borderRadius: '12px',
+                                borderTop: `6px solid ${theme.primaryColor || '#3b82f6'}`,
+                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '1rem',
+                                transition: 'transform 0.2s',
+                                cursor: 'default'
+                            }}
+                                onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+                                onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                            >
+                                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1e293b' }}>{item.title}</h3>
+                                <p style={{ color: '#64748b', fontSize: '1rem', lineHeight: 1.6 }}>{item.text}</p>
+                            </div>
+                        ))}
+                    </div>
+                ) : layout === 'FloatUI - Grid' ? (
+                    <div className="max-w-screen-xl mx-auto px-4 md:px-8">
+                        <div className="max-w-2xl mx-auto text-center mb-10">
+                            <h2 className="text-3xl font-bold sm:text-4xl" style={{ fontFamily: 'var(--font-serif)' }}>{heading}</h2>
+                            <p className="mt-3 text-gray-600 text-lg">{data.subheading}</p>
+                        </div>
+                        <ul className="grid gap-y-8 gap-x-12 sm:grid-cols-2 lg:grid-cols-3">
+                            {(items || []).map((item, i) => (
+                                <li key={i} className="flex gap-x-4">
+                                    <div className="flex-none w-12 h-12 rounded-lg flex items-center justify-center text-2xl" style={{ backgroundColor: `${theme.primaryColor}20`, color: theme.primaryColor }}>
+                                        {item.icon}
+                                    </div>
+                                    <div>
+                                        <h4 className="text-lg text-gray-800 font-semibold">
+                                            {item.title}
+                                        </h4>
+                                        <p className="mt-3 text-gray-600">
+                                            {item.description}
+                                        </p>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 ) : (
                     <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap' }}>
                         {(items || []).map((item, i) => (
