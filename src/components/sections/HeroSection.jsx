@@ -1,19 +1,15 @@
 import React from 'react'
 import { getContrastColor } from '../../utils/colors'
+import { getEffectiveImage } from '../../utils/mediaUtils'
 
 const HeroSection = ({ data, layout, theme }) => {
     const { primaryColor, secondaryColor, neutralColor } = theme;
     const buttonTextColor = getContrastColor(primaryColor);
 
-    // Helper for placeholder images
-    const getPlaceholder = (w, h, text) => {
-        const color = (primaryColor || '#cccccc').replace('#', '')
-        return `https://placehold.co/${w}x${h}/${color}/FFFFFF?text=${encodeURIComponent(text)}`
-    }
-
-    const { headline, subheadline, ctaText, imagePrompt, videoUrl } = data;
+    const { headline, subheadline, ctaText, imagePrompt, imageUrl, videoUrl } = data;
 
     if (layout === 'Split') {
+        const imageSrc = getEffectiveImage(imageUrl, imagePrompt || 'Hero Image', theme, { w: 600, h: 500 });
         return (
             <div className="mock-section mock-hero-split" style={{ backgroundColor: secondaryColor || '#ffffff', display: 'flex', alignItems: 'center', gap: '4rem', padding: '6rem 2rem' }}>
                 <div style={{ flex: 1 }}>
@@ -29,7 +25,7 @@ const HeroSection = ({ data, layout, theme }) => {
                 </div>
                 <div style={{ flex: 1 }}>
                     <img
-                        src={getPlaceholder(600, 500, imagePrompt || 'Hero Image')}
+                        src={imageSrc}
                         alt="Hero"
                         style={{ width: '100%', borderRadius: '8px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' }}
                     />
@@ -39,6 +35,7 @@ const HeroSection = ({ data, layout, theme }) => {
     }
 
     if (layout === 'Centered') {
+        const imageSrc = getEffectiveImage(imageUrl, imagePrompt || 'Banner Image', theme, { w: 1000, h: 500 });
         return (
             <div className="mock-section mock-hero-centered" style={{ backgroundColor: secondaryColor || '#ffffff', textAlign: 'center', padding: '6rem 2rem' }}>
                 <div style={{ maxWidth: '800px', margin: '0 auto' }}>
@@ -54,7 +51,7 @@ const HeroSection = ({ data, layout, theme }) => {
                 </div>
                 <div style={{ marginTop: '4rem', width: '100%', maxWidth: '1000px', margin: '4rem auto 0' }}>
                     <img
-                        src={getPlaceholder(1000, 500, imagePrompt || 'Banner Image')}
+                        src={imageSrc}
                         alt="Hero Banner"
                         style={{ width: '100%', borderRadius: '12px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' }}
                     />
@@ -64,13 +61,29 @@ const HeroSection = ({ data, layout, theme }) => {
     }
 
     if (layout === 'Video-First') {
+        // Use videoUrl if present, else fallback to standard image placeholder with prompt
+        const placeholderSrc = getEffectiveImage(null, 'Background Video Loop', theme, { w: 1200, h: 600 });
+        // Ideally we render a <video> if it's a real URL, but for now we stick to img or just use the logic
+        // If videoUrl is provided, we might want to try rendering it, or just use it as poster?
+        // Let's assume for visual preview, if it's a link, we show it if supports video, else placeholder.
+        // For simplicity, we'll assume it's an image override or we show placeholder.
+        // If the user puts a youtube link, <img> won't work.
+        // Let's just use the placeholder logic for now, or if it's a direct video file.
+        // The user requirement said: "Image/Video Placeholders... If URL is provided, it should be used".
+        // Use an iframe or video tag?
+        const isVideo = videoUrl && (videoUrl.endsWith('.mp4') || videoUrl.endsWith('.webm'));
+
         return (
             <div className="mock-section mock-hero-video" style={{ backgroundColor: '#000', color: '#fff', padding: '0', position: 'relative', height: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                <img
-                    src={getPlaceholder(1200, 600, 'Background Video Loop')}
-                    alt="Video Background"
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
-                />
+                {isVideo ? (
+                    <video src={videoUrl} autoPlay loop muted style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }} />
+                ) : (
+                    <img
+                        src={videoUrl || placeholderSrc}
+                        alt="Video Background"
+                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
+                    />
+                )}
                 <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', maxWidth: '800px', padding: '2rem' }}>
                     <h1 style={{ fontSize: '4rem', marginBottom: '2rem', textShadow: '0 2px 4px rgba(0,0,0,0.5)', fontFamily: 'var(--font-serif)' }}>{headline}</h1>
                     <button style={{ backgroundColor: '#fff', color: '#000', padding: '1.25rem 3rem', border: 'none', borderRadius: '4px', fontSize: '1.1rem', fontWeight: 'bold' }}>
@@ -82,10 +95,11 @@ const HeroSection = ({ data, layout, theme }) => {
     }
 
     if (layout === 'Full Width') {
+        const imageSrc = getEffectiveImage(imageUrl, imagePrompt || 'Full Width Background', theme, { w: 1600, h: 900 });
         return (
             <div className="mock-section mock-hero-full" style={{ position: 'relative', height: '80vh', minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', textAlign: 'center' }}>
                 <img
-                    src={getPlaceholder(1600, 900, imagePrompt || 'Full Width Background')}
+                    src={imageSrc}
                     alt="Background"
                     style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
                 />
@@ -113,6 +127,12 @@ const HeroSection = ({ data, layout, theme }) => {
     }
 
     if (layout === 'Minimal') {
+        // Minimal usually has a graphic element, maybe not a full image.
+        // It uses secondaryColor and primaryColor as shapes.
+        // If we wanted to support an image override, we could.
+        // But the layout code (lines 115-133) uses CSS shapes.
+        // The user asked for "all image and video fields".
+        // Start: 115
         return (
             <div className="mock-section mock-hero-minimal" style={{ backgroundColor: '#fff', padding: '8rem 2rem', textAlign: 'left', maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '4rem' }}>
                 <div style={{ flex: 1 }}>
@@ -173,21 +193,22 @@ const HeroSection = ({ data, layout, theme }) => {
             { label: 'Rating', value: '4.9/5' },
             { label: 'Support', value: '24/7' },
         ];
+        const imageSrc = getEffectiveImage(imageUrl, imagePrompt || 'Product Shot', theme, { w: 600, h: 700 });
         return (
-            <section style={{ backgroundColor: secondaryColor || '#fff', padding: '6rem 2rem', overflow: 'hidden' }}>
-                <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4rem' }}>
-                    <div style={{ flex: '1 1 500px' }}>
-                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 1rem', background: '#f3f4f6', borderRadius: '50px', marginBottom: '2rem' }}>
+            <div className="mock-section mock-hero-marketing" style={{ backgroundColor: secondaryColor || '#fff' }}>
+                <div className="mock-container-split">
+                    <div className="mock-content-left">
+                        <div className="mock-badge">
                             <span style={{ width: '8px', height: '8px', background: primaryColor || '#000', borderRadius: '50%' }}></span>
                             <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#374151' }}>No.1 Trending Solution</span>
                         </div>
-                        <h1 style={{ fontSize: '3.75rem', fontWeight: 800, lineHeight: 1.1, marginBottom: '1.5rem', color: '#111827', fontFamily: 'var(--font-serif)' }}>
+                        <h1 className="mock-h1" style={{ fontSize: '3.75rem', fontWeight: 800, lineHeight: 1.1, marginBottom: '1.5rem', color: '#111827', fontFamily: 'var(--font-serif)' }}>
                             {headline}
                         </h1>
                         <p style={{ fontSize: '1.25rem', color: '#4b5563', lineHeight: 1.6, marginBottom: '2.5rem' }}>
                             {subheadline}
                         </p>
-                        <div style={{ display: 'flex', gap: '1rem', marginBottom: '3rem' }}>
+                        <div className="mock-cta-group">
                             <button style={{ backgroundColor: primaryColor || '#000', color: buttonTextColor, padding: '1rem 2rem', borderRadius: '8px', fontWeight: 600, fontSize: '1rem', border: 'none', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}>
                                 {ctaText}
                             </button>
@@ -195,7 +216,7 @@ const HeroSection = ({ data, layout, theme }) => {
                                 Learn more
                             </button>
                         </div>
-                        <div style={{ display: 'flex', gap: '3rem', borderTop: '1px solid #e5e7eb', paddingTop: '2rem' }}>
+                        <div className="mock-stats">
                             {stats.map((stat, i) => (
                                 <div key={i}>
                                     <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#111827' }}>{stat.value}</div>
@@ -204,16 +225,16 @@ const HeroSection = ({ data, layout, theme }) => {
                             ))}
                         </div>
                     </div>
-                    <div style={{ flex: '1 1 500px', position: 'relative' }}>
-                        <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '200px', height: '200px', background: primaryColor || '#000', opacity: 0.1, borderRadius: '50%', filter: 'blur(40px)' }}></div>
+                    <div className="mock-image-right">
+                        <div className="mock-blob" style={{ background: primaryColor || '#000' }}></div>
                         <img
-                            src={getPlaceholder(600, 700, imagePrompt || 'Product Shot')}
+                            src={imageSrc}
                             alt="Product"
                             style={{ width: '100%', borderRadius: '24px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', position: 'relative', zIndex: 1, border: '8px solid #fff' }}
                         />
                     </div>
                 </div>
-            </section>
+            </div>
         )
     }
 

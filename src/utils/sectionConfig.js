@@ -33,7 +33,8 @@ export const sectionConfigs = {
                     { name: 'headline', label: 'Headline', type: 'text', default: 'Transform Your Look' },
                     { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Experience world-class care and results. The premier destination for your aesthetic needs.' },
                     { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Book Consultation' },
-                    { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Hero Image' }
+                    { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Hero Image' },
+                    { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' }
                 ]
             },
             'Centered': {
@@ -41,7 +42,8 @@ export const sectionConfigs = {
                     { name: 'headline', label: 'Headline', type: 'text', default: 'The Future of Aesthetics is Here' },
                     { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Advanced aesthetics tailored to your unique needs.' },
                     { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Schedule Your Visit' },
-                    { name: 'imagePrompt', label: 'Banner Image Description', type: 'text', default: 'Wide Banner Image' }
+                    { name: 'imagePrompt', label: 'Banner Image Description', type: 'text', default: 'Wide Banner Image' },
+                    { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' }
                 ]
             },
             'Full Width': {
@@ -49,7 +51,8 @@ export const sectionConfigs = {
                     { name: 'headline', label: 'Headline', type: 'text', default: 'Radiance Define' },
                     { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Luxury aesthetics for the modern individual.' },
                     { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Discover More' },
-                    { name: 'imagePrompt', label: 'Background Image Description', type: 'text', default: 'High-res texture or landscape' }
+                    { name: 'imagePrompt', label: 'Background Image Description', type: 'text', default: 'High-res texture or landscape' },
+                    { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' }
                 ]
             },
             'Minimal': {
@@ -79,7 +82,8 @@ export const sectionConfigs = {
                     { name: 'headline', label: 'Headline', type: 'text', default: 'Data to enrich your online business' },
                     { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.' },
                     { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Get started' },
-                    { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Product Dashboard' }
+                    { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Product Dashboard' },
+                    { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' }
                 ]
             }
         }
@@ -155,16 +159,16 @@ export const sectionConfigs = {
                         name: 'items', label: 'Concern Cards', type: 'collection', min: 3, max: 6, fields: [
                             { name: 'title', label: 'Title', type: 'text', default: 'Stubborn Areas' },
                             { name: 'description', label: 'Description', type: 'textarea', default: 'Exercise and diet resistant fat pockets.' },
-                            { name: 'icon', label: 'Icon (Emoji)', type: 'text', default: '🏋️' }
+                            { name: 'icon', label: 'Icon (Emoji)', type: 'icon', default: 'Target' }
                         ]
                     }
                 ],
                 defaultData: {
                     heading: 'Common Concerns',
                     items: [
-                        { title: 'Stubborn Areas', description: 'Fat pockets that just won\'t shift.', icon: '🎯' },
-                        { title: 'Busy Schedule', description: 'No time for long recovery periods.', icon: '⏰' },
-                        { title: 'Safety Concerns', description: 'Worried about invasive surgeries.', icon: '🛡️' }
+                        { title: 'Stubborn Areas', description: 'Fat pockets that just won\'t shift.', icon: 'Target' },
+                        { title: 'Busy Schedule', description: 'No time for long recovery periods.', icon: 'Clock' },
+                        { title: 'Safety Concerns', description: 'Worried about invasive surgeries.', icon: 'Shield' }
                     ]
                 }
             },
@@ -195,7 +199,7 @@ export const sectionConfigs = {
                         name: 'items', label: 'Features', type: 'collection', min: 3, max: 6, fields: [
                             { name: 'title', label: 'Title', type: 'text', default: 'Fast Refresh' },
                             { name: 'description', label: 'Description', type: 'textarea', default: 'Reliable and fast updates.' },
-                            { name: 'icon', label: 'Icon (Emoji/SVG path)', type: 'text', default: '⚡' }
+                            { name: 'icon', label: 'Icon (Emoji/SVG path)', type: 'icon', default: 'Zap' }
                         ]
                     }
                 ]
@@ -221,6 +225,7 @@ export const sectionConfigs = {
                     { name: 'subheading', label: 'Subheading', type: 'text', default: 'FDA-Cleared Technology' },
                     { name: 'description', label: 'Deep Dive Text', type: 'textarea', default: 'Using controlled cooling to eliminate fat cells gently and effectively, without harming surrounding tissue.' },
                     { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Diagram of coolsculpting process' },
+                    { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' },
                     {
                         name: 'benefits', label: 'Key Benefits', type: 'collection', min: 3, max: 3, fields: [
                             { name: 'text', label: 'Benefit', type: 'text', default: 'Clinically Proven' }
@@ -258,7 +263,7 @@ export const sectionConfigs = {
                         name: 'items', label: 'Cards', type: 'collection', min: 3, max: 3, fields: [
                             { name: 'title', label: 'Title', type: 'text', default: 'Fast' },
                             { name: 'description', label: 'Description', type: 'textarea', default: 'In and out in 1 hour.' },
-                            { name: 'icon', label: 'Icon', type: 'text', default: '⚡' }
+                            { name: 'icon', label: 'Icon', type: 'icon', default: 'Zap' }
                         ]
                     }
                 ]
@@ -267,6 +272,7 @@ export const sectionConfigs = {
                 fields: [
                     { name: 'heading', label: 'Heading', type: 'text', default: 'Anatomy of Treatment' },
                     { name: 'imagePrompt', label: 'Main Image', type: 'text', default: 'Device or Anatomy close-up' },
+                    { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' },
                     {
                         name: 'hotspots', label: 'Hotspots', type: 'collection', min: 3, max: 5, fields: [
                             { name: 'label', label: 'Label', type: 'text', default: 'Cooling Plate' },
@@ -371,7 +377,8 @@ export const sectionConfigs = {
                     { name: 'location', label: 'Location Name', type: 'text', default: 'Manhattan Medical Spa' },
                     { name: 'description', label: 'About the Space', type: 'textarea', default: 'A serene oasis in the city.' },
                     { name: 'address', label: 'Address', type: 'textarea', default: '5th Ave, NY' },
-                    { name: 'imagePrompt', label: 'Gallery Image', type: 'text', default: 'Interior of waiting room' }
+                    { name: 'imagePrompt', label: 'Gallery Image', type: 'text', default: 'Interior of waiting room' },
+                    { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' }
                 ],
                 defaultData: {
                     location: 'Manhattan Medical Spa',
@@ -611,7 +618,8 @@ export const sectionConfigs = {
                     { name: 'heading', label: 'Headline', type: 'text', default: 'Secure Your Spot' },
                     { name: 'subtext', label: 'Details', type: 'textarea', default: 'Our experts are ready to guide you.' },
                     { name: 'ctaText', label: 'Button Label', type: 'text', default: 'Check Availability' },
-                    { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Reception area' }
+                    { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Reception area' },
+                    { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' }
                 ]
             },
             'Sticky Bar': {
@@ -676,7 +684,8 @@ export const getInitialSectionState = () => {
         initialState[key] = {
             enabled: true,
             layout: firstLayoutName,
-            data: data
+            data: data,
+            styles: {}
         };
     }
     return initialState;

@@ -1,8 +1,9 @@
 import React from 'react'
 import Tooltip from './Tooltip'
+import IconPicker from './IconPicker'
 import { sectionConfigs } from '../utils/sectionConfig'
 
-const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout, updateSectionData, onReset, onExport, onImport, onSectionClick }) => {
+const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout, updateSectionData, updateSectionStyles, onReset, onExport, onImport, onSectionClick }) => {
     const [activeTab, setActiveTab] = React.useState('settings');
     const [expandedSection, setExpandedSection] = React.useState(null);
 
@@ -56,6 +57,20 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                 </div>
             )
         }
+        if (field.type === 'icon') {
+            return (
+                <div key={field.name} className="dynamic-field">
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        {field.label}
+                        {field.icon && <span>{field.icon}</span>}
+                    </label>
+                    <IconPicker
+                        value={value}
+                        onChange={(newIcon) => updateSectionData(sectionKey, field.name, newIcon)}
+                    />
+                </div>
+            )
+        }
         if (field.type === 'collection') {
             const items = value || [];
             return (
@@ -93,16 +108,30 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                 <div className="item-fields">
                                     {field.fields.map(subField => (
                                         <div key={subField.name} className="sub-field">
-                                            <input
-                                                type={subField.type === 'textarea' ? 'text' : subField.type} // Compact inputs for list items
-                                                placeholder={subField.label}
-                                                value={item[subField.name] || ''}
-                                                onChange={(e) => {
-                                                    const newValue = [...items];
-                                                    newValue[index] = { ...newValue[index], [subField.name]: e.target.value };
-                                                    updateSectionData(sectionKey, field.name, newValue);
-                                                }}
-                                            />
+                                            {subField.type === 'icon' ? (
+                                                <div style={{ marginBottom: '0.5rem' }}>
+                                                    <label style={{ fontSize: '0.75rem', marginBottom: '0.25rem', display: 'block', color: 'var(--text-muted)' }}>{subField.label}</label>
+                                                    <IconPicker
+                                                        value={item[subField.name]}
+                                                        onChange={(newIcon) => {
+                                                            const newValue = [...items];
+                                                            newValue[index] = { ...newValue[index], [subField.name]: newIcon };
+                                                            updateSectionData(sectionKey, field.name, newValue);
+                                                        }}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <input
+                                                    type={subField.type === 'textarea' ? 'text' : subField.type} // Compact inputs for list items
+                                                    placeholder={subField.label}
+                                                    value={item[subField.name] || ''}
+                                                    onChange={(e) => {
+                                                        const newValue = [...items];
+                                                        newValue[index] = { ...newValue[index], [subField.name]: e.target.value };
+                                                        updateSectionData(sectionKey, field.name, newValue);
+                                                    }}
+                                                />
+                                            )}
                                         </div>
                                     ))}
                                 </div>
@@ -438,6 +467,42 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                                     {currentLayoutConfig.fields && currentLayoutConfig.fields.map(field =>
                                                         renderField(sectionKey, field, sectionData.data[field.name])
                                                     )}
+                                                </div>
+
+                                                {/* Design Settings Accordion */}
+                                                <div className="design-settings" style={{ marginTop: '2rem', borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
+                                                    <details>
+                                                        <summary style={{ cursor: 'pointer', fontWeight: 600, color: 'var(--text-muted)', fontSize: '0.9rem', listStyle: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                                            <span style={{ fontSize: '1.1rem' }}>🎨</span> Customize Design
+                                                        </summary>
+                                                        <div style={{ marginTop: '1rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                                            <div className="dynamic-field">
+                                                                <label>Background</label>
+                                                                <select
+                                                                    value={(sectionData.styles && sectionData.styles.backgroundColor) || 'default'}
+                                                                    onChange={(e) => updateSectionStyles(sectionKey, 'backgroundColor', e.target.value)}
+                                                                >
+                                                                    <option value="default">Default</option>
+                                                                    <option value="primary">Primary Color</option>
+                                                                    <option value="secondary">Secondary Color</option>
+                                                                    <option value="accent">Accent Color</option>
+                                                                    <option value="neutral">Neutral Color</option>
+                                                                </select>
+                                                            </div>
+                                                            <div className="dynamic-field">
+                                                                <label>Text Contrast</label>
+                                                                <select
+                                                                    value={(sectionData.styles && sectionData.styles.textColor) || 'auto'}
+                                                                    onChange={(e) => updateSectionStyles(sectionKey, 'textColor', e.target.value)}
+                                                                >
+                                                                    <option value="auto">Auto (Smart)</option>
+                                                                    <option value="dark">Dark Text</option>
+                                                                    <option value="light">Light Text</option>
+                                                                    <option value="primary">Primary Color</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </details>
                                                 </div>
                                             </div>
                                         )}

@@ -1,10 +1,12 @@
 import React from 'react'
+import { getEffectiveImage } from '../../utils/mediaUtils'
 
 const ConversionSection = ({ data, layout, theme }) => {
     const { primaryColor, secondaryColor, accentColor } = theme;
     const { heading, subtext, ctaText } = data;
 
     if (layout === 'Split Booking') {
+        const imageSrc = getEffectiveImage(data.imageUrl, data.imagePrompt || 'Reception', theme, { w: 600, h: 400 });
         return (
             <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#fff', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
                 <div style={{ flex: 1, padding: '4rem 2rem', textAlign: 'left' }}>
@@ -24,8 +26,11 @@ const ConversionSection = ({ data, layout, theme }) => {
                     </button>
                 </div>
                 <div style={{ flex: 1, height: '400px', backgroundColor: '#e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                    {/* Placeholder for split image */}
-                    <div style={{ color: '#9ca3af', fontStyle: 'italic' }}>Image: {data.imagePrompt || 'Reception'}</div>
+                    <img
+                        src={imageSrc}
+                        alt={data.imagePrompt}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
                 </div>
             </div>
         )

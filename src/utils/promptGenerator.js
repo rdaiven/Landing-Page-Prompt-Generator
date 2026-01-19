@@ -6,15 +6,32 @@ export const generatePrompt = (data) => {
         if (!data || Object.keys(data).length === 0) return '';
 
         return Object.entries(data).map(([key, value]) => {
+            if (key === 'imageUrl' && value) return `- IMAGE OVERRIDE: Use specific image at URL "${value}"`;
+            if (key === 'videoUrl' && value) return `- VIDEO OVERRIDE: Use specific video at URL "${value}"`;
+            if (key === 'icon' && value && value !== 'undefined') return `- ICON: Use Lucide icon "<${value} />"`;
+
             // Handle arrays (collections like testimonials)
             if (Array.isArray(value)) {
                 return `- ${key.toUpperCase()}:\n` + value.map(item =>
-                    `  * ` + Object.entries(item).map(([k, v]) => `${k}: "${v || `[Generate high-quality ${k} content based on topic: ${topic}]`}"`).join(', ')
+                    `  * ` + Object.entries(item).map(([k, v]) => {
+                        if (k === 'icon' && v) return `Icon: <${v} />`;
+                        return `${k}: "${v || `[Generate high-quality ${k} content based on topic: ${topic}]`}"`
+                    }).join(', ')
                 ).join('\n');
             }
             // Handle regular strings/text
             return `- ${key.toUpperCase()}: "${value || `[GENERATE high-converting copy for ${key} relevant to ${topic || 'the brand'}]`}"`;
         }).join('\n');
+    }
+
+    // Helper to get styling instructions
+    const getStyleInstruction = (sectionObj) => {
+        if (!sectionObj.styles) return '';
+        let s = '';
+        const { backgroundColor, textColor } = sectionObj.styles;
+        if (backgroundColor) s += `\n- BACKGROUND COLOR: Force background to '${backgroundColor}' theme color.`;
+        if (textColor) s += `\n- TEXT COLOR: Force text color to '${textColor}'.`;
+        return s;
     }
 
     // Helper to infer vibe from color if missing
@@ -144,6 +161,7 @@ IMPORTANT: "STRICT LAYOUT COMPLIANCE"
                 ? '- Header MUST remain fixed/sticky at the top of the viewport at all times.'
                 : '- Header checks in at top but scrolls away with content (Static).'}
 - RESPONSIVENESS: On mobile, use a hamburger menu or simplified layout ensuring CTA is always visible/accessible (unless hidden by smart scroll).
+${getStyleInstruction(sections.header)}
 SPECIFIC CONTENT:
 ${formatSectionData(sections.header.data)}
 
@@ -159,6 +177,7 @@ ${formatSectionData(sections.header.data)}
     - Primary CTA button.
     - Trust micro-signal (Optional).
 ${getDesignRules('hero', sections.hero.layout)}
+${getStyleInstruction(sections.hero)}
 SPECIFIC CONTENT:
 ${formatSectionData(sections.hero.data)}
 
@@ -170,6 +189,7 @@ ${formatSectionData(sections.hero.data)}
 - GOAL: Provide instant assurance with 1-2 critical trust elements only.
 - ELEMENTS: Pick 1-2 from: 5-star rating, patient count, or doctor credentials.
 ${getDesignRules('trustPrimer', sections.trustPrimer.layout)}
+${getStyleInstruction(sections.trustPrimer)}
 SPECIFIC CONTENT:
 ${formatSectionData(sections.trustPrimer.data)}
 
@@ -182,6 +202,7 @@ ${formatSectionData(sections.trustPrimer.data)}
 - RULES: 3–5 bullets only. No paragraphs. No medical jargon.
 - TITLE: "Is this your concern?" or "This treatment may be right for you if..."
 ${getDesignRules('problemConcern', sections.problemConcern.layout)}
+${getStyleInstruction(sections.problemConcern)}
 SPECIFIC CONTENT:
 ${formatSectionData(sections.problemConcern.data)}
 
@@ -193,6 +214,7 @@ ${formatSectionData(sections.problemConcern.data)}
 - GOAL: Explain value with non-medical clarity. Outcome-focused simple biology.
 - STRUCTURE: Outcome focused. Avoid marketing hype. Simple clarity.
 ${getDesignRules('treatmentLogic', sections.treatmentLogic.layout)}
+${getStyleInstruction(sections.treatmentLogic)}
 SPECIFIC CONTENT:
 ${formatSectionData(sections.treatmentLogic.data)}
 
@@ -203,6 +225,7 @@ ${formatSectionData(sections.treatmentLogic.data)}
         p += `5. WHAT TO EXPECT (Layout: ${sections.procedureGuide.layout})
 - GOAL: Reduce fear of the unknown.
 - STRUCTURE: Before session (prep), During session (sensation/duration), After session (results/aftercare).
+${getStyleInstruction(sections.procedureGuide)}
 SPECIFIC CONTENT:
 ${formatSectionData(sections.procedureGuide.data)}
 
@@ -214,6 +237,7 @@ ${formatSectionData(sections.procedureGuide.data)}
 - GOAL: Reinforce credibility. One real proof > five fake ones.
 - MINIMUM: Short testimonials (1-2 lines), Before & After thumbnails, Doctor endorsement video.
 ${getDesignRules('socialProof', sections.socialProof.layout)}
+${getStyleInstruction(sections.socialProof)}
 SPECIFIC CONTENT:
 ${formatSectionData(sections.socialProof.data)}
 
@@ -225,6 +249,7 @@ ${formatSectionData(sections.socialProof.data)}
 - GOAL: Moment of commitment. Clear offer and logical CTA.
 - MUST INCLUDE: Urgency copy (discounted slots or time-bound), CTA Button, Reassurance (e.g., 'No payment required').
 ${getDesignRules('conversion', sections.conversion.layout)}
+${getStyleInstruction(sections.conversion)}
 SPECIFIC CONTENT:
 ${formatSectionData(sections.conversion.data)}
 
@@ -236,6 +261,7 @@ ${formatSectionData(sections.conversion.data)}
 - GOAL: Confirm legitimacy and demand.
 - MUST INCLUDE: Clinic name, Neutral descriptor, Location (City), Visual proof (Interior, Exterior, Doctor-in-clinic), Operating signals (Mon-Sat, by appointment).
 ${getDesignRules('clinicDetails', sections.clinicDetails.layout)}
+${getStyleInstruction(sections.clinicDetails)}
 SPECIFIC CONTENT:
 ${formatSectionData(sections.clinicDetails.data)}
 
@@ -247,6 +273,7 @@ ${formatSectionData(sections.clinicDetails.data)}
 - GOAL: Remove final friction points (Safety, Pain, Sessions, Eligibility).
 - RULE: Do NOT educate. Only answer silent objections stopping a book.
 ${getDesignRules('faq', sections.faq.layout)}
+${getStyleInstruction(sections.faq)}
 SPECIFIC CONTENT:
 ${formatSectionData(sections.faq.data)}
 
@@ -257,6 +284,7 @@ ${formatSectionData(sections.faq.data)}
         p += `10. FINAL DETAILS / FOOTER (Layout: ${sections.footer.layout})
 - INCLUDE: Clinic name, Location, Medical disclaimer (light tone), Privacy/ToS.
 ${getDesignRules('footer', sections.footer.layout)}
+${getStyleInstruction(sections.footer)}
 SPECIFIC CONTENT:
 ${formatSectionData(sections.footer.data)}
 

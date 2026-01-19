@@ -3,10 +3,12 @@ import InputPanel from './components/InputPanel'
 import PreviewPanel from './components/PreviewPanel'
 import { generatePrompt } from './utils/promptGenerator'
 import { getInitialSectionState, sectionConfigs } from './utils/sectionConfig'
+import { Layout, Eye } from 'lucide-react'
 
 const STORAGE_KEY = 'prompt_generator_v1_data';
 
 function App() {
+  const [mobileTab, setMobileTab] = useState('editor') // 'editor' | 'preview'
   const [formData, setFormData] = useState(() => {
     // Initialize from storage if available, otherwise default
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -98,6 +100,22 @@ function App() {
     }))
   }
 
+  const updateSectionStyles = (section, styleName, value) => {
+    setFormData(prev => ({
+      ...prev,
+      sections: {
+        ...prev.sections,
+        [section]: {
+          ...prev.sections[section],
+          styles: {
+            ...(prev.sections[section].styles || {}),
+            [styleName]: value
+          }
+        }
+      }
+    }))
+  }
+
   // --- Actions ---
   const handleReset = () => {
     if (window.confirm('Are you sure you want to clear all data? This cannot be undone.')) {
@@ -177,7 +195,7 @@ function App() {
 
   return (
     <main className="workbench">
-      <div className="input-side">
+      <div className={`input-side ${mobileTab === 'preview' ? 'hidden-mobile' : ''}`}>
         <header className="side-header">
           <h1>Copy Workbench</h1>
           <p>Landing Page Prompt Generator</p>
@@ -188,15 +206,33 @@ function App() {
           toggleSection={toggleSection}
           updateSectionLayout={updateSectionLayout}
           updateSectionData={updateSectionData}
+          updateSectionStyles={updateSectionStyles}
           onReset={handleReset}
           onExport={handleExport}
           onImport={handleImport}
           onSectionClick={handleSectionClick}
         />
       </div>
-      <div className="preview-side">
+      <div className={`preview-side ${mobileTab === 'editor' ? 'hidden-mobile' : ''}`}>
         <PreviewPanel prompt={prompt} formData={formData} />
       </div>
+
+      <nav className="mobile-nav">
+        <button
+          className={`nav-btn ${mobileTab === 'editor' ? 'active' : ''}`}
+          onClick={() => setMobileTab('editor')}
+        >
+          <Layout size={20} />
+          <span>Editor</span>
+        </button>
+        <button
+          className={`nav-btn ${mobileTab === 'preview' ? 'active' : ''}`}
+          onClick={() => setMobileTab('preview')}
+        >
+          <Eye size={20} />
+          <span>Preview</span>
+        </button>
+      </nav>
     </main>
   )
 }

@@ -1,7 +1,9 @@
 import React from 'react'
+import { getEffectiveImage } from '../../utils/mediaUtils'
 
 const ClinicDetailsSection = ({ data, layout, theme }) => {
     if (layout === 'Gallery Split') {
+        const imageSrc = getEffectiveImage(data.imageUrl, data.imagePrompt || 'Interior Shot', theme, { w: 800, h: 600 });
         return (
             <div style={{ padding: '6rem 2rem', backgroundColor: '#f9fafb' }}>
                 <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'center' }}>
@@ -12,12 +14,15 @@ const ClinicDetailsSection = ({ data, layout, theme }) => {
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         overflow: 'hidden'
                     }}>
-                        <span style={{ color: '#9ca3af' }}>{data.imagePrompt || 'Interior Shot'}</span>
+                        <img
+                            src={imageSrc}
+                            alt={data.imagePrompt}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
                     </div>
                     <div>
                         <h2 style={{ fontSize: '2.5rem', fontFamily: 'var(--font-serif)', marginBottom: '1.5rem' }}>{data.location}</h2>
                         <p style={{ fontSize: '1.1rem', color: '#4b5563', marginBottom: '2rem', lineHeight: 1.6 }}>{data.description}</p>
-
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <div style={{ display: 'flex', gap: '1rem' }}>
                                 <span style={{ fontSize: '1.25rem' }}>📍</span>

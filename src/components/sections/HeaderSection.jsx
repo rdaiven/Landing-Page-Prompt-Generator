@@ -10,19 +10,9 @@ const HeaderSection = ({ data, layout, theme }) => {
 
     if (layout === 'Centered Logo') {
         return (
-            <div style={{
-                padding: '2rem',
-                backgroundColor: '#fff',
-                borderBottom: '1px solid #e5e7eb',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '2rem',
-                position: 'relative',
-                zIndex: 100
-            }}>
+            <div className="mock-header-centered" style={{ backgroundColor: '#fff', borderBottom: '1px solid #e5e7eb' }}>
                 <div style={{ fontWeight: '800', fontSize: '2rem', fontFamily: 'var(--font-serif)', color: '#0f172a', letterSpacing: '-0.02em' }}>{brandName || 'Brand'}</div>
-                <nav style={{ display: 'flex', gap: '2.5rem' }}>
+                <nav className="mock-nav">
                     {links.map((link, i) => (
                         <a key={i} href="#" onClick={e => e.preventDefault()} style={{
                             cursor: 'pointer',
@@ -44,11 +34,7 @@ const HeaderSection = ({ data, layout, theme }) => {
     }
 
     return (
-        <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '1.25rem 3rem',
+        <div className="mock-header-standard" style={{
             backgroundColor: 'rgba(255, 255, 255, 0.95)',
             backdropFilter: 'blur(8px)',
             borderBottom: '1px solid #f1f5f9',
@@ -60,8 +46,8 @@ const HeaderSection = ({ data, layout, theme }) => {
                 {brandName || 'Brand'}
             </div>
 
-            <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-                <div style={{ display: 'flex', gap: '2rem', marginRight: '1rem' }}>
+            <nav className="mock-nav-group">
+                <div className="mock-nav-links">
                     {links.map((link, i) => (
                         <a key={i} href="#" onClick={e => e.preventDefault()} style={{
                             cursor: 'pointer',
@@ -79,23 +65,26 @@ const HeaderSection = ({ data, layout, theme }) => {
                     ))}
                 </div>
 
-                <button style={{
-                    backgroundColor: primaryColor || '#000',
-                    color: buttonTextColor,
-                    padding: '0.75rem 1.75rem',
-                    border: 'none',
-                    borderRadius: '50px',
-                    fontWeight: '600',
-                    fontSize: '0.95rem',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-                    cursor: 'pointer',
-                    transition: 'opacity 0.2s'
-                }}
-                    onMouseEnter={(e) => e.target.style.opacity = '0.9'}
-                    onMouseLeave={(e) => e.target.style.opacity = '1'}
-                >
-                    {ctaText}
-                </button>
+                <div className="mock-nav-cta">
+                    <button style={{
+                        backgroundColor: primaryColor || '#000',
+                        color: buttonTextColor,
+                        padding: '0.75rem 1.75rem',
+                        border: 'none',
+                        borderRadius: '50px',
+                        fontWeight: '600',
+                        fontSize: '0.95rem',
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        cursor: 'pointer',
+                        transition: 'opacity 0.2s'
+                    }}
+                        onMouseEnter={(e) => e.target.style.opacity = '0.9'}
+                        onMouseLeave={(e) => e.target.style.opacity = '1'}
+                    >
+                        {ctaText}
+                    </button>
+                    <button className="mobile-menu-btn">☰</button>
+                </div>
             </nav>
         </div>
     )

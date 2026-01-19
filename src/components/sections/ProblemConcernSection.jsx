@@ -1,4 +1,10 @@
 import React from 'react'
+import * as Icons from 'lucide-react'
+
+const DynamicIcon = ({ name, size = 24, className }) => {
+    const IconComponent = Icons[name] || Icons.HelpCircle;
+    return <IconComponent size={size} className={className} />;
+}
 
 const ProblemConcernSection = ({ data, layout, theme }) => {
     const { heading, items } = data;
@@ -25,7 +31,9 @@ const ProblemConcernSection = ({ data, layout, theme }) => {
                                 transition: 'all 0.2s',
                                 cursor: 'default'
                             }}>
-                                <span style={{ fontSize: '2rem' }}>{item.icon}</span>
+                                <div style={{ color: theme.primaryColor || '#000' }}>
+                                    <DynamicIcon name={item.icon} size={32} />
+                                </div>
                                 <h3 style={{ fontSize: '1.25rem', fontWeight: 600 }}>{item.title}</h3>
                                 <p style={{ color: '#6b7280', lineHeight: 1.5 }}>{item.description}</p>
                             </div>
@@ -68,7 +76,7 @@ const ProblemConcernSection = ({ data, layout, theme }) => {
                             {(items || []).map((item, i) => (
                                 <li key={i} className="flex gap-x-4">
                                     <div className="flex-none w-12 h-12 rounded-lg flex items-center justify-center text-2xl" style={{ backgroundColor: `${theme.primaryColor}20`, color: theme.primaryColor }}>
-                                        {item.icon}
+                                        <DynamicIcon name={item.icon} size={24} />
                                     </div>
                                     <div>
                                         <h4 className="text-lg text-gray-800 font-semibold">
@@ -105,5 +113,4 @@ const ProblemConcernSection = ({ data, layout, theme }) => {
         </div>
     )
 }
-
 export default ProblemConcernSection

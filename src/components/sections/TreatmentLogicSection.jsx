@@ -1,10 +1,18 @@
 import React from 'react'
+import { getEffectiveImage } from '../../utils/mediaUtils'
+import * as Icons from 'lucide-react'
+
+const DynamicIcon = ({ name, size = 24, className }) => {
+    const IconComponent = Icons[name] || Icons.HelpCircle;
+    return <IconComponent size={size} className={className} />;
+}
 
 const TreatmentLogicSection = ({ data, layout, theme }) => {
     const { heading, description, feature1, feature2, feature3 } = data;
     const features = [feature1, feature2, feature3].filter(Boolean);
 
     if (layout === 'Detailed Split') {
+        const imageSrc = getEffectiveImage(data.imageUrl, data.imagePrompt || 'Visual Diagram', theme, { w: 600, h: 500 });
         return (
             <div style={{ padding: '6rem 2rem', backgroundColor: '#ffff' }}>
                 <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
@@ -14,7 +22,6 @@ const TreatmentLogicSection = ({ data, layout, theme }) => {
                         </span>
                         <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontFamily: 'var(--font-serif)', lineHeight: 1.2 }}>{heading}</h2>
                         <p style={{ fontSize: '1.1rem', color: '#4b5563', marginBottom: '2rem', lineHeight: '1.6' }}>{description}</p>
-
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             {(data.benefits || []).map((b, i) => (
                                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -34,9 +41,14 @@ const TreatmentLogicSection = ({ data, layout, theme }) => {
                         color: '#9ca3af',
                         fontSize: '1.5rem',
                         textAlign: 'center',
-                        padding: '2rem'
+                        padding: '0',
+                        overflow: 'hidden'
                     }}>
-                        {data.imagePrompt || 'Visual Diagram'}
+                        <img
+                            src={imageSrc}
+                            alt={data.imagePrompt}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
                     </div>
                 </div>
             </div>
@@ -60,10 +72,21 @@ const TreatmentLogicSection = ({ data, layout, theme }) => {
                                 border: '1px solid #e5e7eb',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                justifyContent: 'flex-end'
+                                justifyContent: 'flex-end',
+                                overflow: 'hidden',
+                                position: 'relative'
                             }}>
-                                <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>{item.title}</h3>
-                                <p style={{ fontSize: '0.9rem', color: '#6b7280' }}>{item.text}</p>
+                                {item.type === 'Image' && (
+                                    <img
+                                        src={getEffectiveImage(null, item.title, theme, { w: 400, h: 400 })}
+                                        alt={item.title}
+                                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                                    />
+                                )}
+                                <div style={{ position: 'relative', zIndex: 1, color: item.type === 'Image' ? '#fff' : 'inherit' }}>
+                                    <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600, textShadow: item.type === 'Image' ? '0 1px 2px rgba(0,0,0,0.5)' : 'none' }}>{item.title}</h3>
+                                    <p style={{ fontSize: '0.9rem', color: item.type === 'Image' ? '#f3f4f6' : '#6b7280' }}>{item.text}</p>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -89,7 +112,9 @@ const TreatmentLogicSection = ({ data, layout, theme }) => {
                                 transition: 'transform 0.2s',
                                 cursor: 'default'
                             }}>
-                                <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>{item.icon}</div>
+                                <div style={{ fontSize: '2rem', marginBottom: '1rem', color: theme.primaryColor || '#000' }}>
+                                    <DynamicIcon name={item.icon} size={40} />
+                                </div>
                                 <h3 style={{ fontSize: '1.25rem', marginBottom: '0.75rem', fontWeight: 600 }}>{item.title}</h3>
                                 <p style={{ color: '#6b7280', lineHeight: 1.6 }}>{item.description}</p>
                             </div>
@@ -102,6 +127,8 @@ const TreatmentLogicSection = ({ data, layout, theme }) => {
 
     if (layout === 'Interactive Hotspots') {
         const hotspots = data.hotspots || [];
+        const imageSrc = getEffectiveImage(data.imageUrl, data.imagePrompt || 'Device Close Up', theme, { w: 1000, h: 600 });
+
         return (
             <div style={{ padding: '6rem 2rem', backgroundColor: '#fff' }}>
                 <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
@@ -116,7 +143,11 @@ const TreatmentLogicSection = ({ data, layout, theme }) => {
                         justifyContent: 'center',
                         overflow: 'hidden'
                     }}>
-                        <span style={{ fontSize: '1.5rem', color: '#9ca3af' }}>{data.imagePrompt}</span>
+                        <img
+                            src={imageSrc}
+                            alt={data.imagePrompt}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
                         {/* Mock Hotspots */}
                         {hotspots.map((h, i) => (
                             <div key={i} style={{

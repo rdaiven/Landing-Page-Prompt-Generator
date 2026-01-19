@@ -30,16 +30,76 @@ body {
   display: flex;
   height: 100vh;
   overflow: hidden;
+  flex-direction: column;
+  /* Mobile Default */
+}
+
+/* Mobile: Tabbed Interface */
+.input-side,
+.preview-side {
+  width: 100%;
+  height: calc(100vh - 64px);
+  /* Minus mobile nav height */
+  flex-shrink: 0;
 }
 
 .input-side {
-  width: 450px;
-  flex-shrink: 0;
-  border-right: 1px solid var(--border);
+  border-right: none;
   background: var(--surface-alt);
   overflow-y: auto;
   display: flex;
+  /* Kept flex for column layout inside */
   flex-direction: column;
+}
+
+.preview-side {
+  background: #e2e8f0;
+  overflow-y: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  /* Remove padding on mobile to maximize space */
+}
+
+.hidden-mobile {
+  display: none !important;
+}
+
+/* Mobile Nav Bar */
+.mobile-nav {
+  height: 64px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.5rem;
+  z-index: 50;
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn.active {
+  color: var(--primary);
+  background: var(--surface-alt);
 }
 
 .side-header {
@@ -49,55 +109,47 @@ body {
   flex-shrink: 0;
 }
 
+/* Desktop Overrides (min-width: 1024px) */
+@media (min-width: 1024px) {
+  .workbench {
+    flex-direction: row;
+    /* Side by Side */
+  }
+
+  .mobile-nav {
+    display: none;
+  }
+
+  .hidden-mobile {
+    display: flex !important;
+  }
+
+  .input-side {
+    width: 450px;
+    height: 100vh;
+    border-right: 1px solid var(--border);
+  }
+
+  .preview-side {
+    height: 100vh;
+    padding: 2rem;
+    flex: 1;
+    /* Ensure it takes remaining space */
+    justify-content: flex-start;
+    /* Align closer to input panel */
+    align-items: flex-start;
+    /* align top */
+    overflow-y: auto;
+    /* Ensure scroll is here */
+  }
+}
+
 .side-header h1 {
   font-size: 1.5rem;
   font-weight: 800;
   color: var(--text-main);
   margin: 0;
   letter-spacing: -0.025em;
-}
-
-.side-header p {
-  font-size: 0.875rem;
-  color: var(--text-muted);
-  margin: 0.25rem 0 0 0;
-  font-weight: 500;
-}
-
-.preview-side {
-  flex: 1;
-  background: #e2e8f0;
-  overflow-y: hidden;
-  /* Changed from auto to hidden to allow internal scroll */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
-
-/* Preview Panel Styles */
-.preview-panel {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: var(--surface);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border);
-  max-width: 1400px;
-  /* Constrain max width for better readability on large screens */
-}
-
-.preview-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1.25rem;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
 }
 
 .status {
@@ -545,4 +597,310 @@ button {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Viewport Simulation Tools */
+.viewport-container {
+  margin: 0 auto;
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  background: white;
+  min-height: 100%;
+}
+
+.viewport-mobile {
+  width: 375px;
+  box-shadow: 0 0 0 1px #cbd5e1, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.viewport-tablet {
+  width: 768px;
+  box-shadow: 0 0 0 1px #cbd5e1, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.viewport-desktop {
+  width: 100%;
+}
+
+/* Mock Components Responsive Styles */
+.mock-header-standard,
+.mock-header-centered {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 3rem;
+  position: relative;
+  z-index: 100;
+}
+
+.mock-header-centered {
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.mock-nav,
+.mock-nav-group,
+.mock-nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.mock-nav-cta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Responsive Overrides within Visualization */
+@container (max-width: 768px) {
+  /* This requires container queries on the wrapper, or strictly resizing window. 
+     Since visual preview is in a constrained div, let's use standard media queries if viewport simulation matches real pixels,
+     BUT viewport simulation uses fixed widths on a div. Container Queries are better if supported. 
+     However, standard media queries work for the REAL viewport (375px phone). 
+  */
+}
+
+/* We will use Media Queries for the actual Mobile App View (Screen < 1024px) */
+@media (max-width: 768px) {
+
+  /* Hide Desktop View Toggles on Mobile Device */
+  .preview-header .header-controls .view-toggle {
+    display: none;
+  }
+
+  /* Fix Preview Panel padding for Mobile Nav */
+  .preview-content {
+    padding-bottom: 80px;
+    /* Space for bottom nav */
+  }
+
+  /* Mock Header Responsive */
+  .mock-header-standard {
+    padding: 1rem 1.5rem !important;
+  }
+
+  .mock-nav-links {
+    display: none;
+    /* Hide links on mobile */
+  }
+
+  .mobile-menu-btn {
+    display: block;
+    /* Show hamburger */
+  }
+
+  /* Mock Hero Responsive */
+  .mock-hero-split {
+    flex-direction: column;
+    padding: 3rem 1.5rem !important;
+    gap: 2rem !important;
+    text-align: center;
+  }
+
+  .mock-hero-split h1 {
+    font-size: 2.25rem !important;
+  }
+}
+
+/* Container Query Support for Desktop Simulation of Mobile */
+/* If the container .viewport-mobile is 375px, we want these styles to apply too. */
+/* Ideally we'd use @container but basic CSS support can be tricky without wrapper setup. 
+   For now, we rely on the fact that .viewport-mobile is 375px. 
+   But the media query only triggers on screen size.
+   We can add a specific selector: .viewport-mobile .mock-nav-links { display: none }
+*/
+
+.viewport-mobile .mock-nav-links,
+.viewport-tablet .mock-nav-links {
+  display: none;
+}
+
+.viewport-mobile .mobile-menu-btn,
+.viewport-tablet .mobile-menu-btn {
+  display: block;
+}
+
+.viewport-mobile .mock-header-standard,
+.viewport-tablet .mock-header-standard {
+  padding: 1rem 1.5rem !important;
+}
+
+.viewport-mobile .mock-hero-split {
+  flex-direction: column;
+  padding: 3rem 1.5rem !important;
+  gap: 2rem !important;
+  text-align: center;
+}
+
+.viewport-mobile .mock-hero-split h1 {
+  font-size: 2rem !important;
+}
+
+/* Viewport Simulation Tools */
+.viewport-container {
+  margin: 0 auto;
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  background: white;
+  min-height: 100%;
+}
+
+.viewport-mobile {
+  width: 375px;
+  box-shadow: 0 0 0 1px #cbd5e1, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.viewport-tablet {
+  width: 768px;
+  box-shadow: 0 0 0 1px #cbd5e1, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.viewport-desktop {
+  width: 100%;
+}
+
+/* Mock Hero Marketing Layout (Desktop Fix) */
+.mock-hero-marketing {
+  padding: 6rem 2rem;
+  overflow: hidden;
+}
+
+.mock-container-split {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  /* Allow wrapping on constrained screens */
+  align-items: center;
+  gap: 4rem;
+}
+
+.mock-content-left {
+  flex: 1 1 400px;
+  /* Allow shrinking below 500px */
+  min-width: 300px;
+}
+
+.mock-image-right {
+  flex: 1 1 400px;
+  /* Allow shrinking below 500px */
+  min-width: 300px;
+  position: relative;
+}
+
+.mock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #f3f4f6;
+  border-radius: 50px;
+  margin-bottom: 2rem;
+}
+
+.mock-cta-group {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.mock-stats {
+  display: flex;
+  gap: 3rem;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.mock-blob {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 200px;
+  height: 200px;
+  opacity: 0.1;
+  border-radius: 50%;
+  filter: blur(40px);
+}
+
+/* Ensure images don't overflow */
+.mock-section img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Constrained Viewport Adjustments */
+@media (max-width: 1024px) {
+  .mock-container-split {
+    gap: 3rem;
+  }
+}
+
+/* If inside a small container (like mobile preview on desktop) */
+.viewport-mobile .mock-h1 {
+  font-size: 2.5rem !important;
+}
+
+.viewport-mobile .mock-container-split,
+.viewport-tablet .mock-container-split {
+  flex-direction: column;
+  text-align: center;
+}
+
+.viewport-mobile .mock-cta-group,
+.viewport-tablet .mock-cta-group {
+  justify-content: center;
+}
+
+.viewport-mobile .mock-stats,
+.viewport-tablet .mock-stats {
+  justify-content: center;
+}
+
+/* Mobile Polish (Small Screens) */
+@media (max-width: 480px) {
+  .actions-toolbar {
+    flex-direction: column;
+    gap: 0.75rem !important;
+  }
+
+  .actions-toolbar button,
+  .actions-toolbar label {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .color-grid {
+    grid-template-columns: 1fr;
+    /* Stack color inputs on very small screens */
+    gap: 1rem;
+  }
+
+  .section-layout-select select {
+    font-size: 1rem;
+    /* Prevent zoom on iOS */
+    padding: 0.875rem;
+  }
+
+  .input-panel {
+    padding: 1rem 1.25rem;
+    /* Reduce padding slightly */
+    padding-bottom: 80px;
+    /* Ensure bottom nav doesn't cover content */
+  }
+}
+
+/* Ensure no horizontal scroll on body */
+body {
+  overflow-x: hidden;
+  width: 100vw;
 }

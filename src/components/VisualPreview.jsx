@@ -28,8 +28,24 @@ const VisualPreview = ({ formData }) => {
     const renderSection = (key, Component) => {
         const sectionData = sections[key];
         if (!sectionData || !sectionData.enabled) return null;
+
+        const customStyles = {};
+        if (sectionData.styles) {
+            if (sectionData.styles.backgroundColor) {
+                if (sectionData.styles.backgroundColor === 'primary') customStyles.backgroundColor = theme.primaryColor;
+                else if (sectionData.styles.backgroundColor === 'secondary') customStyles.backgroundColor = theme.secondaryColor;
+                else if (sectionData.styles.backgroundColor === 'accent') customStyles.backgroundColor = theme.accentColor;
+                else if (sectionData.styles.backgroundColor === 'neutral') customStyles.backgroundColor = theme.neutralColor;
+            }
+            if (sectionData.styles.textColor) {
+                if (sectionData.styles.textColor === 'dark') customStyles.color = '#1e293b';
+                else if (sectionData.styles.textColor === 'light') customStyles.color = '#ffffff';
+                else if (sectionData.styles.textColor === 'primary') customStyles.color = theme.primaryColor;
+            }
+        }
+
         return (
-            <div id={`section-${key}`} key={key}>
+            <div id={`section-${key}`} key={key} style={customStyles}>
                 <Component
                     data={sectionData.data}
                     layout={sectionData.layout}
