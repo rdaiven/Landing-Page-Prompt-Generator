@@ -24,35 +24,6 @@ const PreviewPanel = ({ prompt, formData }) => {
                 </div>
 
                 <div className="header-controls">
-                    {viewMode === 'visual' && (
-                        <div className="view-toggle" style={{ marginRight: '1rem' }}>
-                            <button
-                                className={`toggle-btn ${viewport === 'mobile' ? 'active' : ''}`}
-                                onClick={() => setViewport('mobile')}
-                                title="Mobile View"
-                                style={{ padding: '0.35rem' }}
-                            >
-                                <Smartphone size={18} />
-                            </button>
-                            <button
-                                className={`toggle-btn ${viewport === 'tablet' ? 'active' : ''}`}
-                                onClick={() => setViewport('tablet')}
-                                title="Tablet View"
-                                style={{ padding: '0.35rem' }}
-                            >
-                                <Tablet size={18} />
-                            </button>
-                            <button
-                                className={`toggle-btn ${viewport === 'desktop' ? 'active' : ''}`}
-                                onClick={() => setViewport('desktop')}
-                                title="Desktop View"
-                                style={{ padding: '0.35rem' }}
-                            >
-                                <Monitor size={18} />
-                            </button>
-                        </div>
-                    )}
-
                     <button
                         className="help-btn"
                         onClick={() => setIsTutorialOpen(true)}
@@ -84,13 +55,52 @@ const PreviewPanel = ({ prompt, formData }) => {
                     </button>
                 </div>
             </div>
+
             <div className="preview-content">
                 {viewMode === 'visual' ? (
-                    <div className={`viewport-container viewport-${viewport}`}>
-                        <VisualPreview formData={formData} />
-                    </div>
+                    <>
+                        <div className="viewport-toolbar" style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            gap: '0.5rem',
+                            padding: '0.75rem',
+                            background: '#fff',
+                            borderBottom: '1px solid var(--border)',
+                            marginBottom: '1rem'
+                        }}>
+                            <div className="view-toggle">
+                                <button
+                                    className={`toggle-btn ${viewport === 'mobile' ? 'active' : ''}`}
+                                    onClick={() => setViewport('mobile')}
+                                    title="Mobile View"
+                                    style={{ padding: '0.35rem' }}
+                                >
+                                    <Smartphone size={18} />
+                                </button>
+                                <button
+                                    className={`toggle-btn ${viewport === 'tablet' ? 'active' : ''}`}
+                                    onClick={() => setViewport('tablet')}
+                                    title="Tablet View"
+                                    style={{ padding: '0.35rem' }}
+                                >
+                                    <Tablet size={18} />
+                                </button>
+                                <button
+                                    className={`toggle-btn ${viewport === 'desktop' ? 'active' : ''}`}
+                                    onClick={() => setViewport('desktop')}
+                                    title="Desktop View"
+                                    style={{ padding: '0.35rem' }}
+                                >
+                                    <Monitor size={18} />
+                                </button>
+                            </div>
+                        </div>
+                        <div className={`viewport-container viewport-${viewport}`} style={{ flex: 1, overflowY: 'auto' }}>
+                            <VisualPreview formData={formData} />
+                        </div>
+                    </>
                 ) : (
-                    <pre>{prompt}</pre>
+                    <pre style={{ overflow: 'auto', height: '100%' }}>{prompt}</pre>
                 )}
             </div>
 

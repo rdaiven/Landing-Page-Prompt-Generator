@@ -89,18 +89,7 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                         newValue.splice(index, 1);
                                         updateSectionData(sectionKey, field.name, newValue);
                                     }}
-                                    style={{
-                                        position: 'absolute',
-                                        top: '0.5rem',
-                                        right: '0.5rem',
-                                        background: 'transparent',
-                                        border: 'none',
-                                        color: '#ef4444',
-                                        cursor: 'pointer',
-                                        fontSize: '1.2rem',
-                                        fontWeight: 'bold',
-                                        lineHeight: 1
-                                    }}
+                                    className="collection-remove-btn"
                                     title="Remove Item"
                                 >
                                     ×
@@ -144,18 +133,7 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
                                     field.fields.forEach(f => newItem[f.name] = f.default || '');
                                     updateSectionData(sectionKey, field.name, [...items, newItem]);
                                 }}
-                                style={{
-                                    width: '100%',
-                                    padding: '0.75rem',
-                                    marginTop: '0.5rem',
-                                    background: 'var(--surface-alt)',
-                                    border: '1px dashed var(--border)',
-                                    borderRadius: 'var(--radius)',
-                                    color: 'var(--primary)',
-                                    cursor: 'pointer',
-                                    fontWeight: 600,
-                                    fontSize: '0.9rem'
-                                }}
+                                className="collection-add-btn"
                             >
                                 + Add {field.label.slice(0, -1) || 'Item'}
                             </button>
@@ -172,31 +150,13 @@ const InputPanel = ({ formData, updateField, toggleSection, updateSectionLayout,
             <div className="tabs-header" style={{ display: 'flex', gap: '1rem', borderBottom: '1px solid var(--border)', marginBottom: '2rem' }}>
                 <button
                     onClick={() => setActiveTab('settings')}
-                    style={{
-                        padding: '0.75rem 1rem',
-                        border: 'none',
-                        borderBottom: activeTab === 'settings' ? '2px solid var(--primary)' : '2px solid transparent',
-                        marginBottom: '-1px',
-                        color: activeTab === 'settings' ? 'var(--primary)' : 'var(--text-muted)',
-                        fontWeight: 600,
-                        fontSize: '0.95rem',
-                        background: 'none',
-                    }}
+                    className={`tab-btn ${activeTab === 'settings' ? 'active' : ''}`}
                 >
                     Global Settings
                 </button>
                 <button
                     onClick={() => setActiveTab('content')}
-                    style={{
-                        padding: '0.75rem 1rem',
-                        border: 'none',
-                        borderBottom: activeTab === 'content' ? '2px solid var(--primary)' : '2px solid transparent',
-                        marginBottom: '-1px',
-                        color: activeTab === 'content' ? 'var(--primary)' : 'var(--text-muted)',
-                        fontWeight: 600,
-                        fontSize: '0.95rem',
-                        background: 'none',
-                    }}
+                    className={`tab-btn ${activeTab === 'content' ? 'active' : ''}`}
                 >
                     Page Sections
                 </button>
