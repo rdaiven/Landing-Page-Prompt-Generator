@@ -3,7 +3,7 @@ import { getContrastColor } from '../../utils/colors'
 import { getEffectiveImage } from '../../utils/mediaUtils'
 
 const HeroSection = ({ data, layout, theme }) => {
-    const { primaryColor, secondaryColor, neutralColor } = theme;
+    const { primaryColor, secondaryColor } = theme;
     const buttonTextColor = getContrastColor(primaryColor);
 
     const { headline, subheadline, ctaText, imagePrompt, imageUrl, videoUrl } = data;

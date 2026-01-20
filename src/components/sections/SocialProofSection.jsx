@@ -1,7 +1,7 @@
 import React from 'react'
 
 const SocialProofSection = ({ data, layout, theme }) => {
-    const { primaryColor, secondaryColor, neutralColor } = theme;
+    const { primaryColor, neutralColor } = theme;
     const { heading, items } = data;
 
     const scrollLeft = () => {

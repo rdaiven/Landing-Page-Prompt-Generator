@@ -1,5 +1,5 @@
 
-import { getInitialSectionState, sectionConfigs } from './src/utils/sectionConfig.js';
+// import { getInitialSectionState, sectionConfigs } from './src/utils/sectionConfig.js';
 import { generatePrompt } from './src/utils/promptGenerator.js';
 
 console.log("Starting verification...");
@@ -7,21 +7,12 @@ console.log("Starting verification...");
 try {
     // 1. Initialize State
     console.log("Initializing state...");
-    const sections = getInitialSectionState();
+
 
     // 2. Simulate User Data Input
-    const formData = {
-        brandName: "Venus Future Aesthetics",
-        topic: "Cryoslim Treatment",
-        vibe: "Professional & Luxury",
-        primaryColor: "#000000",
-        secondaryColor: "#ffffff",
-        accentColor: "#ff0000",
-        neutralColor: "#f5f5f5",
-        audience: "Women 30-50",
-        assets: [],
-        sections: sections
-    };
+    // 2. Simulate User Data Input
+    // formData removed as it was unused
+
 
     // 2. Validate Design Rules for new Phase 6 layouts
     const checkDesignRules = () => {

@@ -225,6 +225,7 @@ ${formatSectionData(sections.treatmentLogic.data)}
         p += `5. WHAT TO EXPECT (Layout: ${sections.procedureGuide.layout})
 - GOAL: Reduce fear of the unknown.
 - STRUCTURE: Before session (prep), During session (sensation/duration), After session (results/aftercare).
+${getDesignRules('procedureGuide', sections.procedureGuide.layout)}
 ${getStyleInstruction(sections.procedureGuide)}
 SPECIFIC CONTENT:
 ${formatSectionData(sections.procedureGuide.data)}

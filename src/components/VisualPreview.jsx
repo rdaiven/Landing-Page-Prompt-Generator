@@ -25,6 +25,7 @@ const VisualPreview = ({ formData }) => {
         topic
     }
 
+    // eslint-disable-next-line no-unused-vars
     const renderSection = (key, Component) => {
         const sectionData = sections[key];
         if (!sectionData || !sectionData.enabled) return null;
