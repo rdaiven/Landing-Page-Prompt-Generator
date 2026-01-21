@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
-import InputPanel from './components/InputPanel'
-import PreviewPanel from './components/PreviewPanel'
+import WorkbenchLayout from './components/workbench/WorkbenchLayout'
+import TutorialModal from './components/TutorialModal'
 import { generatePrompt } from './utils/promptGenerator'
 import { getInitialSectionState, sectionConfigs } from './utils/sectionConfig'
-import { Layout, Eye } from 'lucide-react'
+import './index.css'
 
 const STORAGE_KEY = 'prompt_generator_v1_data';
 
 function App() {
-  const [mobileTab, setMobileTab] = useState('editor') // 'editor' | 'preview'
+  const [isTutorialOpen, setIsTutorialOpen] = useState(false)
+  const [prompt, setPrompt] = useState('')
   const [formData, setFormData] = useState(() => {
     // Initialize from storage if available, otherwise default
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -26,12 +27,18 @@ function App() {
     }
   })
 
-  const [prompt, setPrompt] = useState('')
+  // Start with tutorial open if first visit (no saved data)
+  useEffect(() => {
+    if (!localStorage.getItem(STORAGE_KEY)) {
+      setIsTutorialOpen(true);
+    }
+  }, []);
 
   useEffect(() => {
-    setPrompt(generatePrompt(formData))
     // Save to local storage on every update
     localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+    const newPrompt = generatePrompt(formData);
+    setPrompt(newPrompt);
   }, [formData])
 
   const updateField = (field, value) => {
@@ -116,8 +123,21 @@ function App() {
     }))
   }
 
+  const updateSectionStatus = (section, status) => {
+    setFormData(prev => ({
+      ...prev,
+      sections: {
+        ...prev.sections,
+        [section]: {
+          ...prev.sections[section],
+          status: status
+        }
+      }
+    }))
+  }
+
   // --- Actions ---
-  const handleReset = () => {
+  const resetForm = () => {
     if (window.confirm('Are you sure you want to clear all data? This cannot be undone.')) {
       const defaults = {
         brandName: '',
@@ -136,7 +156,7 @@ function App() {
     }
   }
 
-  const handleExport = () => {
+  const exportData = () => {
     const dataStr = JSON.stringify(formData, null, 2);
     const blob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -156,19 +176,7 @@ function App() {
     URL.revokeObjectURL(url);
   }
 
-  const handleSectionClick = (sectionKey) => {
-    // Determine the ID of the element to scroll to
-    const elementId = `section-${sectionKey}`;
-
-    // We need to find the element within the PreviewViewport if possible, or just global
-    // Since VisualPreview renders these IDs, we can look for them.
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-
-  const handleImport = (event) => {
+  const importData = (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
@@ -194,46 +202,24 @@ function App() {
   }
 
   return (
-    <main className="workbench">
-      <div className={`input-side ${mobileTab === 'preview' ? 'hidden-mobile' : ''}`}>
-        <header className="side-header">
-          <h1>Copy Workbench</h1>
-          <p>Landing Page Prompt Generator</p>
-        </header>
-        <InputPanel
-          formData={formData}
-          updateField={updateField}
-          toggleSection={toggleSection}
-          updateSectionLayout={updateSectionLayout}
-          updateSectionData={updateSectionData}
-          updateSectionStyles={updateSectionStyles}
-          onReset={handleReset}
-          onExport={handleExport}
-          onImport={handleImport}
-          onSectionClick={handleSectionClick}
-        />
-      </div>
-      <div className={`preview-side ${mobileTab === 'editor' ? 'hidden-mobile' : ''}`}>
-        <PreviewPanel prompt={prompt} formData={formData} />
-      </div>
+    <div className="h-screen w-full overflow-hidden bg-slate-100 font-sans text-slate-900">
+      <WorkbenchLayout
+        prompt={prompt}
+        formData={formData}
+        sections={formData.sections}
+        updateField={updateField}
+        toggleSection={toggleSection}
+        updateSectionLayout={updateSectionLayout}
+        updateSectionData={updateSectionData}
+        updateSectionStyles={updateSectionStyles}
+        updateSectionStatus={updateSectionStatus}
+        onReset={resetForm}
+        onExport={exportData}
+        onImport={importData}
+      />
 
-      <nav className="mobile-nav">
-        <button
-          className={`nav-btn ${mobileTab === 'editor' ? 'active' : ''}`}
-          onClick={() => setMobileTab('editor')}
-        >
-          <Layout size={20} />
-          <span>Editor</span>
-        </button>
-        <button
-          className={`nav-btn ${mobileTab === 'preview' ? 'active' : ''}`}
-          onClick={() => setMobileTab('preview')}
-        >
-          <Eye size={20} />
-          <span>Preview</span>
-        </button>
-      </nav>
-    </main>
+      <TutorialModal isOpen={isTutorialOpen} onClose={() => setIsTutorialOpen(false)} />
+    </div>
   )
 }
 

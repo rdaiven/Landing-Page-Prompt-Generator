@@ -2,21 +2,28 @@
 export const sectionConfigs = {
     header: {
         label: "Navigation Header",
+        description: "Top bar with logo and primary action.",
         icon: "🧭",
         layouts: {
             'Sticky': {
+                tag: "Fixed position",
+                description: "Always visible — stays at the top as users scroll.",
                 fields: [
                     { name: 'navLinks', label: 'Navigation Links (comma separated)', type: 'text', default: 'About, Services, FAQ' },
                     { name: 'ctaText', label: 'Header Button Text', type: 'text', default: 'Book Now' }
                 ]
             },
-            'Smart Hide (Scroll Up to Show)': {
+            'Smart Hide': {
+                tag: "Auto-hide",
+                description: "Hides on scroll down, reveals on scroll up for clean reading.",
                 fields: [
                     { name: 'navLinks', label: 'Navigation Links', type: 'text', default: 'About, Services, FAQ' },
                     { name: 'ctaText', label: 'Header Button Text', type: 'text', default: 'Book Now' }
                 ]
             },
             'Centered Logo': {
+                tag: "Centered layout",
+                description: "Logo centered, navigation links on both sides.",
                 fields: [
                     { name: 'navLinks', label: 'Navigation Links', type: 'text', default: 'Home, About, Services, Contact' },
                     { name: 'ctaText', label: 'Button Text', type: 'text', default: 'Get Started' }
@@ -26,63 +33,114 @@ export const sectionConfigs = {
     },
     hero: {
         label: "Immediate Hook (Hero)",
+        description: "First screen visitors see — headline, proof, and next step.",
         icon: "✨",
         layouts: {
-            'Split': {
+            'High Converting': {
+                tag: "2-column split",
+                description: "Text on one side, image on the other. Best for booking.",
                 fields: [
                     { name: 'headline', label: 'Headline', type: 'text', default: 'Transform Your Look' },
-                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Experience world-class care and results. The premier destination for your aesthetic needs.' },
+                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Experience world-class care and results.' },
                     { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Book Consultation' },
                     { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Hero Image' },
                     { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' }
                 ]
             },
-            'Centered': {
+            'Modern & Bold': {
+                tag: "Centered",
+                description: "Single column, centered text with banner image below.",
                 fields: [
-                    { name: 'headline', label: 'Headline', type: 'text', default: 'The Future of Aesthetics is Here' },
-                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Advanced aesthetics tailored to your unique needs.' },
-                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Schedule Your Visit' },
-                    { name: 'imagePrompt', label: 'Banner Image Description', type: 'text', default: 'Wide Banner Image' },
+                    { name: 'headline', label: 'Headline', type: 'text', default: 'The Future of Aesthetics' },
+                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Advanced aesthetics tailored to you.' },
+                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Schedule Visit' },
+                    { name: 'imagePrompt', label: 'Banner Image', type: 'text', default: 'Wide Banner' },
                     { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' }
                 ]
             },
-            'Full Width': {
+            'Luxurious & Immersive': {
+                tag: "Full-width bg",
+                description: "Full-screen background image with text overlay.",
                 fields: [
-                    { name: 'headline', label: 'Headline', type: 'text', default: 'Radiance Define' },
+                    { name: 'headline', label: 'Headline', type: 'text', default: 'Radiance Defined' },
                     { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Luxury aesthetics for the modern individual.' },
                     { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Discover More' },
-                    { name: 'imagePrompt', label: 'Background Image Description', type: 'text', default: 'High-res texture or landscape' },
+                    { name: 'imagePrompt', label: 'Background Image', type: 'text', default: 'Luxury texture' },
                     { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' }
                 ]
             },
-            'Minimal': {
+            'Video Background': {
+                tag: "Video hero",
+                description: "Autoplay background video with text overlay for maximum impact.",
+                fields: [
+                    { name: 'headline', label: 'Headline', type: 'text', default: 'Experience Excellence' },
+                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'See the difference for yourself.' },
+                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Watch Our Story' },
+                    { name: 'videoUrl', label: 'Video URL', type: 'text', default: '' },
+                    { name: 'imagePrompt', label: 'Fallback Image', type: 'text', default: 'Video thumbnail' }
+                ]
+            },
+            'Animated Gradient': {
+                tag: "Gradient bg",
+                description: "Moving color gradient background with centered content.",
+                fields: [
+                    { name: 'headline', label: 'Headline', type: 'text', default: 'Bold. Beautiful. You.' },
+                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Unlock your potential.' },
+                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Start Journey' }
+                ]
+            },
+            'Split Screen': {
+                tag: "Dual content",
+                description: "Two equal sections side-by-side with distinct content areas.",
+                fields: [
+                    { name: 'leftHeadline', label: 'Left Headline', type: 'text', default: 'Expert Care' },
+                    { name: 'leftText', label: 'Left Text', type: 'textarea', default: 'Trusted by thousands' },
+                    { name: 'rightHeadline', label: 'Right Headline', type: 'text', default: 'Proven Results' },
+                    { name: 'rightText', label: 'Right Text', type: 'textarea', default: '98% satisfaction rate' },
+                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Learn More' }
+                ]
+            },
+            'Minimal Clean': {
+                tag: "Minimalist",
+                description: "Maximum whitespace, minimal elements, elegant typography.",
                 fields: [
                     { name: 'headline', label: 'Headline', type: 'text', default: 'Simply Beautiful' },
-                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'No clutter. Just results.' },
-                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Get Started' }
+                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Less is more.' },
+                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Explore' }
                 ]
             },
-            'Video-First': {
+            'Cards Grid': {
+                tag: "3-card layout",
+                description: "Three feature cards below headline for multi-service clinics.",
                 fields: [
-                    { name: 'videoUrl', label: 'Video URL (Placeholder)', type: 'text', default: '' },
-                    { name: 'headline', label: 'Headline', type: 'text', default: 'See Real Results' },
-                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Watch Success Stories' }
+                    { name: 'headline', label: 'Main Headline', type: 'text', default: 'Your Beauty Destination' },
+                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Multiple treatments, one location.' },
+                    { name: 'card1Title', label: 'Card 1 Title', type: 'text', default: 'Face' },
+                    { name: 'card2Title', label: 'Card 2 Title', type: 'text', default: 'Body' },
+                    { name: 'card3Title', label: 'Card 3 Title', type: 'text', default: 'Skin' },
+                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Book Now' }
                 ]
             },
-            'FloatUI - Centered': {
+            'Asymmetric Layout': {
+                tag: "Offset design",
+                description: "Text and image offset diagonally for modern feel.",
                 fields: [
-                    { name: 'priceText', label: 'Price Badge', type: 'text', default: 'Starts at $49/mo' },
-                    { name: 'headline', label: 'Headline', type: 'text', default: 'Build your SaaS solution with ease' },
-                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Sed ut perspiciatis unde omnis iste natus voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.' },
-                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Get started' },
+                    { name: 'headline', label: 'Headline', type: 'text', default: 'Redefine Beauty' },
+                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'On your terms.' },
+                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Get Started' },
+                    { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Modern aesthetic' },
+                    { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' }
                 ]
             },
-            'Marketing Split': {
+            'Typed Animation': {
+                tag: "Animated text",
+                description: "Typing animation effect on headline for dynamic entrance.",
                 fields: [
-                    { name: 'headline', label: 'Headline', type: 'text', default: 'Data to enrich your online business' },
-                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.' },
-                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Get started' },
-                    { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Product Dashboard' },
+                    { name: 'headline', label: 'Headline', type: 'text', default: 'Your Best Self Awaits' },
+                    { name: 'typedWords', label: 'Rotating Words (comma separated)', type: 'text', default: 'Beautiful, Confident, Radiant, Amazing' },
+                    { name: 'subheadline', label: 'Subheadline', type: 'textarea', default: 'Professional treatments, personal results.' },
+                    { name: 'ctaText', label: 'Primary Button', type: 'text', default: 'Book Consultation' },
+                    { name: 'imagePrompt', label: 'Background Image', type: 'text', default: 'Elegant background' },
                     { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' }
                 ]
             }
@@ -90,30 +148,35 @@ export const sectionConfigs = {
     },
     trustPrimer: {
         label: "Assurance Strip (Trust)",
+        description: "Quick credibility statements right after the hero.",
         icon: "🏆",
         layouts: {
-            'Short Strip': {
+            'Fast to Scan': {
+                tag: "Horizontal strip",
+                description: "Single row of trust badges or ratings.",
                 fields: [
                     {
-                        name: 'items', label: 'Trust Items (Text)', type: 'collection', min: 3, max: 4, fields: [
-                            { name: 'text', label: 'Text', type: 'text', default: '5.0 Rating' }
+                        name: 'items', label: 'Trust Signals (e.g. "5-Star Rated", "FDA Approved")', type: 'collection', min: 3, max: 4, fields: [
+                            { name: 'text', label: 'What is the trust signal?', type: 'text', default: '5.0 Rating' }
                         ]
                     }
                 ],
                 defaultData: {
                     items: [
                         { text: '★★★★★ 5.0 Rating' },
-                        { text: 'Trusted by 1000+ Patients' },
+                        { text: 'Trusted by 1000+ Clients' },
                         { text: 'Certified Experts' }
                     ]
                 }
             },
-            'Logo Grid': {
+            'Logo Showcase': {
+                tag: "Media Authority",
+                description: "Grid layout for partner logos or media features.",
                 fields: [
-                    { name: 'heading', label: 'Featured In (Optional)', type: 'text', default: 'As Featured In' },
+                    { name: 'heading', label: 'Context Header (e.g. "As Featured In")', type: 'text', default: 'As Featured In' },
                     {
                         name: 'items', label: 'Logos/Badges', type: 'collection', min: 4, max: 6, fields: [
-                            { name: 'alt', label: 'Alt Text', type: 'text', default: 'Vogue' },
+                            { name: 'alt', label: 'Organization Name', type: 'text', default: 'Media Outlet' },
                             { name: 'text', label: 'Label (if no logo)', type: 'text', default: '' }
                         ]
                     }
@@ -127,90 +190,255 @@ export const sectionConfigs = {
                         { alt: 'Harper\'s Bazaar', text: 'Harper\'s Bazaar' }
                     ]
                 }
+            },
+            'Marquee Scroll': {
+                tag: "Dynamic Movement",
+                description: "Infinite scrolling loop of logos for high-energy brands.",
+                fields: [
+                    { name: 'heading', label: 'Optional Header (e.g. "Trusted By")', type: 'text', default: '' },
+                    {
+                        name: 'items', label: 'Scrolling Items', type: 'collection', min: 5, max: 10, fields: [
+                            { name: 'text', label: 'Brand/Partner Name', type: 'text', default: 'Partner' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    items: [{ text: 'Google' }, { text: 'Meta' }, { text: 'Forbes' }, { text: 'Inc' }, { text: 'Vogue' }, { text: 'Vanity Fair' }]
+                }
+            },
+            'Key Metrics': {
+                tag: "By the Numbers",
+                description: "Highlight quantifiable success metrics to build logical trust.",
+                fields: [
+                    {
+                        name: 'stats', label: 'Key Statistics', type: 'collection', min: 3, max: 4, fields: [
+                            { name: 'value', label: 'The Number (e.g. "10k+")', type: 'text', default: '98%' },
+                            { name: 'label', label: 'What does this represent?', type: 'text', default: 'Satisfaction Rate' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    stats: [{ value: '10k+', label: 'Happy Patients' }, { value: '15+', label: 'Years Experience' }, { value: '4.9/5', label: 'Average Rating' }]
+                }
+            },
+            'Authority Badges': {
+                tag: "Certifications",
+                description: "Display official accreditations or security seals.",
+                fields: [
+                    {
+                        name: 'badges', label: 'Certifications', type: 'collection', min: 3, max: 5, fields: [
+                            { name: 'title', label: 'Organization Name', type: 'text', default: 'Board Certified' },
+                            { name: 'subtext', label: 'Small Detail (Optional)', type: 'text', default: 'Since 2010' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    badges: [{ title: 'Board Certified' }, { title: 'FDA Approved' }, { title: 'Safety First' }]
+                }
+            },
+            'Compact Rating': {
+                tag: "Review Focus",
+                description: "A simple, centralized star rating or review summary.",
+                fields: [
+                    { name: 'rating', label: 'Aggregate Score (e.g. "4.9")', type: 'text', default: '4.9' },
+                    { name: 'totalReviews', label: 'Review Count (e.g. "500+ Reviews")', type: 'text', default: '500+ Verified Reviews' },
+                    { name: 'platform', label: 'Source Platform (e.g. "on Google")', type: 'text', default: 'on Google' }
+                ]
+            },
+            'Doctor Credentials': {
+                tag: "Expert Assurance",
+                description: "Highlights the lead practitioner's top qualifications.",
+                fields: [
+                    { name: 'name', label: 'Doctor/Practitioner Name', type: 'text', default: 'Dr. Sarah Smith' },
+                    { name: 'credential1', label: 'Primary Credential (e.g. "MD, FACS")', type: 'text', default: 'Double Board Certified' },
+                    { name: 'credential2', label: 'Secondary Credential (e.g. "Ivy League")', type: 'text', default: 'Top 1% Injector' }
+                ]
+            },
+            'Press Mentions': {
+                tag: "Quotable Authority",
+                description: "Pull quotes from reputable media sources.",
+                fields: [
+                    {
+                        name: 'quotes', label: 'Media Snippets', type: 'collection', min: 2, max: 3, fields: [
+                            { name: 'text', label: 'Short Quote Snippet', type: 'text', default: '"Best in class results"' },
+                            { name: 'source', label: 'Publication Name', type: 'text', default: 'Vogue' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    quotes: [{ text: '"Revolutionary"', source: 'Vogue' }, { text: '"The gold standard"', source: 'Harper\'s Bazaar' }]
+                }
+            },
+            'Years of Excellence': {
+                tag: "Heritage",
+                description: "Emphasizes longevity and stability in the market.",
+                fields: [
+                    { name: 'years', label: 'Number of Years', type: 'text', default: '15+' },
+                    { name: 'label', label: 'Context Text', type: 'text', default: 'Years of Excellence in Aesthetic Medicine' },
+                    { name: 'since', label: 'Established Year (Optional)', type: 'text', default: 'Est. 2008' }
+                ]
+            },
+            'Medical Partners': {
+                tag: "Professional Network",
+                description: "Shows relationships with top medical brands (Allergan, Galderma, etc).",
+                fields: [
+                    { name: 'heading', label: 'Section Header', type: 'text', default: 'Official Partners With' },
+                    {
+                        name: 'partners', label: 'Partner Names', type: 'collection', min: 3, max: 5, fields: [
+                            { name: 'name', label: 'Brand Name', type: 'text', default: 'Allergan' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    partners: [{ name: 'Allergan' }, { name: 'Galderma' }, { name: 'Merz Aesthetics' }]
+                }
             }
         }
     },
     problemConcern: {
-        label: "Problem/Relevance",
-        icon: "🎯",
+        label: "Problem / Relevance",
+        description: "Help visitors feel understood by articulating their specific challenges.",
+        icon: "🤔",
         layouts: {
-            'Bullets': {
+            'Simple & Scannable': {
+                tag: "List based",
+                description: "A clear, bulleted list of common issues.",
                 fields: [
-                    { name: 'heading', label: 'Section Heading', type: 'text', default: 'Is this for you?' },
+                    { name: 'heading', label: 'Main Question (e.g. "Does this sound like you?")', type: 'text', default: 'Is this you?' },
                     {
-                        name: 'items', label: 'Concerns', type: 'collection', min: 3, max: 5, fields: [
-                            { name: 'text', label: 'Concern text', type: 'text', default: 'Struggling with stubborn fat?' }
+                        name: 'items', label: 'Pain Points', type: 'collection', min: 3, max: 5, fields: [
+                            { name: 'text', label: 'Describe the specific issue', type: 'text', default: 'Problem description' }
                         ]
                     }
                 ],
                 defaultData: {
-                    heading: 'Is this for you?',
-                    items: [
-                        { text: 'Struggling with stubborn fat?' },
-                        { text: 'Want non-invasive solutions?' },
-                        { text: 'Looking for quick recovery?' }
-                    ]
+                    heading: 'Does this sound familiar?',
+                    items: [{ text: 'Tired of looking tired?' }, { text: 'Stubborn pockets of fat?' }, { text: 'Skin lacking radiance?' }]
                 }
             },
-            'Feature Grid': {
+            'Visual & Engaging': {
+                tag: "Icon cards",
+                description: "Cards with icons to visually represent each problem.",
                 fields: [
-                    { name: 'heading', label: 'Section Heading', type: 'text', default: 'Common Concerns' },
+                    { name: 'heading', label: 'Main Question', type: 'text', default: 'Whatever your concern, we can help.' },
                     {
-                        name: 'items', label: 'Concern Cards', type: 'collection', min: 3, max: 6, fields: [
-                            { name: 'title', label: 'Title', type: 'text', default: 'Stubborn Areas' },
-                            { name: 'description', label: 'Description', type: 'textarea', default: 'Exercise and diet resistant fat pockets.' },
-                            { name: 'icon', label: 'Icon (Emoji)', type: 'icon', default: 'Target' }
+                        name: 'items', label: 'Concern Cards', type: 'collection', min: 3, max: 4, fields: [
+                            { name: 'title', label: 'Concern Name', type: 'text', default: 'Aging Skin' },
+                            { name: 'description', label: 'How does it feel? (Short description)', type: 'textarea', default: 'Fine lines and lost volume.' }
                         ]
                     }
                 ],
                 defaultData: {
-                    heading: 'Common Concerns',
+                    heading: 'Common Concerns We Treat',
                     items: [
-                        { title: 'Stubborn Areas', description: 'Fat pockets that just won\'t shift.', icon: 'Target' },
-                        { title: 'Busy Schedule', description: 'No time for long recovery periods.', icon: 'Clock' },
-                        { title: 'Safety Concerns', description: 'Worried about invasive surgeries.', icon: 'Shield' }
+                        { title: 'Fine Lines', description: 'Smoothing out early signs of aging.' },
+                        { title: 'Skin Texture', description: 'Restoring a smooth, even complexion.' },
+                        { title: 'Volume Loss', description: 'Replenishing youthful fullness.' }
                     ]
                 }
             },
-            'Cards Grid': {
+            'Agitation Scale': {
+                tag: "Emotional Arc",
+                description: "Visually moving from the 'Problem state' to the 'Solution state'.",
                 fields: [
-                    { name: 'heading', label: 'Section Heading', type: 'text', default: 'Why This Matters' },
+                    { name: 'problemHeading', label: 'The Struggle (Headline)', type: 'text', default: 'Frustrated by ineffective creams?' },
+                    { name: 'problemText', label: 'The Struggle (Details)', type: 'textarea', default: 'You spend hundreds on skincare but see no real difference.' },
+                    { name: 'solutionHeading', label: 'The Relief (Headline)', type: 'text', default: 'Real results, fast.' },
+                    { name: 'solutionText', label: 'The Relief (Details)', type: 'textarea', default: 'Our clinical treatments go deeper than any cream can.' }
+                ]
+            },
+            'Symptoms Grid': {
+                tag: "Checklist",
+                description: "A grid of checkboxes for visitors to self-identify symptoms.",
+                fields: [
+                    { name: 'heading', label: 'Header Question', type: 'text', default: 'Are you experiencing...' },
                     {
-                        name: 'items', label: 'Cards', type: 'collection', min: 3, max: 4, fields: [
-                            { name: 'title', label: 'Card Title', type: 'text', default: 'Efficiency' },
-                            { name: 'text', label: 'Card Text', type: 'text', default: 'We save you time.' },
+                        name: 'symptoms', label: 'Symptoms Checklist', type: 'collection', min: 4, max: 8, fields: [
+                            { name: 'text', label: 'Symptom Description', type: 'text', default: 'Dull skin tone' }
                         ]
                     }
                 ],
                 defaultData: {
-                    heading: 'Why This Matters',
-                    items: [
-                        { title: 'Efficiency', text: 'We respect your time and schedule.' },
-                        { title: 'Quality', text: 'Top-tier materials and care.' },
-                        { title: 'Comfort', text: 'Pain-free experience guaranteed.' }
+                    heading: 'Do you notice any of these?',
+                    symptoms: [{ text: 'Dullness' }, { text: 'Uneven Texture' }, { text: 'Pigmentation' }, { text: 'Sagging' }, { text: 'Wrinkles' }, { text: 'Redness' }]
+                }
+            },
+            'Empathy Statement': {
+                tag: "Bold Statement",
+                description: "A single, powerful statement that resonates with the user's core feeling.",
+                fields: [
+                    { name: 'statement', label: 'The "We Get It" Statement', type: 'textarea', default: 'You deserve to look as young as you feel.' },
+                    { name: 'subtext', label: 'Supporting Reassurance', type: 'textarea', default: 'Aging is natural, but we can help you age on your terms.' }
+                ]
+            },
+            'Comparison Table': {
+                tag: "Us vs Others",
+                description: "Compare 'Standard Solutions' (inadequate) vs 'Our Approach'.",
+                fields: [
+                    { name: 'badHeading', label: 'The Old Way (Heading)', type: 'text', default: 'Standard Facials' },
+                    { name: 'badText', label: 'Why it fails', type: 'textarea', default: 'Relaxing but temporary results.' },
+                    { name: 'goodHeading', label: 'Our Medical Approach', type: 'text', default: 'Clinical Results' },
+                    { name: 'goodText', label: 'Why it works', type: 'textarea', default: 'Long-term cellular change.' }
+                ]
+            },
+            'Interactive Quiz': {
+                tag: "Engagement",
+                description: "3 clickable cards asking 'Which one is you?'",
+                fields: [
+                    { name: 'question', label: 'Quiz Question', type: 'text', default: 'What is your primary goal?' },
+                    { name: 'option1', label: 'Option 1 Label', type: 'text', default: 'Smooth Wrinkles' },
+                    { name: 'option2', label: 'Option 2 Label', type: 'text', default: 'Improve Texture' },
+                    { name: 'option3', label: 'Option 3 Label', type: 'text', default: 'Tighten Skin' }
+                ]
+            },
+            'Persona Cards': {
+                tag: "Identity",
+                description: "Define specific patient archetypes so users say 'That's me'.",
+                fields: [
+                    {
+                        name: 'personas', label: 'Patient Personas', type: 'collection', min: 2, max: 3, fields: [
+                            { name: 'type', label: 'Archetype Name (e.g. "The Busy Mom")', type: 'text', default: 'The Professional' },
+                            { name: 'desc', label: 'Description', type: 'text', default: 'Needs zero downtime.' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    personas: [
+                        { type: 'The Busy Professional', desc: 'Needs effective treatments with zero downtime.' },
+                        { type: 'The Perfectionist', desc: 'Wants subtle, natural-looking refinement.' },
+                        { type: 'The First-Timer', desc: 'Nervous but ready to start their journey.' }
                     ]
                 }
             },
-            'FloatUI - Grid': {
+            'Myth vs Fact': {
+                tag: "Education",
+                description: "Debunk a common objection or misconception directly.",
                 fields: [
-                    { name: 'heading', label: 'Section Heading', type: 'text', default: 'Everything you need' },
-                    { name: 'subheading', label: 'Subheading', type: 'textarea', default: 'Loyal customers, automated sales, and more.' },
-                    {
-                        name: 'items', label: 'Features', type: 'collection', min: 3, max: 6, fields: [
-                            { name: 'title', label: 'Title', type: 'text', default: 'Fast Refresh' },
-                            { name: 'description', label: 'Description', type: 'textarea', default: 'Reliable and fast updates.' },
-                            { name: 'icon', label: 'Icon (Emoji/SVG path)', type: 'icon', default: 'Zap' }
-                        ]
-                    }
+                    { name: 'myth', label: 'The Myth', type: 'text', default: 'Myth: Botox makes you look frozen.' },
+                    { name: 'fact', label: 'The Fact', type: 'textarea', default: 'Fact: Done right, you look rested and expressive, just smoother.' }
+                ]
+            },
+            'Before/After Text': {
+                tag: "Transformation Text",
+                description: "Two contrasting text blocks: 'Now' vs 'Potential'.",
+                fields: [
+                    { name: 'beforeHeading', label: 'Current State Header', type: 'text', default: 'Feeling Invisible?' },
+                    { name: 'beforeText', label: 'Current Feelings', type: 'textarea', default: 'Noticing changes in the mirror that don\'t reflect your energy.' },
+                    { name: 'afterHeading', label: 'Future State Header', type: 'text', default: 'Get Your Glow Back' },
+                    { name: 'afterText', label: 'Future Feelings', type: 'textarea', default: 'Walk into any room with renewed confidence.' }
                 ]
             }
         }
     },
+
     treatmentLogic: {
         label: "How it Works / Key Benefits",
+        description: "Explain the approach simply and highlight outcomes.",
         icon: "💡",
         layouts: {
-            'Simple': {
+            'Minimalist': {
+                tag: "Single column",
+                description: "Single column text layout. Direct and simple.",
                 fields: [
                     { name: 'heading', label: 'Heading', type: 'text', default: 'Why Choose Us?' },
                     { name: 'description', label: 'Description', type: 'textarea', default: 'Our unique approach ensures safety and maximum efficacy.' },
@@ -219,12 +447,14 @@ export const sectionConfigs = {
                     { name: 'feature3', label: 'Feature 3', type: 'text', default: 'Personalized Plans' }
                 ]
             },
-            'Detailed Split': {
+            'Story First': {
+                tag: "2-column split",
+                description: "Two columns: text with benefits, plus diagram.",
                 fields: [
                     { name: 'heading', label: 'Heading', type: 'text', default: 'The Science Behind It' },
-                    { name: 'subheading', label: 'Subheading', type: 'text', default: 'FDA-Cleared Technology' },
-                    { name: 'description', label: 'Deep Dive Text', type: 'textarea', default: 'Using controlled cooling to eliminate fat cells gently and effectively, without harming surrounding tissue.' },
-                    { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Diagram of coolsculpting process' },
+                    { name: 'subheading', label: 'Subheading', type: 'text', default: 'Advanced Technology' },
+                    { name: 'description', label: 'Deep Dive Text', type: 'textarea', default: 'Using controlled cooling to eliminate unwanted cells gently and effectively, without harming surrounding tissue.' },
+                    { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Diagram of process' },
                     { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' },
                     {
                         name: 'benefits', label: 'Key Benefits', type: 'collection', min: 3, max: 3, fields: [
@@ -234,60 +464,198 @@ export const sectionConfigs = {
                 ],
                 defaultData: {
                     heading: 'The Science Behind It',
-                    subheading: 'FDA-Cleared Technology',
-                    description: 'Using controlled cooling to eliminate fat cells gently and effectively.',
+                    subheading: 'Advanced Technology',
+                    description: 'Using controlled methods to target specific areas gently and effectively.',
                     imagePrompt: 'Scientific diagram of process',
                     benefits: [
-                        { text: 'Permanent Fat Reduction' },
+                        { text: 'Permanent Reduction' },
                         { text: 'Non-Surgical & Safe' },
                         { text: 'Natural-Looking Results' }
                     ]
                 }
-            },
-            'Bento Grid': {
+            }
+        }
+    },
+    treatmentLogic: {
+        label: "How it Works / Key Benefits",
+        description: "Explain the science or approach simply to build confidence.",
+        icon: "💡",
+        layouts: {
+            'Minimalist': {
+                tag: "Pure Text",
+                description: "Single column text layout. Direct, simple, and confidence-inspiring.",
                 fields: [
-                    { name: 'heading', label: 'Heading', type: 'text', default: 'Holistic Approach' },
-                    {
-                        name: 'items', label: 'Bento Items', type: 'collection', min: 4, max: 4, fields: [
-                            { name: 'title', label: 'Item Title', type: 'text', default: 'Precision' },
-                            { name: 'text', label: 'Item Text', type: 'textarea', default: 'Targeted results.' },
-                            { name: 'type', label: 'Type (Text/Image)', type: 'text', default: 'Text' }
-                        ]
-                    }
+                    { name: 'heading', label: 'Main Benefit Heading', type: 'text', default: 'Why Choose Us?' },
+                    { name: 'description', label: 'The "Secret Sauce" (Explanation)', type: 'textarea', default: 'Our unique approach ensures safety and maximum efficacy.' },
+                    { name: 'feature1', label: 'Key Feature 1', type: 'text', default: 'Advanced Technology' },
+                    { name: 'feature2', label: 'Key Feature 2', type: 'text', default: 'Expert Care' },
+                    { name: 'feature3', label: 'Key Feature 3', type: 'text', default: 'Personalized Plans' }
                 ]
             },
-            'Feature Cards': {
+            'Story First': {
+                tag: "Editorial",
+                description: "Two columns: Rich narrative text + supporting visual.",
                 fields: [
-                    { name: 'heading', label: 'Heading', type: 'text', default: 'Key Features' },
+                    { name: 'heading', label: 'The Science Heading', type: 'text', default: 'The Science Behind It' },
+                    { name: 'subheading', label: 'Sub-header', type: 'text', default: 'Advanced Technology' },
+                    { name: 'description', label: 'Deep Dive Explanation', type: 'textarea', default: 'Using controlled cooling to eliminate unwanted cells gently and effectively.' },
+                    { name: 'imagePrompt', label: 'Visual Description', type: 'text', default: 'Diagram of process' },
                     {
-                        name: 'items', label: 'Cards', type: 'collection', min: 3, max: 3, fields: [
-                            { name: 'title', label: 'Title', type: 'text', default: 'Fast' },
-                            { name: 'description', label: 'Description', type: 'textarea', default: 'In and out in 1 hour.' },
-                            { name: 'icon', label: 'Icon', type: 'icon', default: 'Zap' }
+                        name: 'benefits', label: 'Key Benefit Points', type: 'collection', min: 3, max: 3, fields: [
+                            { name: 'text', label: 'Benefit', type: 'text', default: 'Clinically Proven' }
                         ]
                     }
+                ],
+                defaultData: {
+                    heading: 'The Science Behind It',
+                    subheading: 'Advanced Technology',
+                    description: 'Using controlled methods to target specific areas gently and effectively.',
+                    benefits: [{ text: 'Permanent Reduction' }, { text: 'Non-Surgical & Safe' }, { text: 'Natural-Looking Results' }]
+                }
+            },
+            'Step-by-Step Cards': {
+                tag: "Process",
+                description: "Three sequential cards explaining the mechanism.",
+                fields: [
+                    { name: 'heading', label: 'Process Heading', type: 'text', default: 'How It Works' },
+                    {
+                        name: 'steps', label: 'Mechanism Steps', type: 'collection', min: 3, max: 3, fields: [
+                            { name: 'title', label: 'Phase Name', type: 'text', default: 'Target' },
+                            { name: 'description', label: 'What happens?', type: 'textarea', default: 'We identify the area.' },
+                            { name: 'icon', label: 'Icon', type: 'icon', default: 'Target' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    heading: 'How It Works',
+                    steps: [
+                        { title: 'Target', description: 'Precision targeting of problem areas.', icon: 'Target' },
+                        { title: 'Treat', description: 'Advanced energy delivery stimulating collagen.', icon: 'Zap' },
+                        { title: 'Transform', description: 'Natural healing process reveals results.', icon: 'Sparkles' }
+                    ]
+                }
+            },
+            'Scientific Diagram': {
+                tag: "Visual Heavy",
+                description: "Large central diagram with annotated points.",
+                fields: [
+                    { name: 'heading', label: 'Diagram Title', type: 'text', default: 'Anatomy of Treatment' },
+                    { name: 'imagePrompt', label: 'Diagram Description', type: 'text', default: 'Cross-section of skin layers' },
+                    {
+                        name: 'points', label: 'Annotation Points', type: 'collection', min: 3, max: 4, fields: [
+                            { name: 'label', label: 'Point Label', type: 'text', default: 'Dermis Layer' },
+                            { name: 'desc', label: 'Short Explanation', type: 'text', default: 'Where collagen lives' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    heading: 'Deep Actions',
+                    points: [
+                        { label: 'Surface', desc: 'Remains cool and protected' },
+                        { label: 'Target Zone', desc: 'Precision energy delivery' },
+                        { label: 'Deep Structure', desc: 'Structural support renewal' }
+                    ]
+                }
+            },
+            'Mechanism of Action': {
+                tag: "Animation Placeholder",
+                description: "Space for a loop/video showing the biological process.",
+                fields: [
+                    { name: 'heading', label: 'Mechanism Heading', type: 'text', default: 'See It In Action' },
+                    { name: 'description', label: 'Process Description', type: 'textarea', default: 'Watch how the treatment targets only the cells you want to remove.' },
+                    { name: 'videoPrompt', label: 'Animation Description', type: 'text', default: '3D animation of fat cell reduction' }
                 ]
             },
-            'Interactive Hotspots': {
+            'Interactive Tabs': {
+                tag: "Clickable",
+                description: "Tabbed interface to explore different aspects (Preparation, Action, Result).",
                 fields: [
-                    { name: 'heading', label: 'Heading', type: 'text', default: 'Anatomy of Treatment' },
-                    { name: 'imagePrompt', label: 'Main Image', type: 'text', default: 'Device or Anatomy close-up' },
-                    { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' },
+                    { name: 'heading', label: 'Explore the Process', type: 'text', default: 'Understanding the Tech' },
+                    { name: 'tab1', label: 'Tab 1 Title', type: 'text', default: 'Preparation' },
+                    { name: 'content1', label: 'Tab 1 Content', type: 'textarea', default: 'No anesthesia required.' },
+                    { name: 'tab2', label: 'Tab 2 Title', type: 'text', default: 'The Action' },
+                    { name: 'content2', label: 'Tab 2 Content', type: 'textarea', default: 'Painless energy pulses.' },
+                    { name: 'tab3', label: 'Tab 3 Title', type: 'text', default: 'The Outcome' },
+                    { name: 'content3', label: 'Tab 3 Content', type: 'textarea', default: 'Gradual, natural improvement.' }
+                ]
+            },
+            'Benefit Stack': {
+                tag: "List",
+                description: "A stacked list of major technical benefits with detailed icons.",
+                fields: [
+                    { name: 'heading', label: 'Why It\'s Superior', type: 'text', default: 'The Clinical Advantage' },
                     {
-                        name: 'hotspots', label: 'Hotspots', type: 'collection', min: 3, max: 5, fields: [
-                            { name: 'label', label: 'Label', type: 'text', default: 'Cooling Plate' },
-                            { name: 'description', label: 'Info', type: 'text', default: 'Protects skin while treating fat.' }
+                        name: 'benefits', label: 'Major Benefits', type: 'collection', min: 4, max: 5, fields: [
+                            { name: 'title', label: 'Benefit Feature', type: 'text', default: 'FDA Cleared' },
+                            { name: 'desc', label: 'Why it matters', type: 'text', default: 'Proven safety profile.' },
+                            { name: 'icon', label: 'Icon', type: 'icon', default: 'Shield' }
                         ]
                     }
+                ],
+                defaultData: {
+                    heading: 'The Clinical Advantage',
+                    benefits: [
+                        { title: 'No Downtime', desc: 'Return to work immediately.', icon: 'Clock' },
+                        { title: 'fda Cleared', desc: 'Proven safety and efficacy.', icon: 'Shield' },
+                        { title: 'Pain Free', desc: 'Most patients read or nap.', icon: 'Smile' },
+                        { title: 'Lasting Results', desc: 'Once treated, cells are gone.', icon: 'Infinity' }
+                    ]
+                }
+            },
+            'Comparison (The Science)': {
+                tag: "Contrast",
+                description: "Compare 'Generic Method' vs 'Our Method' scientifically.",
+                fields: [
+                    { name: 'heading', label: 'The Difference', type: 'text', default: 'Why We Are Different' },
+                    { name: 'ourMethod', label: 'Our Method Name', type: 'text', default: 'Cryolipolysis' },
+                    { name: 'ourDesc', label: 'Our Mechanism', type: 'textarea', default: 'Selective cooling kills fat cells only.' },
+                    { name: 'othersMethod', label: 'Other Methods', type: 'text', default: 'Laser/Heat' },
+                    { name: 'othersDesc', label: 'Their Mechanism', type: 'textarea', default: 'Can damage surrounding tissue.' }
+                ]
+            },
+            'Timeline Flow': {
+                tag: "Horizontal",
+                description: "A horizontal timeline showing the biological reaction over time.",
+                fields: [
+                    { name: 'heading', label: 'Biological Timeline', type: 'text', default: 'What Happens Inside' },
+                    {
+                        name: 'events', label: 'Timeline Events', type: 'collection', min: 4, max: 4, fields: [
+                            { name: 'time', label: 'Time', type: 'text', default: 'Immedately' },
+                            { name: 'desc', label: 'Reaction', type: 'text', default: 'Cooling applied' }
+                        ]
+                    }
+                ],
+                defaultData: {
+                    heading: 'Biological Timeline',
+                    events: [
+                        { time: 'Day 0', desc: 'Treatment applied' },
+                        { time: 'Day 3', desc: 'Cell breakdown begins' },
+                        { time: 'Week 4', desc: 'Metabolic flushing' },
+                        { time: 'Month 3', desc: 'Full reduction visible' }
+                    ]
+                }
+            },
+            'Expert Explainer': {
+                tag: "Authority",
+                description: "A 'Doctor's Perspective' layout explaining the logic.",
+                fields: [
+                    { name: 'heading', label: 'Heading', type: 'text', default: 'Doctor\'s Note' },
+                    { name: 'doctorName', label: 'Expert Name', type: 'text', default: 'Dr. Smith' },
+                    { name: 'explanation', label: 'The Explanation', type: 'textarea', default: 'This technology targets the structural causes of aging, not just the surface symptoms.' },
+                    { name: 'quote', label: 'Pull Quote', type: 'text', default: '"It effectively resets the clock."' },
+                    { name: 'imagePrompt', label: 'Doctor Photo', type: 'text', default: 'Doctor in lab coat' }
                 ]
             }
         }
     },
     procedureGuide: {
         label: "Procedure Guide (Steps)",
+        description: "Walk them through the journey so they know what to expect.",
         icon: "👣",
         layouts: {
-            '3-Step': {
+            'Quick & Clear': {
+                tag: "3-column steps",
+                description: "Three columns with numbered steps.",
                 fields: [
                     {
                         name: 'items', label: 'Steps', type: 'collection', min: 3, max: 3, fields: [
@@ -304,7 +672,9 @@ export const sectionConfigs = {
                     ]
                 }
             },
-            'Timeline': {
+            'Detailed Journey': {
+                tag: "Vertical timeline",
+                description: "Vertical timeline with connecting line.",
                 fields: [
                     { name: 'heading', label: 'Timeline Heading', type: 'text', default: 'Your Journey' },
                     {
@@ -324,124 +694,56 @@ export const sectionConfigs = {
                         { time: 'Week 12', title: 'Full Results', description: 'Optimal transformation.' }
                     ]
                 }
-            },
-            'Vertical Tabs': {
-                fields: [
-                    { name: 'heading', label: 'Heading', type: 'text', default: 'The Process' },
-                    {
-                        name: 'steps', label: 'Steps', type: 'collection', min: 3, max: 4, fields: [
-                            { name: 'step', label: 'Step Name', type: 'text', default: 'Prep' },
-                            { name: 'detail', label: 'Detail Text', type: 'textarea', default: 'No special preparation needed.' },
-                            { name: 'imagePrompt', label: 'Side Image', type: 'text', default: 'Patient relaxing' }
-                        ]
-                    }
-                ]
-            },
-            'Masonry Steps': {
-                fields: [
-                    { name: 'heading', label: 'Heading', type: 'text', default: 'What to Expect' },
-                    {
-                        name: 'cards', label: 'Cards', type: 'collection', min: 4, max: 6, fields: [
-                            { name: 'title', label: 'Title', type: 'text', default: 'Comfort' },
-                            { name: 'text', label: 'Description', type: 'textarea', default: 'Relax with Netflix.' }
-                        ]
-                    }
-                ]
-            },
-            'Carousel Steps': {
-                fields: [
-                    { name: 'heading', label: 'Heading', type: 'text', default: 'Walkthrough' },
-                    {
-                        name: 'slides', label: 'Slides', type: 'collection', min: 3, max: 5, fields: [
-                            { name: 'title', label: 'Slide Title', type: 'text', default: 'Step 1' },
-                            { name: 'desc', label: 'Slide Text', type: 'text', default: 'Description.' }
-                        ]
-                    }
-                ]
             }
         }
     },
     clinicDetails: {
         label: "Visit Us (Details)",
+        description: "Location, hours, and contact info.",
         icon: "🏥",
         layouts: {
-            'Grid': {
+            'Simple & Clean': {
+                tag: "3-column grid",
+                description: "Three columns for location, hours, contact.",
                 fields: [
                     { name: 'location', label: 'Location Name', type: 'text', default: 'Beverly Hills Clinic' },
                     { name: 'address', label: 'Address', type: 'textarea', default: '123 Luxury Lane, CA 90210' },
                     { name: 'hours', label: 'Hours', type: 'text', default: 'Mon-Sat: 9am - 6pm' }
                 ]
             },
-            'Gallery Split': {
+            'With Interior View': {
+                tag: "2-column split",
+                description: "Image on one side, location details on other.",
                 fields: [
-                    { name: 'location', label: 'Location Name', type: 'text', default: 'Manhattan Medical Spa' },
+                    { name: 'location', label: 'Location Name', type: 'text', default: '[Clinic Name] Medical Spa' },
                     { name: 'description', label: 'About the Space', type: 'textarea', default: 'A serene oasis in the city.' },
-                    { name: 'address', label: 'Address', type: 'textarea', default: '5th Ave, NY' },
+                    { name: 'address', label: 'Address', type: 'textarea', default: '123 Main St, City, State' },
                     { name: 'imagePrompt', label: 'Gallery Image', type: 'text', default: 'Interior of waiting room' },
                     { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' }
                 ],
                 defaultData: {
-                    location: 'Manhattan Medical Spa',
+                    location: '[Clinic Name] Medical Spa',
                     description: 'Relax in our state-of-the-art facility featuring private suites.',
-                    address: '500 5th Ave, New York, NY',
+                    address: '123 Main St, City, State',
                     imagePrompt: 'Modern luxury spa interior'
                 }
-            },
-            'Map Overlay': {
-                fields: [
-                    { name: 'location', label: 'Location', type: 'text', default: 'Downtown Clinic' },
-                    { name: 'address', label: 'Address', type: 'text', default: '123 Market St' },
-                    { name: 'googleMapsUrl', label: 'Map Embed URL (Placeholder)', type: 'text', default: 'https://maps.google.com/...' }
-                ]
-            },
-            'Minimal List': {
-                fields: [
-                    { name: 'heading', label: 'Heading', type: 'text', default: 'Visit Us' },
-                    {
-                        name: 'details', label: 'Details', type: 'collection', min: 3, max: 3, fields: [
-                            { name: 'label', label: 'Label', type: 'text', default: 'Phone' },
-                            { name: 'value', label: 'Value', type: 'text', default: '555-0123' }
-                        ]
-                    }
-                ]
-            },
-            'Business Card': {
-                fields: [
-                    { name: 'clinicName', label: 'Clinic Name', type: 'text', default: 'Luxe Med' },
-                    { name: 'tagline', label: 'Tagline', type: 'text', default: 'Premier Aesthetics' },
-                    { name: 'contactInfo', label: 'Contact', type: 'textarea', default: 'email@example.com\n555-0123' }
-                ]
             }
         }
     },
     faq: {
         label: "Common Questions (FAQ)",
+        description: "Overcome objections and clarify details.",
         icon: "❓",
         layouts: {
-            'Objection-Only': {
-                fields: [
-                    {
-                        name: 'items', label: 'Questions', type: 'collection', min: 3, max: 5, fields: [
-                            { name: 'question', label: 'Question', type: 'text', default: 'Is it painful?' },
-                            { name: 'answer', label: 'Answer', type: 'textarea', default: 'Most patients report minimal discomfort.' }
-                        ]
-                    }
-                ],
-                defaultData: {
-                    items: [
-                        { question: 'Is it painful?', answer: 'Most patients report minimal discomfort.' },
-                        { question: 'How long until I see results?', answer: 'Results are typically visible within 2 weeks.' },
-                        { question: 'Is there downtime?', answer: 'No, you can return to work immediately.' }
-                    ]
-                }
-            },
-            'Accordion': {
+            'Space Saving': {
+                tag: "Accordion",
+                description: "Expandable Q&A to save vertical space.",
                 fields: [
                     { name: 'heading', label: 'Heading', type: 'text', default: 'Frequently Asked Questions' },
                     {
                         name: 'items', label: 'Q&A Items', type: 'collection', min: 4, max: 6, fields: [
                             { name: 'question', label: 'Question', type: 'text', default: 'Cost?' },
-                            { name: 'answer', label: 'Answer', type: 'textarea', default: 'Starts at $500.' }
+                            { name: 'answer', label: 'Answer', type: 'textarea', default: 'Starts at $X.' }
                         ]
                     }
                 ],
@@ -449,53 +751,22 @@ export const sectionConfigs = {
                     heading: 'Frequently Asked Questions',
                     items: [
                         { question: 'How much does it cost?', answer: 'Pricing depends on the treatment area.' },
-                        { question: 'Is it permanent?', answer: 'Yes, treated fat cells are gone for good.' },
-                        { question: 'Can I finance it?', answer: 'We offer payment plans via CareCredit.' },
-                        { question: 'Who performs the procedure?', answer: 'Our licensed medical aestheticians.' }
+                        { question: 'Is it permanent?', answer: 'Yes, treated cells are gone for good.' },
+                        { question: 'Can I finance it?', answer: 'We offer payment plans.' },
+                        { question: 'Who performs the procedure?', answer: 'Our licensed medical experts.' }
                     ]
                 }
-            },
-            'Side-by-Side Category': {
-                fields: [
-                    { name: 'heading', label: 'Main Heading', type: 'text', default: 'FAQ' },
-                    {
-                        name: 'categories', label: 'Categories', type: 'collection', min: 2, max: 2, fields: [
-                            { name: 'catName', label: 'Category Name', type: 'text', default: 'Treatment' },
-                            { name: 'questions', label: 'Questions (comma sep)', type: 'textarea', default: 'Does it hurt?, How long?' }
-                        ]
-                    }
-                ]
-            },
-            'Grid Cards': {
-                fields: [
-                    { name: 'heading', label: 'Heading', type: 'text', default: 'Common Questions' },
-                    {
-                        name: 'cards', label: 'Q&A Cards', type: 'collection', min: 4, max: 6, fields: [
-                            { name: 'q', label: 'Question', type: 'text', default: 'Q?' },
-                            { name: 'a', label: 'Answer', type: 'textarea', default: 'A.' }
-                        ]
-                    }
-                ]
-            },
-            'Search + List': {
-                fields: [
-                    { name: 'heading', label: 'Heading', type: 'text', default: 'Help Center' },
-                    { name: 'placeholder', label: 'Search Placeholder', type: 'text', default: 'Search questions...' },
-                    {
-                        name: 'topQuestions', label: 'Top Questions', type: 'collection', min: 3, max: 5, fields: [
-                            { name: 'q', label: 'Question', type: 'text', default: 'Cost?' },
-                            { name: 'a', label: 'Answer', type: 'textarea', default: 'Varies.' }
-                        ]
-                    }
-                ]
             }
         }
     },
     socialProof: {
         label: "Real Results (Proof)",
+        description: "Testimonials and social proof to build trust.",
         icon: "💬",
         layouts: {
-            'Grid': {
+            'High Engagement': {
+                tag: "Testimonial grid",
+                description: "Grid layout of client testimonials.",
                 fields: [
                     { name: 'heading', label: 'Section Heading', type: 'text', default: 'Real Patient Results' },
                     {
@@ -517,7 +788,9 @@ export const sectionConfigs = {
                     ]
                 }
             },
-            'Carousel': {
+            'Compact & Modern': {
+                tag: "Carousel",
+                description: "Horizontal scrolling testimonials.",
                 fields: [
                     { name: 'heading', label: 'Section Heading', type: 'text', default: 'Client Love' },
                     {
@@ -536,50 +809,9 @@ export const sectionConfigs = {
                     ]
                 }
             },
-            'Wall of Love': {
-                fields: [
-                    { name: 'heading', label: 'Section Heading', type: 'text', default: 'What Everyone is Saying' },
-                    {
-                        name: 'items', label: 'Reviews', type: 'collection', min: 6, max: 9, fields: [
-                            { name: 'text', label: 'Review', type: 'textarea', default: 'Great!' },
-                            { name: 'user', label: 'User', type: 'text', default: '@user' }
-                        ]
-                    }
-                ],
-                defaultData: {
-                    heading: 'What Everyone is Saying',
-                    items: [
-                        { text: 'Finally found a clinic I trust.', user: '@sarahstyle' },
-                        { text: 'The results speak for themselves.', user: '@mike_fitness' },
-                        { text: 'Professional, clean, and friendly.', user: '@jenny_bg' },
-                        { text: 'Booked my second session immediately.', user: '@alex_does_life' },
-                        { text: 'So worth the investment.', user: '@wellness_queen' },
-                        { text: '10/10 experience.', user: '@hannah_b' }
-                    ]
-                }
-            },
-            'Video Highlight': {
-                fields: [
-                    { name: 'heading', label: 'Heading', type: 'text', default: 'Client Stories' },
-                    { name: 'mainVideo', label: 'Main Video Placeholder', type: 'text', default: 'Video Embed Code/URL' },
-                    {
-                        name: 'thumbnails', label: 'Other Stories', type: 'collection', min: 3, max: 3, fields: [
-                            { name: 'name', label: 'Name', type: 'text', default: 'Sarah' },
-                            { name: 'duration', label: 'Duration', type: 'text', default: '2:30' }
-                        ]
-                    }
-                ],
-                defaultData: {
-                    heading: 'Client Stories',
-                    mainVideo: 'Video of Patient Transformation',
-                    thumbnails: [
-                        { name: 'Jessica', duration: '3:45' },
-                        { name: 'Michael', duration: '2:15' },
-                        { name: 'Ashley', duration: '4:20' }
-                    ]
-                }
-            },
-            'Stat-Backed Trust': {
+            'Best Conversion': {
+                tag: "Stats row",
+                description: "Row of large numbers with explanatory text.",
                 fields: [
                     { name: 'heading', label: 'Heading', type: 'text', default: 'Proven Results' },
                     {
@@ -603,17 +835,22 @@ export const sectionConfigs = {
         }
     },
     conversion: {
-        label: "Check Availability (CTA)",
+        label: "Call to Action",
+        description: "Final push to convert visitors.",
         icon: "🚀",
         layouts: {
-            'Urgency': {
+            'High Urgency FOMO': {
+                tag: "Urgency banner",
+                description: "Full-width banner with urgency messaging.",
                 fields: [
                     { name: 'heading', label: 'Heading', type: 'text', default: 'Ready to start your journey?' },
                     { name: 'subtext', label: 'Subtext', type: 'textarea', default: 'Limited availability for new patients this month.' },
                     { name: 'ctaText', label: 'Button Text', type: 'text', default: 'Book My Appointment' }
                 ]
             },
-            'Split Booking': {
+            'Best for Booking': {
+                tag: "2-column split",
+                description: "Image on one side, CTA form on other.",
                 fields: [
                     { name: 'heading', label: 'Headline', type: 'text', default: 'Secure Your Spot' },
                     { name: 'subtext', label: 'Details', type: 'textarea', default: 'Our experts are ready to guide you.' },
@@ -621,34 +858,23 @@ export const sectionConfigs = {
                     { name: 'imagePrompt', label: 'Image Description', type: 'text', default: 'Reception area' },
                     { name: 'imageUrl', label: 'Image URL (Optional)', type: 'text', default: '' }
                 ]
-            },
-            'Sticky Bar': {
-                fields: [
-                    { name: 'heading', label: 'Short Text', type: 'text', default: 'Limited Time Offer' },
-                    { name: 'ctaText', label: 'Button Label', type: 'text', default: 'Claim Offer' }
-                ]
-            },
-            'FloatUI - Simple': {
-                fields: [
-                    { name: 'priceText', label: 'Price Text', type: 'text', default: 'Plans from $19/mo' },
-                    { name: 'heading', label: 'Headline', type: 'text', default: 'Ready to get started?' },
-                    { name: 'subtext', label: 'Subtext', type: 'textarea', default: 'Join thousands of satisfied customers today.' },
-                    { name: 'ctaText', label: 'Button Text', type: 'text', default: 'Start Now' }
-                ]
             }
         }
     },
     footer: {
         label: "Footer",
+        description: "Legal info and final links.",
         icon: "🏁",
         layouts: {
             'Minimal': {
+                tag: "Single row",
                 fields: [
                     { name: 'copyright', label: 'Copyright Text', type: 'text', default: '© 2024 All rights reserved.' },
                     { name: 'links', label: 'Footer Links', type: 'text', default: 'Privacy, Terms, Contact' }
                 ]
             },
-            'Expanded': {
+            'Detailed & Informative': {
+                tag: "4-column grid",
                 fields: [
                     { name: 'copyright', label: 'Copyright Text', type: 'text', default: '© 2024 Brand Name.' },
                     { name: 'column1', label: 'Column 1 Title', type: 'text', default: 'Company' },

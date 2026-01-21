@@ -1,4 +1,10 @@
 import React from 'react'
+import { sectionConfigs } from '../utils/sectionConfig'
+import { getContrastColor } from '../utils/colors'
+import { getDataWithDefaults } from '../utils/dataHelpers'
+import ErrorBoundary from './ErrorBoundary'
+
+// Import Section Components
 import HeaderSection from './sections/HeaderSection'
 import HeroSection from './sections/HeroSection'
 import TrustPrimerSection from './sections/TrustPrimerSection'
@@ -11,10 +17,18 @@ import FAQSection from './sections/FAQSection'
 import ConversionSection from './sections/ConversionSection'
 import FooterSection from './sections/FooterSection'
 
-import { getContrastColor } from '../utils/colors'
-
-const VisualPreview = ({ formData }) => {
+const VisualPreview = ({ formData, activeSection }) => {
     const { primaryColor, secondaryColor, accentColor, neutralColor, sections, brandName, topic } = formData
+
+    // Auto-scroll to active section
+    React.useEffect(() => {
+        if (activeSection) {
+            const element = document.getElementById(`section-${activeSection}`);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    }, [activeSection]);
 
     const theme = {
         primaryColor,
@@ -30,12 +44,15 @@ const VisualPreview = ({ formData }) => {
         const sectionData = sections[key];
         if (!sectionData || !sectionData.enabled) return null;
 
-        const customStyles = {};
+        // Merge user data with defaults
+        const dataWithDefaults = getDataWithDefaults(key, sectionData.layout, sectionData.data);
+
+        // Custom styles (background, text color, etc.)
+        const customStyles = { minHeight: '200px' };
         if (sectionData.styles) {
             if (sectionData.styles.backgroundColor) {
                 if (sectionData.styles.backgroundColor === 'primary') customStyles.backgroundColor = theme.primaryColor;
                 else if (sectionData.styles.backgroundColor === 'secondary') customStyles.backgroundColor = theme.secondaryColor;
-                else if (sectionData.styles.backgroundColor === 'accent') customStyles.backgroundColor = theme.accentColor;
                 else if (sectionData.styles.backgroundColor === 'neutral') customStyles.backgroundColor = theme.neutralColor;
             }
             if (sectionData.styles.textColor) {
@@ -47,12 +64,14 @@ const VisualPreview = ({ formData }) => {
 
         return (
             <div id={`section-${key}`} key={key} style={customStyles}>
-                <Component
-                    data={sectionData.data}
-                    layout={sectionData.layout}
-                    theme={theme}
-                    isScrollTarget={true}
-                />
+                <ErrorBoundary label={`Error in ${key} section`}>
+                    <Component
+                        data={dataWithDefaults}
+                        layout={sectionData.layout}
+                        theme={theme}
+                        isScrollTarget={true}
+                    />
+                </ErrorBoundary>
             </div>
         )
     }

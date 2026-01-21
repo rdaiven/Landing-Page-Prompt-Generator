@@ -1,3 +1,5 @@
+import { sectionConfigs } from './sectionConfig'
+
 export const generatePrompt = (data) => {
     const { brandName, topic, vibe, primaryColor, secondaryColor, accentColor, neutralColor, audience, assets, sections } = data
 
@@ -81,79 +83,94 @@ IMPORTANT: "STRICT LAYOUT COMPLIANCE"
 
 `
 
+    // Helper to get layout description from sectionConfig
+    const getLayoutDescription = (sectionKey, layoutName) => {
+        const config = sectionConfigs[sectionKey]
+        if (!config || !config.layouts || !config.layouts[layoutName]) {
+            return ''
+        }
+        const description = config.layouts[layoutName].description
+        return description ? `\n- DESCRIPTION: ${description}` : ''
+    }
+
     // Helper to get specific design rules based on section and layout
     const getDesignRules = (section, layout) => {
         const rules = {
+            header: {
+                'Sticky': 'LAYOUT: Fixed/sticky position header. Always visible at top. Use backdrop-blur for glassmorphism effect.',
+                'Smart Hide': 'BEHAVIOR: Hides on scroll down (transform: translateY(-100%)), reveals on scroll up. Requires JavaScript scroll detection.',
+                'Centered Logo': 'LAYOUT: Horizontal flex with logo centered. Navigation links split equally left and right of logo.'
+            },
             hero: {
-                'Split': 'LAYOUT: Mobile = Stacked (Image Top, Text Bottom). Desktop = 2-Column Grid (50/50). content-center. Background color: Secondary.',
-                'Centered': 'LAYOUT: Text centered in max-w-4xl container. Background image with heavy overlay or gradient fade.',
-                'Video-First': 'LAYOUT: Video aspect-ratio 16:9 takes full width or 60% of viewport. Headline overlay or immediately below.',
-                'Full Width': 'LAYOUT: Full viewport height (100vh) background image with semi-transparent dark overlay. White text centered over image.',
+                'High Converting': 'LAYOUT: Mobile = Stacked (Image Top, Text Bottom). Desktop = 2-Column Grid (50/50). content-center. Background color: Secondary.',
+                'Modern & Bold': 'LAYOUT: Text centered in max-w-4xl container. Background image with heavy overlay or gradient fade.',
+                'Luxurious & Immersive': 'LAYOUT: Full viewport height (100vh) background image with semi-transparent dark overlay. White text centered over image.',
                 'Minimal': 'LAYOUT: High-end editorial style. Left-aligned text, ample whitespace. Small decorative visual or color block instead of large hero image.'
             },
             trustPrimer: {
-                'Short Strip': 'LAYOUT: Single row flex-wrap. Logos grayscale with opacity-50, hover:opacity-100.',
-                'Logo Grid': 'LAYOUT: Simple grid. Mobile 2-cols, Desktop 4-cols. Center logos vertically.'
+                'Fast to Scan': 'LAYOUT: Single row flex-wrap. Logos grayscale with opacity-50, hover:opacity-100.',
+                'Logo Showcase': 'LAYOUT: Simple grid. Mobile 2-cols, Desktop 4-cols. Center logos vertically.'
             },
             problemConcern: {
-                'Bullets': 'STYLE: Standard checklist with checkmark icons. Vertical stack.',
-                'Feature Grid': 'LAYOUT: Card grid style. Icon top-left, bold title, light text description. Mobile 1-col, Desktop 3-col.'
+                'Simple & Scannable': 'STYLE: Standard checklist with checkmark icons. Vertical stack.',
+                'Visual & Engaging': 'LAYOUT: Card grid style. Icon top-left, bold title, light text description. Mobile 1-col, Desktop 3-col.'
             },
             treatmentLogic: {
-                'Simple': 'STYLE: Clean typography, ample whitespace. 1-col text focus.',
-                'Detailed Split': 'LAYOUT: Split 50/50. Left: Benefits text + visual bullets. Right: Technical diagram or illustration.',
+                'Minimalist': 'STYLE: Clean typography, ample whitespace. 1-col text focus.',
+                'Story First': 'LAYOUT: Split 50/50. Left: Benefits text + visual bullets. Right: Technical diagram or illustration.',
                 'Bento Grid': 'LAYOUT: Grid of boxy "bento" style cards of varying sizes (spans). Rounded corners, partial borders. Modern tech aesthetic.',
                 'Feature Cards': 'LAYOUT: Horizontal row of equal height cards. Icon focus. Minimalist borders.',
                 'Interactive Hotspots': 'LAYOUT: Central large image with absolute positioned "Hotspot" dots. Hovering usually reveals tooltips (describe as such).'
             },
             procedureGuide: {
-                '3-Step': 'LAYOUT: 3 simple columns. Numbered circle (1, 2, 3) centered above text.',
-                'Timeline': 'LAYOUT: Vertical timeline with connecting line. Alternating content or Left-aligned with line on left.',
+                'Quick & Clear': 'LAYOUT: 3 simple columns. Numbered circle (1, 2, 3) centered above text.',
+                'Detailed Journey': 'LAYOUT: Vertical timeline with connecting line. Alternating content or Left-aligned with line on left.',
                 'Vertical Tabs': 'LAYOUT: Left side list of tabs/steps, Right side content panel that changes. (Implement as standard flex/grid for static preview).',
                 'Masonry Steps': 'LAYOUT: Masonry layout (columns count depends on screen size). Fluid logical flow.',
                 'Carousel Steps': 'LAYOUT: Swipeable cards for mobile. Horizontal scroll snap. Progress dots.'
             },
             socialProof: {
-                'Grid': 'LAYOUT: Responsive Grid (Mobile 1-col, Desktop 3-col). Cards with shadow-sm and rounded corners.',
-                'Carousel': 'LAYOUT: Horizontal scrolling container (overflow-x-auto). Cards snap to center. Use JS for nav buttons.',
+                'High Engagement': 'LAYOUT: Responsive Grid (Mobile 1-col, Desktop 3-col). Cards with shadow-sm and rounded corners.',
+                'Compact & Modern': 'LAYOUT: Horizontal scrolling container (overflow-x-auto). Cards snap to center. Use JS for nav buttons.',
                 'Testimonials': 'LAYOUT: Simple vertical list or grid. Focus on readability.',
                 'Before & After': 'STYLE: Side-by-side comparison images. Slider handle if possible, else stacked images.',
                 'Wall of Love': 'LAYOUT: Dense masonry grid of tweets/reviews. Varying heights. "Infinite scroll" feel.',
                 'Video Highlight': 'LAYOUT: Large featured video player + row of smaller thumbnails below.',
-                'Stat-Backed Trust': 'LAYOUT: Row of large numbers (Typography focus) with explanatory text below. Icons optional.'
+                'Best Conversion': 'LAYOUT: Row of large numbers (Typography focus) with explanatory text below. Icons optional.'
             },
             conversion: {
-                'Urgency': 'STYLE: Floating bottom bar or sticky component. Highlighted countdown timer.',
+                'High Urgency FOMO': 'STYLE: Floating bottom bar or sticky component. Highlighted countdown timer.',
                 'Benefit-Driven': 'LAYOUT: Split layout (Text Left, CTA Right). Focus on value proposition.',
-                'Split Booking': 'LAYOUT: 50/50 Split. Image on one side (warm reception), Form/CTA on other.',
+                'Best for Booking': 'LAYOUT: 50/50 Split. Image on one side (warm reception), Form/CTA on other.',
                 'Sticky Bar': 'LAYOUT: Fixed position at bottom (or top) of screen. Slim bar with Text + Button.',
                 'FloatUI - Simple': 'LAYOUT: Minimal clean centered section. Price badge -> Heading -> Subtext -> Button.'
             },
             clinicDetails: {
-                'Grid': 'LAYOUT: 3-column grid for Location, Hours, Contact. Map below.',
-                'Gallery Split': 'LAYOUT: 50/50 Split. Left: Large Interior Image (Mockup). Right: Details & Address.',
+                'Simple & Clean': 'LAYOUT: 3-column grid for Location, Hours, Contact. Map below.',
+                'With Interior View': 'LAYOUT: 50/50 Split. Left: Large Interior Image (Mockup). Right: Details & Address.',
                 'Map Overlay': 'LAYOUT: Full height background map. Floating card/modal on top (Left or Right) containing address/details.',
                 'Minimal List': 'LAYOUT: Simple clean list, left aligned. Icons + Text. No heavy backgrounds.',
                 'Business Card': 'LAYOUT: Centered "Card" style container. Shadowed. Contains Logo, Address, Contact. mimicking a physical card.'
             },
             faq: {
                 'Objection-Only': 'STYLE: Simple list or grid of Q&A blocks.',
-                'Accordion': 'STYLE: Interactive accordion. Click to expand answer. Border separators.',
+                'Space Saving': 'STYLE: Interactive accordion. Click to expand answer. Border separators.',
                 'Side-by-Side Category': 'LAYOUT: Left col: Category Menu. Right col: List of Questions for that category.',
                 'Grid Cards': 'LAYOUT: Grid of simple cards, each containing one Q&A pair. Exposed answers (no click needed).',
                 'Search + List': 'LAYOUT: Large Search Bar at top. List of popular questions below.'
             },
             footer: {
                 'Minimal': 'STYLE: Simple centered branding and links. No background distraction.',
-                'Detailed': 'LAYOUT: 4-column link grid. Newsletter signup form included.'
+                'Detailed & Informative': 'LAYOUT: 4-column link grid. Newsletter signup form included.'
             }
         }
         return rules[section]?.[layout] ? `- DESIGN SPEC: ${rules[section][layout]}` : ''
     }
 
-    p += `0. HEADER / NAVIGATION (Layout: ${sections.header.layout})
+    p += `0. HEADER / NAVIGATION (Layout: ${sections.header.layout})${getLayoutDescription('header', sections.header.layout)}
 - GOAL: distinct navigation that follows user or stays at top.
 - MUST INCLUDE: Brand Logo, "Book Now" CTA Button (Highlighted).
+${getDesignRules('header', sections.header.layout)}
 - MOBILE BEHAVIOR:
   ${sections.header.layout === 'Smart Hide (Scroll Up to Show)'
             ? '- Implement "Smart Sticky" behavior: Header slides up/hides when scrolling down to maximize screen space for content. Header slides down/shows immediately when scrolling up to allow navigation.'
@@ -168,8 +185,8 @@ ${formatSectionData(sections.header.data)}
 `
 
     if (sections.hero.enabled) {
-        p += `1. HERO SECTION (Layout: ${sections.hero.layout})
-- GOAL: Immediately answer “Is this for me, is this legit, and how much?”
+        p += `1. HERO SECTION (Layout: ${sections.hero.layout})${getLayoutDescription('hero', sections.hero.layout)}
+- GOAL: Immediately answer "Is this for me, is this legit, and how much?"
 - MUST INCLUDE: 
     - Outcome-driven headline (Describe result, NOT technology names).
     - Sub-headline (Brief treatment explanation).
@@ -185,7 +202,7 @@ ${formatSectionData(sections.hero.data)}
     }
 
     if (sections.trustPrimer.enabled) {
-        p += `2. TRUST PRIMER (Layout: ${sections.trustPrimer.layout})
+        p += `2. TRUST PRIMER (Layout: ${sections.trustPrimer.layout})${getLayoutDescription('trustPrimer', sections.trustPrimer.layout)}
 - GOAL: Provide instant assurance with 1-2 critical trust elements only.
 - ELEMENTS: Pick 1-2 from: 5-star rating, patient count, or doctor credentials.
 ${getDesignRules('trustPrimer', sections.trustPrimer.layout)}
@@ -197,7 +214,7 @@ ${formatSectionData(sections.trustPrimer.data)}
     }
 
     if (sections.problemConcern.enabled) {
-        p += `3. PROBLEM / CONCERN SECTION (Layout: ${sections.problemConcern.layout})
+        p += `3. PROBLEM / CONCERN SECTION (Layout: ${sections.problemConcern.layout})${getLayoutDescription('problemConcern', sections.problemConcern.layout)}
 - GOAL: Confirm relevance filter. Diagnostic, not emotional or fear-based.
 - RULES: 3–5 bullets only. No paragraphs. No medical jargon.
 - TITLE: "Is this your concern?" or "This treatment may be right for you if..."
@@ -210,7 +227,7 @@ ${formatSectionData(sections.problemConcern.data)}
     }
 
     if (sections.treatmentLogic.enabled) {
-        p += `4. WHAT THE TREATMENT DOES (Layout: ${sections.treatmentLogic.layout})
+        p += `4. WHAT THE TREATMENT DOES (Layout: ${sections.treatmentLogic.layout})${getLayoutDescription('treatmentLogic', sections.treatmentLogic.layout)}
 - GOAL: Explain value with non-medical clarity. Outcome-focused simple biology.
 - STRUCTURE: Outcome focused. Avoid marketing hype. Simple clarity.
 ${getDesignRules('treatmentLogic', sections.treatmentLogic.layout)}
@@ -222,7 +239,7 @@ ${formatSectionData(sections.treatmentLogic.data)}
     }
 
     if (sections.procedureGuide.enabled) {
-        p += `5. WHAT TO EXPECT (Layout: ${sections.procedureGuide.layout})
+        p += `5. WHAT TO EXPECT (Layout: ${sections.procedureGuide.layout})${getLayoutDescription('procedureGuide', sections.procedureGuide.layout)}
 - GOAL: Reduce fear of the unknown.
 - STRUCTURE: Before session (prep), During session (sensation/duration), After session (results/aftercare).
 ${getDesignRules('procedureGuide', sections.procedureGuide.layout)}
@@ -234,7 +251,7 @@ ${formatSectionData(sections.procedureGuide.data)}
     }
 
     if (sections.socialProof.enabled) {
-        p += `6. SOCIAL PROOF SECTION (Non-Negotiable) (Layout: ${sections.socialProof.layout})
+        p += `6. SOCIAL PROOF SECTION (Non-Negotiable) (Layout: ${sections.socialProof.layout})${getLayoutDescription('socialProof', sections.socialProof.layout)}
 - GOAL: Reinforce credibility. One real proof > five fake ones.
 - MINIMUM: Short testimonials (1-2 lines), Before & After thumbnails, Doctor endorsement video.
 ${getDesignRules('socialProof', sections.socialProof.layout)}
@@ -246,7 +263,7 @@ ${formatSectionData(sections.socialProof.data)}
     }
 
     if (sections.conversion.enabled) {
-        p += `7. CONVERSION BLOCK (Layout: ${sections.conversion.layout})
+        p += `7. CONVERSION BLOCK (Layout: ${sections.conversion.layout})${getLayoutDescription('conversion', sections.conversion.layout)}
 - GOAL: Moment of commitment. Clear offer and logical CTA.
 - MUST INCLUDE: Urgency copy (discounted slots or time-bound), CTA Button, Reassurance (e.g., 'No payment required').
 ${getDesignRules('conversion', sections.conversion.layout)}
@@ -258,7 +275,7 @@ ${formatSectionData(sections.conversion.data)}
     }
 
     if (sections.clinicDetails.enabled) {
-        p += `8. CLINIC DETAILS (Layout: ${sections.clinicDetails.layout})
+        p += `8. CLINIC DETAILS (Layout: ${sections.clinicDetails.layout})${getLayoutDescription('clinicDetails', sections.clinicDetails.layout)}
 - GOAL: Confirm legitimacy and demand.
 - MUST INCLUDE: Clinic name, Neutral descriptor, Location (City), Visual proof (Interior, Exterior, Doctor-in-clinic), Operating signals (Mon-Sat, by appointment).
 ${getDesignRules('clinicDetails', sections.clinicDetails.layout)}
@@ -270,7 +287,7 @@ ${formatSectionData(sections.clinicDetails.data)}
     }
 
     if (sections.faq.enabled) {
-        p += `9. FAQ — OBJECTION HANDLING ONLY (Layout: ${sections.faq.layout})
+        p += `9. FAQ — OBJECTION HANDLING ONLY (Layout: ${sections.faq.layout})${getLayoutDescription('faq', sections.faq.layout)}
 - GOAL: Remove final friction points (Safety, Pain, Sessions, Eligibility).
 - RULE: Do NOT educate. Only answer silent objections stopping a book.
 ${getDesignRules('faq', sections.faq.layout)}
@@ -282,7 +299,7 @@ ${formatSectionData(sections.faq.data)}
     }
 
     if (sections.footer.enabled) {
-        p += `10. FINAL DETAILS / FOOTER (Layout: ${sections.footer.layout})
+        p += `10. FINAL DETAILS / FOOTER (Layout: ${sections.footer.layout})${getLayoutDescription('footer', sections.footer.layout)}
 - INCLUDE: Clinic name, Location, Medical disclaimer (light tone), Privacy/ToS.
 ${getDesignRules('footer', sections.footer.layout)}
 ${getStyleInstruction(sections.footer)}
