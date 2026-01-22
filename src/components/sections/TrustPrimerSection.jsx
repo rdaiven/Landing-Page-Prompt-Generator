@@ -4,6 +4,7 @@
 // ===================================================================
 
 import React from 'react'
+import ReactDOMServer from 'react-dom/server';
 
 // ============================================================
 // REACT COMPONENT (Visual Preview)
@@ -177,163 +178,18 @@ const TrustPrimerSection = ({ data, layout, theme }) => {
 // HTML GENERATOR (Code View)
 // ============================================================
 
+// ============================================================
+// HTML GENERATOR (Code View) - DRY Implementation
+// ============================================================
+
 export const generateTrustPrimerHTML = (layout, data, theme) => {
-    const { items, heading, stats, badges, rating, totalReviews, platform, name, credential1, credential2, quotes, years, label, since, partners } = data
+    // Render the React component directly to static HTML string
+    const html = ReactDOMServer.renderToStaticMarkup(
+        <TrustPrimerSection data={data} layout={layout} theme={theme} />
+    );
 
-    // 1. Logo Showcase
-    if (layout === 'Logo Showcase') {
-        return `<!-- TRUST: Logo Showcase -->
-<section class="py-12 bg-white border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-        ${heading ? `<p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">${heading}</p>` : ''}
-        <div class="flex flex-wrap justify-center gap-12 md:gap-16 items-center opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-            ${(items || []).map(item => `
-            <span class="text-xl md:text-2xl font-bold text-gray-300 font-serif">${item.text || item.alt}</span>`).join('')}
-        </div>
-    </div>
-</section>`
-    }
-
-    // 2. Fast to Scan
-    if (layout === 'Fast to Scan') {
-        return `<!-- TRUST: Fast to Scan -->
-<section class="py-4 bg-slate-50 border-b border-gray-200">
-    <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center gap-8 text-sm md:text-base font-semibold text-slate-600">
-        ${(items || []).map(item => `
-        <div class="flex items-center gap-2">
-            <svg class="w-5 h-5" style="color: var(--accent);" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-            ${item.text}
-        </div>`).join('')}
-    </div>
-</section>`
-    }
-
-    // 3. Marquee Scroll
-    if (layout === 'Marquee Scroll') {
-        return `<!-- TRUST: Marquee Scroll -->
-<section class="py-8 bg-white overflow-hidden border-b border-gray-100">
-    ${heading ? `<p class="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">${heading}</p>` : ''}
-    <div class="relative flex overflow-x-hidden group">
-        <div class="animate-marquee whitespace-nowrap flex gap-16 px-8">
-            ${[...items, ...items].map(item => `
-            <span class="text-2xl font-bold text-gray-300 font-serif">${item.text}</span>`).join('')}
-        </div>
-        <div class="absolute top-0 animate-marquee2 whitespace-nowrap flex gap-16 px-8">
-             ${[...items, ...items].map(item => `
-            <span class="text-2xl font-bold text-gray-300 font-serif">${item.text}</span>`).join('')}
-        </div>
-    </div>
-    <style>
-        .animate-marquee { animation: marquee 25s linear infinite; }
-        .animate-marquee2 { animation: marquee2 25s linear infinite; }
-        @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-100%); } }
-        @keyframes marquee2 { 0% { transform: translateX(100%); } 100% { transform: translateX(0%); } }
-    </style>
-</section>`
-    }
-
-    // 4. Key Metrics
-    if (layout === 'Key Metrics') {
-        return `<!-- TRUST: Key Metrics -->
-<section class="py-12 bg-white">
-    <div class="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-${(stats || []).length} gap-8 text-center divide-x divide-gray-100">
-        ${(stats || []).map(stat => `
-        <div>
-            <div class="text-4xl md:text-5xl font-bold mb-2" style="color: var(--primary);">${stat.value}</div>
-            <div class="text-xs font-bold text-gray-500 uppercase tracking-wider">${stat.label}</div>
-        </div>`).join('')}
-    </div>
-</section>`
-    }
-
-    // 5. Authority Badges
-    if (layout === 'Authority Badges') {
-        return `<!-- TRUST: Authority Badges -->
-<section class="py-10 bg-slate-50 text-center">
-    <div class="max-w-5xl mx-auto px-4 flex flex-wrap justify-center gap-12">
-        ${(badges || []).map(badge => `
-        <div class="flex flex-col items-center group">
-            <div class="w-12 h-12 rounded-full border-2 flex items-center justify-center mb-3 transition-colors group-hover:bg-white" style="border-color: var(--primary); color: var(--primary);">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <span class="font-bold text-gray-900">${badge.title}</span>
-            <span class="text-xs text-gray-500">${badge.subtext}</span>
-        </div>`).join('')}
-    </div>
-</section>`
-    }
-
-    // 6. Compact Rating
-    if (layout === 'Compact Rating') {
-        return `<!-- TRUST: Compact Rating -->
-<section class="py-6 bg-white border-b border-gray-100">
-    <div class="flex justify-center items-center gap-4">
-        <div class="text-3xl font-bold" style="color: var(--primary);">${rating}</div>
-        <div class="flex flex-col">
-            <div class="flex text-yellow-400 text-lg">★★★★★</div>
-            <div class="text-xs text-gray-500 font-medium">Based on <strong>${totalReviews}</strong> ${platform}</div>
-        </div>
-    </div>
-</section>`
-    }
-
-    // 7. Doctor Credentials
-    if (layout === 'Doctor Credentials') {
-        return `<!-- TRUST: Doctor Credentials -->
-<section class="py-12 bg-white text-center">
-    <div class="inline-block px-10 py-6 border border-gray-200 rounded-xl shadow-sm">
-        <h4 class="text-xl mb-2" style="font-family: 'Playfair Display', serif; color: var(--primary);">${name}</h4>
-        <div class="flex flex-wrap justify-center gap-4 text-sm text-gray-600 font-medium uppercase tracking-wide">
-            <span>${credential1}</span>
-            <span class="text-gray-300">•</span>
-            <span>${credential2}</span>
-        </div>
-    </div>
-</section>`
-    }
-
-    // 8. Press Mentions
-    if (layout === 'Press Mentions') {
-        return `<!-- TRUST: Press Mentions -->
-<section class="py-16 bg-slate-50">
-    <div class="max-w-5xl mx-auto px-4 grid md:grid-cols-${(quotes || []).length} gap-12">
-        ${(quotes || []).map(quote => `
-        <div class="text-center">
-            <p class="text-lg italic text-slate-700 mb-4 leading-relaxed">"${quote.text}"</p>
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">— ${quote.source}</p>
-        </div>`).join('')}
-    </div>
-</section>`
-    }
-
-    // 9. Years of Excellence
-    if (layout === 'Years of Excellence') {
-        return `<!-- TRUST: Years of Excellence -->
-<section class="py-10 text-white" style="background-color: var(--primary);">
-    <div class="max-w-4xl mx-auto px-4 flex items-center justify-center gap-6">
-        <div class="text-5xl font-bold">${years}</div>
-        <div class="h-10 w-px bg-white/20"></div>
-        <div>
-            <div class="text-lg font-semibold tracking-wide">${label}</div>
-            <div class="text-sm opacity-60">${since}</div>
-        </div>
-    </div>
-</section>`
-    }
-
-    // 10. Medical Partners
-    if (layout === 'Medical Partners') {
-        return `<!-- TRUST: Medical Partners -->
-<section class="py-12 bg-white text-center">
-    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">${heading}</h4>
-    <div class="flex flex-wrap justify-center gap-12 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all">
-        ${(partners || []).map(p => `
-        <span class="text-xl font-bold text-slate-700">${p.name}</span>`).join('')}
-    </div>
-</section>`
-    }
-
-    return ''
-}
+    return `<!-- TRUST PRIMER: ${layout} -->
+${html}`;
+};
 
 export default TrustPrimerSection

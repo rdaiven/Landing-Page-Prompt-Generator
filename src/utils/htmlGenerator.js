@@ -1,3 +1,4 @@
+import { getDataWithDefaults } from './dataHelpers'
 import { getEffectiveImage } from './mediaUtils'
 import { generateHeroHTML } from '../components/sections/HeroSection'
 import { generateHeaderHTML } from '../components/sections/HeaderSection'
@@ -60,6 +61,9 @@ ${sectionsHTML}
 export const generateSectionHTML = (sectionKey, sectionData, theme) => {
     const { layout, data } = sectionData
 
+    // Merge user data with defaults to ensure HTML output matches Visual Preview
+    const dataWithDefaults = getDataWithDefaults(sectionKey, layout, data)
+
     const generators = {
         header: generateHeaderHTML,
         hero: generateHeroHTML,
@@ -77,7 +81,7 @@ export const generateSectionHTML = (sectionKey, sectionData, theme) => {
     const generator = generators[sectionKey]
     if (!generator) return `<!-- Section ${sectionKey} not implemented -->`
 
-    return generator(layout, data, theme)
+    return generator(layout, dataWithDefaults, theme)
 }
 
 // ============================================================
