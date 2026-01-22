@@ -2,10 +2,18 @@ import React from 'react'
 import * as Icons from 'lucide-react'
 import ReactDOMServer from 'react-dom/server';
 
-const FooterSection = ({ data, layout, theme }) => {
+const FooterSection = ({ data, layout, theme, styles }) => {
     const { copyright, links, address, column1, column2, column3 } = data
     const primaryColor = theme.primaryColor || '#1d4ed8'
     const linkList = links ? links.split(',').map(l => l.trim()) : ['Privacy', 'Terms', 'Sitemap']
+
+    // Dynamic Shape Radius
+    const getShapeRadius = (shape) => {
+        if (shape === 'square') return '0px'
+        if (shape === 'pill') return '9999px'
+        return '6px' // Default
+    }
+    const borderRadius = getShapeRadius(styles?.buttonShape)
 
     // Layout Implementation Map
     const layouts = {
@@ -94,7 +102,7 @@ const FooterSection = ({ data, layout, theme }) => {
                     <p style={{ color: '#6b7280', marginBottom: '2rem' }}>Get exclusive offers and beauty tips delivered to your inbox.</p>
                     <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '3rem' }}>
                         <input type="email" placeholder="Enter your email" style={{ flex: 1, padding: '0.75rem 1rem', borderRadius: '6px', border: '1px solid #d1d5db' }} />
-                        <button style={{ backgroundColor: primaryColor, color: 'white', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '6px', fontWeight: '600', cursor: 'pointer' }}>Subscribe</button>
+                        <button style={{ backgroundColor: primaryColor, color: 'white', border: 'none', padding: '0.75rem 1.5rem', borderRadius: borderRadius, fontWeight: '600', cursor: 'pointer' }}>Subscribe</button>
                     </div>
                     <div style={{ fontSize: '0.85rem', color: '#9ca3af' }}>
                         {copyright} • <a href="#" style={{ color: '#9ca3af' }}>Privacy Policy</a>
@@ -197,11 +205,11 @@ const FooterSection = ({ data, layout, theme }) => {
 // HTML GENERATOR (Code View) - DRY Implementation
 // ============================================================
 
-export const generateFooterHTML = (layout, data, theme) => {
+export const generateFooterHTML = (layout, data, theme, styles) => {
     // Render the React component directly to static HTML string
     // This ensures strict parity between Visual Preview and Code View
     const html = ReactDOMServer.renderToStaticMarkup(
-        <FooterSection data={data} layout={layout} theme={theme} />
+        <FooterSection data={data} layout={layout} theme={theme} styles={styles} />
     );
 
     return `<!-- FOOTER: ${layout} -->

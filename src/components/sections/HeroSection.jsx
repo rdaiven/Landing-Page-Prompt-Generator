@@ -29,9 +29,21 @@ const getButtonStyle = (primaryColor) => {
 // REACT COMPONENT (Visual Preview)
 // ============================================================
 
-const HeroSection = ({ data, layout, theme }) => {
+const HeroSection = ({ data, layout, theme, styles }) => {
     const { primaryColor, secondaryColor, accentColor } = theme
-    const buttonStyle = getButtonStyle(primaryColor)
+
+    // Dynamic Shape
+    const getShapeRadius = (shape) => {
+        if (shape === 'square') return '0px'
+        if (shape === 'pill') return '9999px'
+        return '0.375rem' // Default
+    }
+
+    const buttonStyle = {
+        ...getButtonStyle(primaryColor),
+        borderRadius: getShapeRadius(styles?.buttonShape)
+    }
+
     const { headline, subheadline, ctaText, imagePrompt, imageUrl, videoUrl, leftHeadline, leftText, rightHeadline, rightText, typedWords, card1Title, card2Title, card3Title } = data
 
     // 1. High Converting - 2-Column Split
@@ -251,11 +263,11 @@ import ReactDOMServer from 'react-dom/server';
 // HTML GENERATOR (Code View) - DRY Implementation
 // ============================================================
 
-export const generateHeroHTML = (layout, data, theme) => {
+export const generateHeroHTML = (layout, data, theme, styles) => {
     // Render the React component directly to static HTML string
     // This ensures logical parity between Visual Preview and Code View
     const html = ReactDOMServer.renderToStaticMarkup(
-        <HeroSection data={data} layout={layout} theme={theme} />
+        <HeroSection data={data} layout={layout} theme={theme} styles={styles} />
     );
 
     return `<!-- HERO: ${layout} -->

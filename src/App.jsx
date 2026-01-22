@@ -74,22 +74,27 @@ function App() {
   }
 
   const updateSectionLayout = (section, layout) => {
-    // When layout changes, we need to reset data to defaults for that layout
     const config = sectionConfigs[section].layouts[layout];
-    const newData = {};
+    const prevData = formData.sections[section].data || {};
 
-    if (config.defaultData) {
-      Object.assign(newData, config.defaultData);
-    }
+    // 1. Start with the new layout's defaults to ensure we have all necessary keys for the new layout
+    const newData = { ...(config.defaultData || {}) };
 
+    // 2. Supersede with any existing data from the previous layout
+    // This ensures that shared fields (like 'heading' or 'items') are preserved.
+    // It also preserves keys not used in the new layout (hidden state), supporting the user's request.
+    Object.keys(prevData).forEach(key => {
+      newData[key] = prevData[key];
+    });
+
+    // 3. UX Rule: For fields that are NEW to this layout (didn't exist in prevData),
+    // ensure text inputs start empty instead of showing the placeholder default.
     if (config.fields) {
       config.fields.forEach(field => {
-        if (field.type !== 'collection' && newData[field.name] === undefined) {
-          // UX RULE: Text inputs start empty (showing placeholder).
+        // Only apply if this field wasn't present in the previous data
+        if (field.type !== 'collection' && prevData[field.name] === undefined) {
           if (field.type === 'text' || field.type === 'textarea') {
             newData[field.name] = '';
-          } else {
-            newData[field.name] = field.default || '';
           }
         }
       });

@@ -211,11 +211,11 @@ const ConversionSection = ({ data, layout, theme }) => {
 // HTML GENERATOR (Code View) - DRY Implementation
 // ============================================================
 
-export const generateConversionHTML = (layout, data, theme) => {
+export const generateConversionHTML = (layout, data, theme, styles) => {
     // Render the React component directly to static HTML string
     // This ensures strict parity between Visual Preview and Code View
     const html = ReactDOMServer.renderToStaticMarkup(
-        <ConversionSection data={data} layout={layout} theme={theme} />
+        <ConversionSection data={data} layout={layout} theme={theme} styles={styles} />
     );
 
     return `<!-- CONVERSION: ${layout} -->

@@ -73,7 +73,7 @@ ${sectionsHTML}
  * Generates HTML for a single section
  */
 export const generateSectionHTML = (sectionKey, sectionData, theme) => {
-    const { layout, data } = sectionData
+    const { layout, data, styles } = sectionData
 
     // Merge user data with defaults to ensure HTML output matches Visual Preview
     const dataWithDefaults = getDataWithDefaults(sectionKey, layout, data)
@@ -95,7 +95,8 @@ export const generateSectionHTML = (sectionKey, sectionData, theme) => {
     const generator = generators[sectionKey]
     if (!generator) return `<!-- Section ${sectionKey} not implemented -->`
 
-    return generator(layout, dataWithDefaults, theme)
+    // Pass styles to generator
+    return generator(layout, dataWithDefaults, theme, styles)
 }
 
 // ============================================================

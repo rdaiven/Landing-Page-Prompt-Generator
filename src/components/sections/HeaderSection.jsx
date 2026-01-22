@@ -30,11 +30,22 @@ const parseLinks = (navLinks) => {
 // REACT COMPONENT (Visual Preview)
 // ============================================================
 
-const HeaderSection = ({ data, layout, theme }) => {
+const HeaderSection = ({ data, layout, theme, styles }) => {
     const { primaryColor, brandName } = theme
     const { navLinks, ctaText } = data
     const links = parseLinks(navLinks)
-    const buttonStyle = getButtonStyle(primaryColor)
+
+    // Dynamic Button Style based on 'styles.buttonShape' props
+    const getShapeRadius = (shape) => {
+        if (shape === 'square') return '0px'
+        if (shape === 'pill') return '9999px'
+        return '8px' // Default rounded
+    }
+
+    const buttonStyle = {
+        ...getButtonStyle(primaryColor),
+        borderRadius: getShapeRadius(styles?.buttonShape)
+    }
 
     // Layout Implementation Map
     // This pattern enables "Safe Fallback" by default
@@ -195,11 +206,11 @@ const HeaderSection = ({ data, layout, theme }) => {
 // HTML GENERATOR (Code View) - DRY Implementation
 // ============================================================
 
-export const generateHeaderHTML = (layout, data, theme) => {
+export const generateHeaderHTML = (layout, data, theme, styles) => {
     // Render the React component directly to static HTML string
     // This ensures strict parity between Visual Preview and Code View
     const html = ReactDOMServer.renderToStaticMarkup(
-        <HeaderSection data={data} layout={layout} theme={theme} />
+        <HeaderSection data={data} layout={layout} theme={theme} styles={styles} />
     );
 
     return `<!-- HEADER: ${layout} -->

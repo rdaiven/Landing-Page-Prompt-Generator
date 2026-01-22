@@ -144,7 +144,14 @@ const SectionEditor = ({ sectionKey, formData, updateSectionLayout, updateSectio
                         <button
                             onClick={() => {
                                 const newItem = {};
-                                field.fields.forEach(f => newItem[f.name] = f.default || '');
+                                field.fields.forEach(f => {
+                                    // UX RULE: New items start empty for text fields
+                                    if (f.type === 'text' || f.type === 'textarea') {
+                                        newItem[f.name] = '';
+                                    } else {
+                                        newItem[f.name] = f.default || '';
+                                    }
+                                });
                                 updateSectionData(sectionKey, field.name, [...items, newItem]);
                             }}
                             className="w-full py-2 rounded-xl border border-dashed border-slate-300 text-slate-600 text-xs font-semibold hover:bg-slate-50 hover:border-slate-400 transition-colors"
@@ -278,6 +285,18 @@ const SectionEditor = ({ sectionKey, formData, updateSectionLayout, updateSectio
                                                 <option value="auto">Auto Contrast</option>
                                                 <option value="dark">Dark</option>
                                                 <option value="light">Light</option>
+                                            </select>
+                                        </div>
+                                        <div className="space-y-1">
+                                            <label className="text-xs font-semibold text-slate-500">Button Shape</label>
+                                            <select
+                                                className="w-full text-sm rounded-lg border-slate-200 bg-slate-50 px-2 py-1.5 focus:ring-2 focus:ring-indigo-100 outline-none"
+                                                value={(sectionData.styles && sectionData.styles.buttonShape) || 'default'}
+                                                onChange={(e) => updateSectionStyles(sectionKey, 'buttonShape', e.target.value)}
+                                            >
+                                                <option value="default">Default (Rounded)</option>
+                                                <option value="pill">Pill (Oval)</option>
+                                                <option value="square">Square (Sharp)</option>
                                             </select>
                                         </div>
                                     </div>

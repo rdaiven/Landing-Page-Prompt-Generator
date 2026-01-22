@@ -20,9 +20,17 @@ const DynamicIcon = ({ name, size = 24, className }) => {
 // REACT COMPONENT (Visual Preview)
 // ============================================================
 
-const ProblemConcernSection = ({ data, layout, theme }) => {
+const ProblemConcernSection = ({ data, layout, theme, styles }) => {
     const { heading, items, problemHeading, problemText, solutionHeading, solutionText, symptoms, statement, subtext, badHeading, badText, goodHeading, goodText, question, option1, option2, option3, personas, myth, fact, beforeHeading, beforeText, afterHeading, afterText } = data
     const [selectedQuiz, setSelectedQuiz] = useState(null)
+
+    // Dynamic Shape Radius
+    const getShapeRadius = (shape) => {
+        if (shape === 'square') return '0px'
+        if (shape === 'pill') return '9999px'
+        return '12px' // Default for this section (matches original rounded-xl)
+    }
+    const borderRadius = getShapeRadius(styles?.buttonShape)
 
     // Layout Implementation Map
     const layouts = {
@@ -130,7 +138,8 @@ const ProblemConcernSection = ({ data, layout, theme }) => {
                             <button
                                 key={i}
                                 onClick={() => setSelectedQuiz(i)}
-                                className={`p-8 rounded-xl border-2 transition-all text-left group ${selectedQuiz === i ? 'border-black bg-white shadow-xl' : 'border-transparent bg-white shadow-sm hover:border-gray-200'}`}
+                                style={{ borderRadius: borderRadius }}
+                                className={`p-8 border-2 transition-all text-left group ${selectedQuiz === i ? 'border-black bg-white shadow-xl' : 'border-transparent bg-white shadow-sm hover:border-gray-200'}`}
                             >
                                 <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center mb-4 ${selectedQuiz === i ? 'border-black bg-black text-white' : 'border-gray-200 group-hover:border-gray-400'}`}>
                                     {selectedQuiz === i && '✓'}
@@ -203,10 +212,11 @@ const ProblemConcernSection = ({ data, layout, theme }) => {
 // HTML GENERATOR (Code View) - DRY Implementation
 // ============================================================
 
-export const generateProblemConcernHTML = (layout, data, theme) => {
+export const generateProblemConcernHTML = (layout, data, theme, styles) => {
     // Render the React component directly to static HTML string
+    // This ensures logical parity between Visual Preview and Code View
     const html = ReactDOMServer.renderToStaticMarkup(
-        <ProblemConcernSection data={data} layout={layout} theme={theme} />
+        <ProblemConcernSection data={data} layout={layout} theme={theme} styles={styles} />
     );
 
     return `<!-- PROBLEM/CONCERN: ${layout} -->

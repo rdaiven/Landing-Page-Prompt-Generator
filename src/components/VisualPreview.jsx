@@ -69,6 +69,7 @@ const VisualPreview = ({ formData, activeSection }) => {
                         data={dataWithDefaults}
                         layout={sectionData.layout}
                         theme={theme}
+                        styles={sectionData.styles || {}}
                         isScrollTarget={true}
                     />
                 </ErrorBoundary>

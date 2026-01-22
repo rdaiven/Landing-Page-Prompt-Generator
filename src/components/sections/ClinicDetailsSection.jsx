@@ -8,7 +8,15 @@ import { getEffectiveImage } from '../../utils/mediaUtils'
 import * as Icons from 'lucide-react' // Added Icons import
 import ReactDOMServer from 'react-dom/server';
 
-const ClinicDetailsSection = ({ data, layout, theme }) => {
+const ClinicDetailsSection = ({ data, layout, theme, styles }) => {
+
+    // Dynamic Shape Radius
+    const getShapeRadius = (shape) => {
+        if (shape === 'square') return '0px'
+        if (shape === 'pill') return '9999px'
+        return '8px' // Default for clinic cards
+    }
+    const borderRadius = getShapeRadius(styles?.buttonShape)
 
     // Layout Implementation Map
     const layouts = {
@@ -18,16 +26,16 @@ const ClinicDetailsSection = ({ data, layout, theme }) => {
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
                         <div style={{ padding: '2rem', background: '#fff', borderRadius: '12px' }}>
                             <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 'bold' }}>Location</h3>
-                            <p>{data.location}</p>
-                            <p style={{ marginTop: '0.5rem', color: '#6b7280' }}>{data.address}</p>
+                            <p>{data.location || 'Clinic Name'}</p>
+                            <p style={{ marginTop: '0.5rem', color: '#6b7280' }}>{data.address || '123 Medical Blvd, Suite 100'}</p>
                         </div>
                         <div style={{ padding: '2rem', background: '#fff', borderRadius: '12px' }}>
                             <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 'bold' }}>Hours</h3>
-                            <p style={{ whiteSpace: 'pre-line' }}>{data.hours}</p>
+                            <p style={{ whiteSpace: 'pre-line' }}>{data.hours || 'Mon-Fri: 9am - 6pm\nSat: 10am - 2pm'}</p>
                         </div>
                         <div style={{ padding: '2rem', background: '#fff', borderRadius: '12px' }}>
                             <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 'bold' }}>Contact</h3>
-                            <button style={{ padding: '0.75rem 1.5rem', background: theme.primaryColor || '#000', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
+                            <button style={{ padding: '0.75rem 1.5rem', background: theme.primaryColor || '#000', color: 'white', border: 'none', borderRadius: borderRadius, cursor: 'pointer', fontWeight: '600' }}>
                                 Get in Touch
                             </button>
                         </div>
@@ -42,11 +50,11 @@ const ClinicDetailsSection = ({ data, layout, theme }) => {
                         <img src={getEffectiveImage(data.imageUrl, data.imagePrompt || 'Luxury Clinic Interior', theme, { w: 800, h: 600 })} alt={data.imagePrompt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
                     <div>
-                        <h2 style={{ fontSize: '3rem', fontFamily: 'var(--font-serif)', marginBottom: '1.5rem', lineHeight: 1.1 }}>{data.location}</h2>
-                        <p style={{ fontSize: '1.125rem', color: '#4b5563', marginBottom: '2rem', lineHeight: 1.6 }}>{data.description}</p>
+                        <h2 style={{ fontSize: '3rem', fontFamily: 'var(--font-serif)', marginBottom: '1.5rem', lineHeight: 1.1 }}>{data.location || 'Headquarters'}</h2>
+                        <p style={{ fontSize: '1.125rem', color: '#4b5563', marginBottom: '2rem', lineHeight: 1.6 }}>{data.description || 'Experience world-class care in our state-of-the-art facility.'}</p>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.1rem', fontWeight: '500' }}>
                             <Icons.MapPin size={24} style={{ color: theme.primaryColor }} />
-                            <span>{data.address}</span>
+                            <span>{data.address || '123 Medical Blvd, Suite 100'}</span>
                         </div>
                     </div>
                 </div>
@@ -59,12 +67,12 @@ const ClinicDetailsSection = ({ data, layout, theme }) => {
                         <div style={{ display: 'grid', gap: '2rem' }}>
                             <div style={{ padding: '2rem', background: '#fff', borderRadius: '16px' }}>
                                 <h3 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-serif)', marginBottom: '1rem' }}>Visit Us</h3>
-                                <p style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>{data.location}</p>
-                                <p style={{ color: '#6b7280' }}>{data.address}</p>
+                                <p style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>{data.location || 'Main Clinic'}</p>
+                                <p style={{ color: '#6b7280' }}>{data.address || '123 Medical Blvd, Suite 100'}</p>
                             </div>
                             <div style={{ padding: '2rem', background: '#fff', borderRadius: '16px' }}>
                                 <h3 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-serif)', marginBottom: '1rem' }}>Opening Hours</h3>
-                                <p style={{ whiteSpace: 'pre-line', fontSize: '1.1rem' }}>{data.hours}</p>
+                                <p style={{ whiteSpace: 'pre-line', fontSize: '1.1rem' }}>{data.hours || 'Mon-Fri: 9am - 6pm'}</p>
                             </div>
                         </div>
                         <div style={{ background: '#e5e7eb', borderRadius: '24px', minHeight: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -82,11 +90,11 @@ const ClinicDetailsSection = ({ data, layout, theme }) => {
                 </div>
                 <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', position: 'relative', zIndex: 1 }}>
                     <div style={{ background: 'white', color: '#1f2937', padding: '3rem', borderRadius: '24px', maxWidth: '500px', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
-                        <h2 style={{ fontSize: '2.5rem', fontFamily: 'var(--font-serif)', marginBottom: '1.5rem' }}>{data.location}</h2>
-                        <p style={{ marginBottom: '1.5rem', lineHeight: 1.6 }}>{data.description}</p>
+                        <h2 style={{ fontSize: '2.5rem', fontFamily: 'var(--font-serif)', marginBottom: '1.5rem' }}>{data.location || 'Main Office'}</h2>
+                        <p style={{ marginBottom: '1.5rem', lineHeight: 1.6 }}>{data.description || 'Visit our flagship location for comprehensive care and consultations.'}</p>
                         <div style={{ borderTop: '1px solid #e5e7eb', paddingTop: '1.5rem' }}>
                             <div style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Address</div>
-                            <p style={{ color: '#6b7280' }}>{data.address}</p>
+                            <p style={{ color: '#6b7280' }}>{data.address || '123 Medical Blvd, Suite 100'}</p>
                         </div>
                     </div>
                 </div>
@@ -102,14 +110,14 @@ const ClinicDetailsSection = ({ data, layout, theme }) => {
                                 <Icons.MapPin size={32} />
                             </div>
                             <h3 style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Visit</h3>
-                            <p style={{ color: '#6b7280' }}>{data.address}</p>
+                            <p style={{ color: '#6b7280' }}>{data.address || '123 Medical Blvd'}</p>
                         </div>
                         <div>
                             <div style={{ width: '64px', height: '64px', background: `${theme.primaryColor}10`, color: theme.primaryColor, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem auto' }}>
                                 <Icons.Clock size={32} />
                             </div>
                             <h3 style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Hours</h3>
-                            <p style={{ color: '#6b7280', whiteSpace: 'pre-line' }}>{data.hours}</p>
+                            <p style={{ color: '#6b7280', whiteSpace: 'pre-line' }}>{data.hours || 'Mon-Fri: 9-5'}</p>
                         </div>
                         <div>
                             <div style={{ width: '64px', height: '64px', background: `${theme.primaryColor}10`, color: theme.primaryColor, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem auto' }}>
@@ -127,11 +135,11 @@ const ClinicDetailsSection = ({ data, layout, theme }) => {
         'Modern Clean': () => (
             <div style={{ padding: '6rem 2rem', backgroundColor: '#fff' }}>
                 <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
-                    <h2 style={{ fontSize: '4rem', fontFamily: 'var(--font-serif)', marginBottom: '1rem', lineHeight: 1 }}>{data.location}</h2>
-                    <p style={{ fontSize: '1.25rem', color: '#6b7280', marginBottom: '3rem' }}>{data.address}</p>
+                    <h2 style={{ fontSize: '4rem', fontFamily: 'var(--font-serif)', marginBottom: '1rem', lineHeight: 1 }}>{data.location || 'New York City'}</h2>
+                    <p style={{ fontSize: '1.25rem', color: '#6b7280', marginBottom: '3rem' }}>{data.address || '123 Medical Blvd, Suite 100, NY 10001'}</p>
                     <div style={{ display: 'inline-block', padding: '2rem 4rem', background: '#f9fafb', borderRadius: '24px' }}>
                         <div style={{ fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: '700', color: '#9ca3af', marginBottom: '1rem' }}>Open Hours</div>
-                        <p style={{ fontSize: '1.125rem', fontWeight: '500', whiteSpace: 'pre-line' }}>{data.hours}</p>
+                        <p style={{ fontSize: '1.125rem', fontWeight: '500', whiteSpace: 'pre-line' }}>{data.hours || 'Mon-Fri: 9am - 6pm'}</p>
                     </div>
                 </div>
             </div>
@@ -139,12 +147,12 @@ const ClinicDetailsSection = ({ data, layout, theme }) => {
         'Contact Centric': () => (
             <div style={{ padding: '6rem 2rem', backgroundColor: theme.primaryColor, color: 'white' }}>
                 <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-                    <h2 style={{ fontSize: '2.5rem', fontFamily: 'var(--font-serif)', marginBottom: '2rem' }}>Ready to visit {data.location}?</h2>
+                    <h2 style={{ fontSize: '2.5rem', fontFamily: 'var(--font-serif)', marginBottom: '2rem' }}>Ready to visit {data.location || 'us'}?</h2>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-                        <div style={{ fontSize: '1.5rem', opacity: 0.9 }}>{data.address}</div>
+                        <div style={{ fontSize: '1.5rem', opacity: 0.9 }}>{data.address || '123 Medical Blvd, Suite 100'}</div>
                         <div style={{ width: '50px', height: '1px', background: 'white', margin: '1rem 0', opacity: 0.5 }}></div>
-                        <div style={{ fontSize: '1.25rem', opacity: 0.8 }}>{data.hours}</div>
-                        <button style={{ marginTop: '2rem', padding: '1rem 2rem', background: 'white', color: theme.primaryColor, border: 'none', borderRadius: '99px', fontWeight: 'bold', cursor: 'pointer', fontSize: '1.125rem' }}>
+                        <div style={{ fontSize: '1.25rem', opacity: 0.8 }}>{data.hours || 'Mon-Fri: 9am - 6pm'}</div>
+                        <button style={{ marginTop: '2rem', padding: '1rem 2rem', background: 'white', color: theme.primaryColor, border: 'none', borderRadius: borderRadius, fontWeight: 'bold', cursor: 'pointer', fontSize: '1.125rem' }}>
                             Book Appointment Now
                         </button>
                     </div>
@@ -155,16 +163,16 @@ const ClinicDetailsSection = ({ data, layout, theme }) => {
             <div style={{ padding: '6rem 2rem', backgroundColor: '#fdfcf8', borderBottom: '1px solid #e5e5e5', borderTop: '1px solid #e5e5e5' }}>
                 <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '2rem' }}>
                     <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.3em', color: theme.primaryColor }}>Our Location</div>
-                    <h2 style={{ fontSize: '3rem', fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>{data.location}</h2>
+                    <h2 style={{ fontSize: '3rem', fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>{data.location || 'The Suite'}</h2>
                     <div style={{ width: '1px', height: '60px', background: '#d1d5db' }}></div>
                     <div style={{ display: 'flex', gap: '4rem', flexWrap: 'wrap', justifyItems: 'center' }}>
                         <div>
                             <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', marginBottom: '0.5rem' }}>Address</div>
-                            <div style={{ color: '#6b7280' }}>{data.address}</div>
+                            <div style={{ color: '#6b7280' }}>{data.address || '123 Medical Blvd, Suite 100'}</div>
                         </div>
                         <div>
                             <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', marginBottom: '0.5rem' }}>Hours</div>
-                            <div style={{ color: '#6b7280' }}>{data.hours}</div>
+                            <div style={{ color: '#6b7280' }}>{data.hours || 'Mon-Fri: 9am - 6pm'}</div>
                         </div>
                     </div>
                 </div>
@@ -173,15 +181,15 @@ const ClinicDetailsSection = ({ data, layout, theme }) => {
         'Split with Image': () => (
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '600px' }}>
                 <div style={{ padding: '6rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', backgroundColor: '#fff' }}>
-                    <h2 style={{ fontSize: '3rem', fontFamily: 'var(--font-serif)', marginBottom: '2rem', color: theme.primaryColor }}>{data.location}</h2>
+                    <h2 style={{ fontSize: '3rem', fontFamily: 'var(--font-serif)', marginBottom: '2rem', color: theme.primaryColor }}>{data.location || 'Our Location'}</h2>
                     <div style={{ spaceY: '2rem' }}>
                         <div style={{ marginBottom: '2rem' }}>
                             <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Find Us</h3>
-                            <p style={{ color: '#4b5563', fontSize: '1.1rem' }}>{data.address}</p>
+                            <p style={{ color: '#4b5563', fontSize: '1.1rem' }}>{data.address || '123 Medical Blvd, Suite 100'}</p>
                         </div>
                         <div>
                             <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Opening Hours</h3>
-                            <p style={{ color: '#4b5563', fontSize: '1.1rem', whiteSpace: 'pre-line' }}>{data.hours}</p>
+                            <p style={{ color: '#4b5563', fontSize: '1.1rem', whiteSpace: 'pre-line' }}>{data.hours || 'Mon-Fri: 9am - 6pm'}</p>
                         </div>
                     </div>
                 </div>
@@ -194,13 +202,13 @@ const ClinicDetailsSection = ({ data, layout, theme }) => {
             <div style={{ padding: '4rem 2rem', backgroundColor: '#111827', color: 'white' }}>
                 <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '2rem' }}>
                     <div>
-                        <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>{data.location}</h2>
-                        <p style={{ opacity: 0.7 }}>{data.description}</p>
+                        <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>{data.location || 'Main Office'}</h2>
+                        <p style={{ opacity: 0.7 }}>{data.description || 'Your trusted neighborhood clinic.'}</p>
                     </div>
                     <div style={{ display: 'flex', gap: '3rem' }}>
                         <div>
                             <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.5, marginBottom: '0.5rem' }}>Visit</div>
-                            <div>{data.address}</div>
+                            <div>{data.address || '123 Medical Blvd'}</div>
                         </div>
                         <div>
                             <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.5, marginBottom: '0.5rem' }}>Contact</div>
@@ -221,10 +229,11 @@ const ClinicDetailsSection = ({ data, layout, theme }) => {
 // HTML GENERATOR (Code View) - DRY Implementation
 // ============================================================
 
-export const generateClinicDetailsHTML = (layout, data, theme) => {
+export const generateClinicDetailsHTML = (layout, data, theme, styles) => {
     // Render the React component directly to static HTML string
+    // This ensures logical parity between Visual Preview and Code View
     const html = ReactDOMServer.renderToStaticMarkup(
-        <ClinicDetailsSection data={data} layout={layout} theme={theme} />
+        <ClinicDetailsSection data={data} layout={layout} theme={theme} styles={styles} />
     );
 
     return `<!-- CLINIC DETAILS: ${layout} -->

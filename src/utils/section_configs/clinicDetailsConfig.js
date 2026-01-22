@@ -18,6 +18,7 @@ export const clinicDetailsConfig = {
             fields: [
                 { name: 'location', label: 'Location Name', helperText: "Name.", type: 'text', default: 'Headquarters' },
                 { name: 'description', label: 'Short Description', helperText: "Describe the vibe.", type: 'textarea', default: 'Visit us in our modern, central facility.' },
+                { name: 'address', label: 'Address', helperText: "Full address.", type: 'text', default: '123 Main St, New York, NY' },
                 { name: 'imagePrompt', label: 'Image Description (AI)', helperText: "Visual.", type: 'text', default: 'Modern Office Interior' }
             ]
         },
@@ -25,7 +26,9 @@ export const clinicDetailsConfig = {
             tag: "Functional",
             description: "Layout with space for a map integration.",
             fields: [
-                { name: 'location', label: 'Title', helperText: "Header.", type: 'text', default: 'Visit Us' }
+                { name: 'location', label: 'Title', helperText: "Header.", type: 'text', default: 'Visit Us' },
+                { name: 'address', label: 'Address', helperText: "Full address.", type: 'text', default: '123 Main St, New York, NY' },
+                { name: 'hours', label: 'Opening Hours', helperText: "e.g. Mon-Fri: 9-5", type: 'textarea', default: 'Mon-Fri: 9am - 6pm\nSat: 10am - 4pm' }
             ]
         },
         'Floating Card': {
@@ -33,6 +36,8 @@ export const clinicDetailsConfig = {
             description: "Info card floating over a background image.",
             fields: [
                 { name: 'location', label: 'Title', helperText: "Header.", type: 'text', default: 'Main Office' },
+                { name: 'description', label: 'Short Description', helperText: "Brief intro.", type: 'textarea', default: 'Experience world-class care.' },
+                { name: 'address', label: 'Address', helperText: "Full address.", type: 'text', default: '123 Main St, New York, NY' },
                 { name: 'imagePrompt', label: 'Background Image (AI)', helperText: "Visual.", type: 'text', default: 'Modern Building Exterior' }
             ]
         },
@@ -40,28 +45,35 @@ export const clinicDetailsConfig = {
             tag: "Iconic",
             description: "Icon-based grid for quick scanning.",
             fields: [
-                { name: 'address', label: 'Address', helperText: "Short address.", type: 'text', default: '123 Main St' }
+                { name: 'address', label: 'Address', helperText: "Short address.", type: 'text', default: '123 Main St' },
+                { name: 'hours', label: 'Opening Hours', helperText: "e.g. Mon-Fri: 9-5", type: 'textarea', default: 'Mon-Fri: 9am - 6pm\nSat: 10am - 4pm' }
             ]
         },
         'Modern Clean': {
             tag: "Sleek",
             description: "Large typography and white space.",
             fields: [
-                { name: 'location', label: 'Location Name', helperText: "Name.", type: 'text', default: 'New York City' }
+                { name: 'location', label: 'Location Name', helperText: "Name.", type: 'text', default: 'New York City' },
+                { name: 'address', label: 'Address', helperText: "Full address.", type: 'text', default: '123 Main St, New York, NY' },
+                { name: 'hours', label: 'Opening Hours', helperText: "e.g. Mon-Fri: 9-5", type: 'textarea', default: 'Mon-Fri: 9am - 6pm\nSat: 10am - 4pm' }
             ]
         },
         'Contact Centric': {
             tag: "Action",
             description: "Focuses on booking and contact info.",
             fields: [
-                { name: 'location', label: 'Location Name', helperText: "Name.", type: 'text', default: 'City Center' }
+                { name: 'location', label: 'Location Name', helperText: "Name.", type: 'text', default: 'City Center' },
+                { name: 'address', label: 'Address', helperText: "Full address.", type: 'text', default: '123 Main St, New York, NY' },
+                { name: 'hours', label: 'Opening Hours', helperText: "e.g. Mon-Fri: 9-5", type: 'textarea', default: 'Mon-Fri: 9am - 6pm\nSat: 10am - 4pm' }
             ]
         },
         'Luxury Boutique': {
             tag: "Premium",
             description: "Elegant layout for high-end locations.",
             fields: [
-                { name: 'location', label: 'Location Name', helperText: "Name.", type: 'text', default: 'The Suite' }
+                { name: 'location', label: 'Location Name', helperText: "Name.", type: 'text', default: 'The Suite' },
+                { name: 'address', label: 'Address', helperText: "Full address.", type: 'text', default: '123 Main St, New York, NY' },
+                { name: 'hours', label: 'Opening Hours', helperText: "e.g. Mon-Fri: 9-5", type: 'textarea', default: 'Mon-Fri: 9am - 6pm\nSat: 10am - 4pm' }
             ]
         },
         'Split with Image': {
@@ -69,6 +81,8 @@ export const clinicDetailsConfig = {
             description: "50/50 split between info and image.",
             fields: [
                 { name: 'location', label: 'Location Name', helperText: "Name.", type: 'text', default: 'Our Location' },
+                { name: 'address', label: 'Address', helperText: "Full address.", type: 'text', default: '123 Main St, New York, NY' },
+                { name: 'hours', label: 'Opening Hours', helperText: "e.g. Mon-Fri: 9-5", type: 'textarea', default: 'Mon-Fri: 9am - 6pm\nSat: 10am - 4pm' },
                 { name: 'imagePrompt', label: 'Image Description', helperText: "Visual.", type: 'text', default: 'Reception Area' }
             ]
         },
@@ -76,7 +90,9 @@ export const clinicDetailsConfig = {
             tag: "Compact",
             description: "Dark, compact layout suitable for page bottoms.",
             fields: [
-                { name: 'location', label: 'Location Name', helperText: "Name.", type: 'text', default: 'Main Office' }
+                { name: 'location', label: 'Location Name', helperText: "Name.", type: 'text', default: 'Main Office' },
+                { name: 'description', label: 'Short Description', helperText: "Brief intro.", type: 'textarea', default: 'Your trusted neighborhood clinic.' },
+                { name: 'address', label: 'Address', helperText: "Full address.", type: 'text', default: '123 Main St, New York, NY' }
             ]
         }
     }
