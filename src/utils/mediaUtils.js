@@ -8,8 +8,10 @@
  * @param {object} dimensions - { w: number, h: number } dimensions for the placeholder.
  * @returns {string} - The effective image URL.
  */
+import { getContrastColor } from './colors';
+
 export const getEffectiveImage = (url, prompt, theme, dimensions = { w: 600, h: 400 }) => {
-    if (url && url.length > 5) { // Basic check for potentially valid URL
+    if (url && url.length > 5) {
         return url;
     }
 
@@ -17,8 +19,15 @@ export const getEffectiveImage = (url, prompt, theme, dimensions = { w: 600, h: 
     const text = prompt || 'Image';
 
     // Use theme primary color if available, strip hash
-    const bg = theme && theme.primaryColor ? theme.primaryColor.replace('#', '') : 'cccccc';
-    const fg = 'ffffff'; // White text usually works well on brand colors
+    let bg = 'cccccc';
+    let fg = '000000';
+
+    if (theme && theme.primaryColor) {
+        bg = theme.primaryColor.replace('#', '');
+        // Calculate contrast color for text (white or black)
+        const contrast = getContrastColor(theme.primaryColor);
+        fg = contrast.replace('#', '');
+    }
 
     return `https://placehold.co/${w}x${h}/${bg}/${fg}?text=${encodeURIComponent(text)}`;
 };

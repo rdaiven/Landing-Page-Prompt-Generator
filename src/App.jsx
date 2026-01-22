@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import WorkbenchLayout from './components/workbench/WorkbenchLayout'
 import TutorialModal from './components/TutorialModal'
+import OnboardingWizard from './components/OnboardingWizard'
 import { generatePrompt } from './utils/promptGenerator'
 import { getInitialSectionState, sectionConfigs } from './utils/sectionConfig'
 import './index.css'
@@ -9,6 +10,7 @@ const STORAGE_KEY = 'prompt_generator_v1_data';
 
 function App() {
   const [isTutorialOpen, setIsTutorialOpen] = useState(false)
+  const [showWizard, setShowWizard] = useState(false)
   const [prompt, setPrompt] = useState('')
   const [formData, setFormData] = useState(() => {
     // Initialize from storage if available, otherwise default
@@ -27,12 +29,22 @@ function App() {
     }
   })
 
-  // Start with tutorial open if first visit (no saved data)
+  // Start with Wizard open if first visit (no saved data)
   useEffect(() => {
     if (!localStorage.getItem(STORAGE_KEY)) {
-      setIsTutorialOpen(true);
+      setShowWizard(true);
     }
   }, []);
+
+  const handleWizardComplete = (wizardData) => {
+    setFormData(prev => ({
+      ...prev,
+      ...wizardData
+    }));
+    setShowWizard(false);
+    // Optional: Open the "How to Use" guide after onboarding
+    // setIsTutorialOpen(true); 
+  };
 
   useEffect(() => {
     // Save to local storage on every update
@@ -73,7 +85,12 @@ function App() {
     if (config.fields) {
       config.fields.forEach(field => {
         if (field.type !== 'collection' && newData[field.name] === undefined) {
-          newData[field.name] = field.default || '';
+          // UX RULE: Text inputs start empty (showing placeholder).
+          if (field.type === 'text' || field.type === 'textarea') {
+            newData[field.name] = '';
+          } else {
+            newData[field.name] = field.default || '';
+          }
         }
       });
     }
@@ -219,6 +236,7 @@ function App() {
       />
 
       <TutorialModal isOpen={isTutorialOpen} onClose={() => setIsTutorialOpen(false)} />
+      <OnboardingWizard isOpen={showWizard} onClose={() => setShowWizard(false)} onComplete={handleWizardComplete} />
     </div>
   )
 }

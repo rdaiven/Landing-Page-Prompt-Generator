@@ -68,9 +68,9 @@ const Sidebar = ({ activeTab, setActiveTab, activeSection, onSectionSelect, form
             <div className="p-4 border-b border-slate-200 bg-white shadow-sm z-10">
                 <div className="flex items-start justify-between gap-3 mb-4">
                     <div>
-                        <div className="text-lg font-bold text-slate-900">Copy Workbench</div>
-                        <div className="text-xs text-slate-500">Landing Page Prompt Generator</div>
-                    </div>
+                        <h1 className="text-xl font-bold bg-gradient-to-r from-slate-900 to-indigo-600 bg-clip-text text-transparent truncate cursor-default">
+                            Landing Page Architect
+                        </h1>        </div>
                     <div className="flex-shrink-0 text-[10px] font-semibold bg-slate-100 border border-slate-200 px-2 py-1 rounded-lg text-slate-600">
                         {completedCount}/{totalCount} Ready
                     </div>
@@ -113,7 +113,7 @@ const Sidebar = ({ activeTab, setActiveTab, activeSection, onSectionSelect, form
                 {activeTab === 'global' && (
                     <div className="space-y-1">
                         <div className="px-2 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Configuration</div>
-                        {['Brand', 'Colors', 'Typography'].map(item => (
+                        {['Brand', 'Colors', 'Structure', 'Typography'].map(item => (
                             <button
                                 key={item}
                                 onClick={() => onSectionSelect('global-' + item.toLowerCase())}

@@ -7,11 +7,11 @@ export const faqConfig = {
             tag: "Standard",
             description: "Classic expandable questions.",
             fields: [
-                { name: 'heading', label: 'Heading', type: 'text', default: 'Frequently Asked Questions' },
+                { name: 'heading', label: 'Section Heading', helperText: "Header.", type: 'text', default: 'Frequently Asked Questions' },
                 {
-                    name: 'items', label: 'Q&A Items', type: 'collection', min: 4, max: 8, fields: [
-                        { name: 'question', label: 'Question', type: 'text', default: 'How long does it last?' },
-                        { name: 'answer', label: 'Answer', type: 'textarea', default: 'Results can last for years.' }
+                    name: 'items', label: 'What are the common questions?', helperText: "Add 4-8 Q&A.", type: 'collection', min: 4, max: 8, fields: [
+                        { name: 'question', label: 'Question', helperText: "The objection.", type: 'text', default: 'How long does it last?' },
+                        { name: 'answer', label: 'Answer', helperText: "The resolution.", type: 'textarea', default: 'Results can last for years.' }
                     ]
                 }
             ],
@@ -29,11 +29,11 @@ export const faqConfig = {
             tag: "Dense",
             description: "Side-by-side grid for more density.",
             fields: [
-                { name: 'heading', label: 'Heading', type: 'text', default: 'FAQ' },
+                { name: 'heading', label: 'Heading', helperText: "Header.", type: 'text', default: 'FAQ' },
                 {
-                    name: 'items', label: 'Q&A Items', type: 'collection', min: 4, max: 6, fields: [
-                        { name: 'question', label: 'Question', type: 'text', default: 'Cost?' },
-                        { name: 'answer', label: 'Answer', type: 'textarea', default: 'Depends on treatment.' }
+                    name: 'items', label: 'Q&A Items', helperText: "Add items.", type: 'collection', min: 4, max: 6, fields: [
+                        { name: 'question', label: 'Question', helperText: "Q.", type: 'text', default: 'Cost?' },
+                        { name: 'answer', label: 'Answer', helperText: "A.", type: 'textarea', default: 'Depends on treatment.' }
                     ]
                 }
             ]
@@ -43,9 +43,9 @@ export const faqConfig = {
             description: "Simple list, no accordion, just text.",
             fields: [
                 {
-                    name: 'items', label: 'Q&A Items', type: 'collection', min: 3, max: 5, fields: [
-                        { name: 'question', label: 'Question', type: 'text', default: 'Safety?' },
-                        { name: 'answer', label: 'Answer', type: 'textarea', default: 'FDA Cleared.' }
+                    name: 'items', label: 'Q&A Items', helperText: "Add items.", type: 'collection', min: 3, max: 5, fields: [
+                        { name: 'question', label: 'Question', helperText: "Q.", type: 'text', default: 'Safety?' },
+                        { name: 'answer', label: 'Answer', helperText: "A.", type: 'textarea', default: 'FDA Cleared.' }
                     ]
                 }
             ]
@@ -54,11 +54,11 @@ export const faqConfig = {
             tag: "Featured",
             description: "First item is emphasized or separated.",
             fields: [
-                { name: 'heading', label: 'Aside Heading', type: 'text', default: 'Detailed Answers' },
+                { name: 'heading', label: 'Aside Heading', helperText: "e.g. Detailed Answers", type: 'text', default: 'Detailed Answers' },
                 {
-                    name: 'items', label: 'Q&A Items', type: 'collection', min: 4, max: 6, fields: [
-                        { name: 'question', label: 'Question', type: 'text', default: 'Recovery?' },
-                        { name: 'answer', label: 'Answer', type: 'textarea', default: 'None required.' }
+                    name: 'items', label: 'Q&A Items', helperText: "First one is featured.", type: 'collection', min: 4, max: 6, fields: [
+                        { name: 'question', label: 'Question', helperText: "Q.", type: 'text', default: 'Recovery?' },
+                        { name: 'answer', label: 'Answer', helperText: "A.", type: 'textarea', default: 'None required.' }
                     ]
                 }
             ]
@@ -67,11 +67,11 @@ export const faqConfig = {
             tag: "Contrast",
             description: "Dark background look.",
             fields: [
-                { name: 'heading', label: 'Heading', type: 'text', default: 'Questions?' },
+                { name: 'heading', label: 'Heading', helperText: "Header.", type: 'text', default: 'Questions?' },
                 {
-                    name: 'items', label: 'Q&A Items', type: 'collection', min: 3, max: 5, fields: [
-                        { name: 'question', label: 'Question', type: 'text', default: 'Cost?' },
-                        { name: 'answer', label: 'Answer', type: 'textarea', default: 'Starts at $X' }
+                    name: 'items', label: 'Q&A Items', helperText: "Add items.", type: 'collection', min: 3, max: 5, fields: [
+                        { name: 'question', label: 'Question', helperText: "Q.", type: 'text', default: 'Cost?' },
+                        { name: 'answer', label: 'Answer', helperText: "A.", type: 'textarea', default: 'Starts at $X' }
                     ]
                 }
             ]
@@ -81,9 +81,9 @@ export const faqConfig = {
             description: "Has a sticky sidebar (desktop only).",
             fields: [
                 {
-                    name: 'items', label: 'Q&A Items', type: 'collection', min: 4, max: 8, fields: [
-                        { name: 'question', label: 'Question', type: 'text', default: 'Start?' },
-                        { name: 'answer', label: 'Answer', type: 'textarea', default: 'Book online.' }
+                    name: 'items', label: 'Q&A Items', helperText: "Add items.", type: 'collection', min: 4, max: 8, fields: [
+                        { name: 'question', label: 'Question', helperText: "Q.", type: 'text', default: 'Start?' },
+                        { name: 'answer', label: 'Answer', helperText: "A.", type: 'textarea', default: 'Book online.' }
                     ]
                 }
             ]
@@ -93,9 +93,9 @@ export const faqConfig = {
             description: "Each Q&A in its own box.",
             fields: [
                 {
-                    name: 'items', label: 'Q&A Items', type: 'collection', min: 3, max: 6, fields: [
-                        { name: 'question', label: 'Question', type: 'text', default: 'Pain?' },
-                        { name: 'answer', label: 'Answer', type: 'textarea', default: 'Managed with cooling.' }
+                    name: 'items', label: 'Q&A Items', helperText: "Add items.", type: 'collection', min: 3, max: 6, fields: [
+                        { name: 'question', label: 'Question', helperText: "Q.", type: 'text', default: 'Pain?' },
+                        { name: 'answer', label: 'Answer', helperText: "A.", type: 'textarea', default: 'Managed with cooling.' }
                     ]
                 }
             ]
@@ -105,9 +105,9 @@ export const faqConfig = {
             description: "Includes a large icon/visual intro.",
             fields: [
                 {
-                    name: 'items', label: 'Q&A Items', type: 'collection', min: 3, max: 5, fields: [
-                        { name: 'question', label: 'Question', type: 'text', default: 'Results?' },
-                        { name: 'answer', label: 'Answer', type: 'textarea', default: 'Seen in 6 weeks.' }
+                    name: 'items', label: 'Q&A Items', helperText: "Add items.", type: 'collection', min: 3, max: 5, fields: [
+                        { name: 'question', label: 'Question', helperText: "Q.", type: 'text', default: 'Results?' },
+                        { name: 'answer', label: 'Answer', helperText: "A.", type: 'textarea', default: 'Seen in 6 weeks.' }
                     ]
                 }
             ]
@@ -117,9 +117,9 @@ export const faqConfig = {
             description: "Simulates category tabs.",
             fields: [
                 {
-                    name: 'items', label: 'Q&A Items', type: 'collection', min: 4, max: 6, fields: [
-                        { name: 'question', label: 'Question', type: 'text', default: 'Financing?' },
-                        { name: 'answer', label: 'Answer', type: 'textarea', default: 'Available.' }
+                    name: 'items', label: 'Q&A Items', helperText: "Add items.", type: 'collection', min: 4, max: 6, fields: [
+                        { name: 'question', label: 'Question', helperText: "Q.", type: 'text', default: 'Financing?' },
+                        { name: 'answer', label: 'Answer', helperText: "A.", type: 'textarea', default: 'Available.' }
                     ]
                 }
             ]
@@ -129,9 +129,9 @@ export const faqConfig = {
             description: "Looks like a chat conversation.",
             fields: [
                 {
-                    name: 'items', label: 'Q&A Items', type: 'collection', min: 3, max: 4, fields: [
-                        { name: 'question', label: 'User Question', type: 'text', default: 'How fast?' },
-                        { name: 'answer', label: 'Response', type: 'textarea', default: '30 minutes.' }
+                    name: 'items', label: 'Q&A Items', helperText: "Chat bubbles.", type: 'collection', min: 3, max: 4, fields: [
+                        { name: 'question', label: 'User Question', helperText: "User asks...", type: 'text', default: 'How fast?' },
+                        { name: 'answer', label: 'Response', helperText: "Bot/Doctor answers.", type: 'textarea', default: '30 minutes.' }
                     ]
                 }
             ]

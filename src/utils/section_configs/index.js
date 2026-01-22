@@ -40,7 +40,13 @@ export const getInitialSectionState = () => {
         if (layoutConfig.fields) {
             layoutConfig.fields.forEach(field => {
                 if (field.type !== 'collection' && data[field.name] === undefined) {
-                    data[field.name] = field.default || '';
+                    // UX RULE: Text inputs start empty (showing placeholder).
+                    // Structural inputs (select, icon) keep their defaults.
+                    if (field.type === 'text' || field.type === 'textarea') {
+                        data[field.name] = '';
+                    } else {
+                        data[field.name] = field.default || '';
+                    }
                 }
             });
         }

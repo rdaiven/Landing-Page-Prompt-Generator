@@ -1,21 +1,51 @@
 import React from 'react';
-import { Palette, Type, MousePointerClick, Save, Upload, RotateCcw } from 'lucide-react';
+import { Palette, Type, MousePointerClick, Save, Upload, RotateCcw, Target, Mic, Layout } from 'lucide-react';
 import Tooltip from '../Tooltip';
+import { THEME_CONFIG } from '../../utils/themeConfig';
+
+const SelectionCard = ({ selected, onSelect, options }) => (
+    <div className="grid grid-cols-1 gap-2">
+        {options.map((opt) => (
+            <button
+                key={opt.id}
+                onClick={() => onSelect(opt.id)}
+                className={`
+                    group relative flex items-start gap-3 p-3 rounded-xl border text-left transition-all
+                    ${selected === opt.id
+                        ? 'bg-indigo-50 border-indigo-600 ring-1 ring-indigo-600 shadow-sm z-10'
+                        : 'bg-white border-slate-200 hover:border-indigo-300 hover:shadow-md'
+                    }
+                `}
+            >
+                <div className={`
+                    flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-lg
+                    ${selected === opt.id ? 'bg-white' : 'bg-slate-50'}
+                `}>
+                    {opt.icon}
+                </div>
+                <div>
+                    <div className={`text-sm font-bold ${selected === opt.id ? 'text-indigo-900' : 'text-slate-900'}`}>{opt.title}</div>
+                    <div className="text-xs text-slate-500 leading-snug">{opt.desc}</div>
+                </div>
+            </button>
+        ))}
+    </div>
+);
 
 const PaletteBtn = ({ preset, updateField }) => (
     <button
         onClick={() => {
-            updateField('primaryColor', preset.primary);
-            updateField('secondaryColor', preset.secondary);
-            updateField('accentColor', preset.accent);
-            updateField('neutralColor', preset.neutral);
+            updateField('primaryColor', preset.colors.primary);
+            updateField('secondaryColor', preset.colors.secondary);
+            updateField('accentColor', preset.colors.accent);
+            updateField('neutralColor', preset.colors.neutral);
         }}
         className="group relative flex items-center gap-3 p-2 rounded-xl border border-slate-200 bg-white hover:border-indigo-300 hover:shadow-md transition-all text-left w-full"
     >
         <div className="flex-shrink-0 flex -space-x-1">
-            <div className="w-4 h-4 rounded-full border border-white shadow-sm" style={{ background: preset.primary }}></div>
-            <div className="w-4 h-4 rounded-full border border-white shadow-sm" style={{ background: preset.accent }}></div>
-            <div className="w-4 h-4 rounded-full border border-white shadow-sm" style={{ background: preset.secondary }}></div>
+            <div className="w-4 h-4 rounded-full border border-white shadow-sm" style={{ background: preset.colors.primary }}></div>
+            <div className="w-4 h-4 rounded-full border border-white shadow-sm" style={{ background: preset.colors.accent }}></div>
+            <div className="w-4 h-4 rounded-full border border-white shadow-sm" style={{ background: preset.colors.secondary }}></div>
         </div>
         <span className="text-xs font-semibold text-slate-700 group-hover:text-slate-900">{preset.name}</span>
     </button>
@@ -23,263 +53,197 @@ const PaletteBtn = ({ preset, updateField }) => (
 
 const GlobalEditor = ({ activeSection, formData, updateField, onReset, onExport, onImport }) => {
 
-    const helpText = {
-        brandName: "The official name of the clinic or practice.",
-        topic: "The specific treatment or service this page is selling (e.g. 'CoolSculpting' or 'Botox').",
-        vibe: "The emotional tone of the copy and design.",
-        primaryColor: "Main brand color used for buttons and highlights.",
-        secondaryColor: "Background or accent color.",
-        accentColor: "Used for success states, secondary highlights, or badges.",
-        neutralColor: "Used for backgrounds, borders, and subtle text.",
-        audience: "Who is this for? e.g. 'Post-partum moms' or 'Men over 40'.",
-    };
-
     // Helper to determine which subsection to show
-    // activeSection will be something like 'global-brand', 'global-colors', etc.
     const subSection = activeSection.replace('global-', '');
 
     const renderBrandSettings = () => (
-        <div className="space-y-6 animate-fadeIn">
+        <div className="space-y-8 animate-fadeIn">
+            {/* Identity Details (Top Priority) */}
             <div>
-                <h3 className="text-lg font-bold text-slate-900 mb-1">Brand Identity</h3>
-                <p className="text-sm text-slate-500 mb-4">Define the core identity of the business.</p>
+                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Identity Details</h3>
                 <div className="space-y-4">
                     <div>
-                        <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Brand Name</label>
+                        <label className="block text-xs font-semibold text-slate-700 mb-1.5">Brand Name</label>
                         <input
                             type="text"
                             value={formData.brandName}
                             onChange={(e) => updateField('brandName', e.target.value)}
                             className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all"
-                            placeholder="e.g. Venus Future Aesthetics"
+                            placeholder="e.g. Acme Corp"
                         />
                     </div>
                     <div>
-                        <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Business Topic / Niche</label>
+                        <label className="block text-xs font-semibold text-slate-700 mb-1.5">Main Topic / Service</label>
                         <input
                             type="text"
                             value={formData.topic}
                             onChange={(e) => updateField('topic', e.target.value)}
                             className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all"
-                            placeholder="e.g. Non-invasive fat loss clinic"
+                            placeholder="e.g. Medical Weight Loss"
                         />
                     </div>
                     <div>
-                        <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Target Audience</label>
+                        <label className="block text-xs font-semibold text-slate-700 mb-1.5">Target Audience</label>
                         <input
                             type="text"
                             value={formData.audience}
                             onChange={(e) => updateField('audience', e.target.value)}
                             className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all"
-                            placeholder="e.g. Busy professionals aged 35-50"
+                            placeholder="e.g. Busy Professionals"
                         />
                     </div>
                 </div>
             </div>
 
-            <div className="pt-6 border-t border-slate-200">
-                <h3 className="text-lg font-bold text-slate-900 mb-1">Visual Vibe</h3>
-                <p className="text-sm text-slate-500 mb-4">Set the mood and aesthetic direction.</p>
-                <div className="space-y-4">
-                    <div>
-                        <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">Vibe / Style</label>
-
-                        {/* Custom Input moved above presets */}
-                        <div className="mb-3">
-                            <input
-                                type="text"
-                                value={formData.vibe}
-                                onChange={(e) => updateField('vibe', e.target.value)}
-                                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all font-medium text-slate-700"
-                                placeholder="Type a custom vibe..."
-                            />
-                        </div>
-
-                        {/* Expanded Presets Grid */}
-                        <div className="grid grid-cols-3 gap-2">
-                            {[
-                                'Luxury', 'Minimalist', 'Clinical', 'Warm', 'Bold', 'Tech',
-                                'Modern', 'Rustic', 'Industrial', 'Elegant', 'Playful', 'Organic',
-                                'Energetic', 'Futuristic', 'Classic', 'Vintage', 'Whimsical', 'Dark Mode',
-                                'Corporate', 'Creative', 'Sophisticated', 'Gritty', 'Clean', 'Glamorous',
-                                'Retro', 'Urban', 'Serene', 'Dynamic', 'Professional', 'Artistic'
-                            ].map(vibe => (
-                                <button
-                                    key={vibe}
-                                    onClick={() => updateField('vibe', vibe)}
-                                    className={`px-2 py-2 text-xs font-medium rounded-lg border text-center transition-all truncate ${formData.vibe === vibe
-                                        ? 'bg-indigo-50 border-indigo-200 text-indigo-700 ring-1 ring-indigo-200 shadow-sm'
-                                        : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50'
-                                        }`}
-                                    title={vibe}
-                                >
-                                    {vibe}
-                                </button>
-                            ))}
-                        </div>
+            <div className="border-t border-slate-200 pt-6">
+                {/* Primary Goal */}
+                <div className="mb-8">
+                    <div className="flex items-center gap-2 mb-3">
+                        <Target className="w-4 h-4 text-indigo-600" />
+                        <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide">Primary Goal</h3>
                     </div>
+                    <SelectionCard
+                        selected={formData.goal}
+                        onSelect={(val) => updateField('goal', val)}
+                        options={[
+                            { id: 'bookings', title: 'Bookings & Appointments', desc: 'Direct scheduling for services.', icon: '📅' },
+                            { id: 'leads', title: 'Leads & Inquiries', desc: 'Capture interest for high-ticket items.', icon: '✉️' },
+                            { id: 'sales', title: 'Direct Sales & Offers', desc: 'Immediate purchase or conversion.', icon: '💰' }
+                        ]}
+                    />
+                </div>
+
+                {/* Brand Voice */}
+                <div>
+                    <div className="flex items-center gap-2 mb-3">
+                        <Mic className="w-4 h-4 text-indigo-600" />
+                        <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide">Brand Voice</h3>
+                    </div>
+                    <SelectionCard
+                        selected={formData.vibe}
+                        onSelect={(val) => updateField('vibe', val)}
+                        options={[
+                            { id: 'premium', title: 'Premium & Clinical', desc: 'Professional, authoritative, trustworthy.', icon: '💎' },
+                            { id: 'warm', title: 'Warm & Reassuring', desc: 'Friendly, empathetic, approachable.', icon: '🌞' },
+                            { id: 'bold', title: 'Bold & Direct', desc: 'Confident, high-energy, persuasive.', icon: '⚡' }
+                        ]}
+                    />
                 </div>
             </div>
         </div>
     );
 
-    const renderColorSettings = () => (
-        <div className="space-y-6 animate-fadeIn">
+    const renderStructureSettings = () => (
+        <div className="space-y-8 animate-fadeIn">
             <div>
-                <h3 className="text-lg font-bold text-slate-900 mb-1">Color Palette</h3>
-                <p className="text-sm text-slate-500 mb-4">Define the brand's primary and secondary colors.</p>
+                <div className="flex items-center gap-2 mb-3">
+                    <Layout className="w-4 h-4 text-indigo-600" />
+                    <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide">Shape & Layout Style</h3>
+                </div>
+                <p className="text-xs text-slate-500 mb-3">Defines the structural "vibe" (e.g., Rounded vs. Sharp). Combined with your color palette.</p>
+                <SelectionCard
+                    selected={formData.style}
+                    onSelect={(val) => updateField('style', val)}
+                    options={THEME_CONFIG.styles.map(s => ({
+                        id: s.id,
+                        title: s.name,  // Mapping 'name' to 'title' for SelectionCard
+                        desc: s.description,
+                        icon: '🎨' // Simplified icon or map dynamic icons if available
+                    }))}
+                />
+            </div>
+        </div>
+    );
 
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Primary Color</label>
-                        <div className="flex gap-2">
-                            <input
-                                type="color"
-                                value={formData.primaryColor || '#000000'}
-                                onChange={(e) => updateField('primaryColor', e.target.value)}
-                                className="h-9 w-9 p-0.5 rounded-lg border border-slate-200 cursor-pointer"
-                            />
-                            <input
-                                type="text"
-                                value={formData.primaryColor}
-                                onChange={(e) => updateField('primaryColor', e.target.value)}
-                                className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all"
-                                placeholder="#000000"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Secondary Color</label>
-                        <div className="flex gap-2">
-                            <input
-                                type="color"
-                                value={formData.secondaryColor || '#ffffff'}
-                                onChange={(e) => updateField('secondaryColor', e.target.value)}
-                                className="h-9 w-9 p-0.5 rounded-lg border border-slate-200 cursor-pointer"
-                            />
-                            <input
-                                type="text"
-                                value={formData.secondaryColor}
-                                onChange={(e) => updateField('secondaryColor', e.target.value)}
-                                className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all"
-                                placeholder="#ffffff"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Accent Color</label>
-                        <div className="flex gap-2">
-                            <input
-                                type="color"
-                                value={formData.accentColor || '#3b82f6'}
-                                onChange={(e) => updateField('accentColor', e.target.value)}
-                                className="h-9 w-9 p-0.5 rounded-lg border border-slate-200 cursor-pointer"
-                            />
-                            <input
-                                type="text"
-                                value={formData.accentColor}
-                                onChange={(e) => updateField('accentColor', e.target.value)}
-                                className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all"
-                                placeholder="#3b82f6"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Neutral/Bg</label>
-                        <div className="flex gap-2">
-                            <input
-                                type="color"
-                                value={formData.neutralColor || '#f8fafc'}
-                                onChange={(e) => updateField('neutralColor', e.target.value)}
-                                className="h-9 w-9 p-0.5 rounded-lg border border-slate-200 cursor-pointer"
-                            />
-                            <input
-                                type="text"
-                                value={formData.neutralColor}
-                                onChange={(e) => updateField('neutralColor', e.target.value)}
-                                className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all"
-                                placeholder="#f8fafc"
-                            />
-                        </div>
+    const renderColorSettings = () => (
+        <div className="space-y-8 animate-fadeIn">
+            <div className="">
+                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Color Palette</h3>
+
+                {/* 1. Presets */}
+                <div className="mb-6">
+                    <label className="block text-xs font-semibold text-slate-500 mb-2">Color Presets (Start Here)</label>
+                    <div className="grid grid-cols-2 gap-2">
+                        {THEME_CONFIG.palettes.map(preset => <PaletteBtn key={preset.id} preset={preset} updateField={updateField} />)}
                     </div>
                 </div>
 
-                {/* Expanded Palette Collection */}
-                <div className="space-y-4 pt-4 border-t border-slate-100 mt-6">
-                    <label className="text-sm font-bold text-slate-900">Curated Color Themes</label>
-                    <div className="space-y-6">
-                        {/* Luxury & High-End */}
+                {/* 2. Detailed Editor */}
+                <div className="space-y-4">
+                    <label className="block text-xs font-semibold text-slate-500 mb-2">Detailed Color Map</label>
+
+                    {/* Row 1: Core */}
+                    <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Luxury & Premium</div>
-                            <div className="grid grid-cols-2 gap-2">
-                                {[
-                                    { name: 'Gold Standard', primary: '#1a1a1a', secondary: '#ffffff', accent: '#d4af37', neutral: '#f9f9f9' },
-                                    { name: 'Midnight Silk', primary: '#0f172a', secondary: '#f8fafc', accent: '#c084fc', neutral: '#f1f5f9' },
-                                    { name: 'Royal Velvet', primary: '#4c1d95', secondary: '#ffffff', accent: '#fbbf24', neutral: '#f5f3ff' },
-                                    { name: 'Onyx & Rose', primary: '#1c1917', secondary: '#fff1f2', accent: '#fda4af', neutral: '#fafaf9' },
-                                    { name: 'Slate Elite', primary: '#334155', secondary: '#ffffff', accent: '#94a3b8', neutral: '#f8fafc' },
-                                    { name: 'Champagne', primary: '#78350f', secondary: '#fffbeb', accent: '#f59e0b', neutral: '#fff7ed' },
-                                ].map(preset => <PaletteBtn key={preset.name} preset={preset} updateField={updateField} />)}
+                            <label className="block text-xs font-semibold text-slate-700 mb-1.5">Primary (Brand)</label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="color"
+                                    value={formData.primaryColor || '#000000'}
+                                    onChange={(e) => updateField('primaryColor', e.target.value)}
+                                    className="h-9 w-9 p-0.5 rounded-lg border border-slate-200 cursor-pointer"
+                                />
+                                <input
+                                    type="text"
+                                    value={formData.primaryColor}
+                                    onChange={(e) => updateField('primaryColor', e.target.value)}
+                                    className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all"
+                                />
                             </div>
                         </div>
-
-                        {/* Medical & Clinical */}
                         <div>
-                            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Clinical & Trust</div>
-                            <div className="grid grid-cols-2 gap-2">
-                                {[
-                                    { name: 'MediBlue', primary: '#0284c7', secondary: '#ffffff', accent: '#38bdf8', neutral: '#f0f9ff' },
-                                    { name: 'Pure Teal', primary: '#0d9488', secondary: '#ffffff', accent: '#5eead4', neutral: '#f0fdfa' },
-                                    { name: 'Sterile White', primary: '#475569', secondary: '#ffffff', accent: '#cbd5e1', neutral: '#f8fafc' },
-                                    { name: 'Health Plus', primary: '#dc2626', secondary: '#ffffff', accent: '#f87171', neutral: '#fef2f2' },
-                                    { name: 'Deep Ocean', primary: '#1e3a8a', secondary: '#f8fafc', accent: '#60a5fa', neutral: '#eff6ff' },
-                                    { name: 'Clean Mint', primary: '#059669', secondary: '#ffffff', accent: '#34d399', neutral: '#ecfdf5' },
-                                ].map(preset => <PaletteBtn key={preset.name} preset={preset} updateField={updateField} />)}
+                            <label className="block text-xs font-semibold text-slate-700 mb-1.5">Secondary (Support)</label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="color"
+                                    value={formData.secondaryColor || '#ffffff'}
+                                    onChange={(e) => updateField('secondaryColor', e.target.value)}
+                                    className="h-9 w-9 p-0.5 rounded-lg border border-slate-200 cursor-pointer"
+                                />
+                                <input
+                                    type="text"
+                                    value={formData.secondaryColor}
+                                    onChange={(e) => updateField('secondaryColor', e.target.value)}
+                                    className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all"
+                                />
                             </div>
                         </div>
+                    </div>
 
-                        {/* Organic & Natural */}
+                    {/* Row 2: Accent & Neutral */}
+                    <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Organic & Natural</div>
-                            <div className="grid grid-cols-2 gap-2">
-                                {[
-                                    { name: 'Forest Calm', primary: '#166534', secondary: '#f0fdf4', accent: '#d97706', neutral: '#fcfaf5' },
-                                    { name: 'Earth Tone', primary: '#7c2d12', secondary: '#fff7ed', accent: '#d97706', neutral: '#fafaf9' },
-                                    { name: 'Sage Garden', primary: '#3f6212', secondary: '#f7fee7', accent: '#84cc16', neutral: '#fafffd' },
-                                    { name: 'Sand & Sea', primary: '#0e7490', secondary: '#fffbeb', accent: '#d97706', neutral: '#fff7ed' },
-                                    { name: 'Terracotta', primary: '#9f1239', secondary: '#fff1f2', accent: '#fb7185', neutral: '#fff0f3' },
-                                    { name: 'Olive Drab', primary: '#365314', secondary: '#ecfccb', accent: '#84cc16', neutral: '#f7fee7' },
-                                ].map(preset => <PaletteBtn key={preset.name} preset={preset} updateField={updateField} />)}
+                            <label className="block text-xs font-semibold text-slate-700 mb-1.5">Accent (Highlights)</label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="color"
+                                    value={formData.accentColor || '#3b82f6'}
+                                    onChange={(e) => updateField('accentColor', e.target.value)}
+                                    className="h-9 w-9 p-0.5 rounded-lg border border-slate-200 cursor-pointer"
+                                />
+                                <input
+                                    type="text"
+                                    value={formData.accentColor}
+                                    onChange={(e) => updateField('accentColor', e.target.value)}
+                                    className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all"
+                                />
                             </div>
                         </div>
-
-                        {/* Modern & Minimal */}
                         <div>
-                            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Modern & Minimal</div>
-                            <div className="grid grid-cols-2 gap-2">
-                                {[
-                                    { name: 'Monochrome', primary: '#000000', secondary: '#ffffff', accent: '#525252', neutral: '#f5f5f5' },
-                                    { name: 'Swiss Style', primary: '#dc2626', secondary: '#ffffff', accent: '#171717', neutral: '#fafafa' },
-                                    { name: 'Tech Dark', primary: '#111827', secondary: '#f9fafb', accent: '#6366f1', neutral: '#f3f4f6' },
-                                    { name: 'Soft Gray', primary: '#374151', secondary: '#ffffff', accent: '#9ca3af', neutral: '#f9fafb' },
-                                    { name: 'Bauhaus', primary: '#1d4ed8', secondary: '#ffffff', accent: '#fbbf24', neutral: '#fafafa' },
-                                    { name: 'Graphite', primary: '#1f2937', secondary: '#f3f4f6', accent: '#4b5563', neutral: '#f9fafb' },
-                                ].map(preset => <PaletteBtn key={preset.name} preset={preset} updateField={updateField} />)}
-                            </div>
-                        </div>
-
-                        {/* Vibrant & Bold */}
-                        <div>
-                            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Vibrant & Pop</div>
-                            <div className="grid grid-cols-2 gap-2">
-                                {[
-                                    { name: 'Cyberpunk', primary: '#7209b7', secondary: '#0f0518', accent: '#4cc9f0', neutral: '#1a1025' },
-                                    { name: 'Neon Night', primary: '#c026d3', secondary: '#fdf4ff', accent: '#e879f9', neutral: '#fae8ff' },
-                                    { name: 'Citrus', primary: '#ea580c', secondary: '#fff7ed', accent: '#fcc737', neutral: '#ffedd5' },
-                                    { name: 'Electric Blue', primary: '#2563eb', secondary: '#eff6ff', accent: '#f43f5e', neutral: '#f8fafc' },
-                                    { name: 'Candy', primary: '#db2777', secondary: '#fff1f2', accent: '#f472b6', neutral: '#fdf2f8' },
-                                    { name: 'Sunset', primary: '#be123c', secondary: '#fff1f2', accent: '#fb923c', neutral: '#fff7ed' },
-                                ].map(preset => <PaletteBtn key={preset.name} preset={preset} updateField={updateField} />)}
+                            <label className="block text-xs font-semibold text-slate-700 mb-1.5">Neutral (Backgrounds)</label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="color"
+                                    value={formData.neutralColor || '#f3f4f6'}
+                                    onChange={(e) => updateField('neutralColor', e.target.value)}
+                                    className="h-9 w-9 p-0.5 rounded-lg border border-slate-200 cursor-pointer"
+                                />
+                                <input
+                                    type="text"
+                                    value={formData.neutralColor}
+                                    onChange={(e) => updateField('neutralColor', e.target.value)}
+                                    className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all"
+                                />
                             </div>
                         </div>
                     </div>
@@ -292,13 +256,38 @@ const GlobalEditor = ({ activeSection, formData, updateField, onReset, onExport,
         <div className="space-y-6 animate-fadeIn">
             <div>
                 <h3 className="text-lg font-bold text-slate-900 mb-1">Typography</h3>
-                <p className="text-sm text-slate-500 mb-4">Select fonts and text styles.</p>
+                <p className="text-sm text-slate-500 mb-4">Select a font pairing for your site.</p>
 
-                <div className="p-4 bg-yellow-50 text-yellow-800 text-sm rounded-xl border border-yellow-200 flex items-start gap-3">
-                    <span className="text-xl">🚧</span>
-                    <div>
-                        <span className="font-bold">Coming Soon:</span> Advanced font selection and size scaling will be available in the next update. For now, the system uses a modern, optimized system font stack (Inter/San Francisco).
-                    </div>
+                <div className="grid grid-cols-1 gap-2">
+                    {THEME_CONFIG.fonts.map((font) => (
+                        <button
+                            key={font.id}
+                            onClick={() => updateField('fontPairing', font.id)}
+                            className={`
+                                group relative flex items-start gap-4 p-4 rounded-xl border text-left transition-all
+                                ${formData.fontPairing === font.id
+                                    ? 'bg-indigo-50 border-indigo-600 ring-1 ring-indigo-600 shadow-sm z-10'
+                                    : 'bg-white border-slate-200 hover:border-indigo-300 hover:shadow-md'
+                                }
+                            `}
+                        >
+                            <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <span className="text-sm font-bold text-slate-900">{font.name}</span>
+                                    {formData.fontPairing === font.id && <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider bg-indigo-100 px-2 py-0.5 rounded-full">Active</span>}
+                                </div>
+                                <div className="text-xs text-slate-500 mb-3">{font.desc}</div>
+                                <div className="p-3 bg-white rounded-lg border border-slate-100 shadow-sm">
+                                    <div style={{ fontFamily: font.heading }} className="text-lg font-bold text-slate-900 mb-1">
+                                        Heading Type
+                                    </div>
+                                    <div style={{ fontFamily: font.body }} className="text-sm text-slate-600">
+                                        Body text example. Clean and readable.
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    ))}
                 </div>
             </div>
         </div>
@@ -310,15 +299,16 @@ const GlobalEditor = ({ activeSection, formData, updateField, onReset, onExport,
             <div className="p-5 border-b border-slate-200 bg-white flex-shrink-0 flex justify-between items-center">
                 <div>
                     <span className="text-xs font-bold text-indigo-500 uppercase tracking-wider">Global Configuration</span>
-                    <h2 className="text-xl font-bold text-slate-900 capitalize">{subSection === 'global' ? 'Brand Identity' : subSection}</h2>
+                    <h2 className="text-xl font-bold text-slate-900 capitalize">{subSection === 'global' ? 'Brand Strategy' : subSection}</h2>
                 </div>
             </div>
 
             {/* Content */}
             <div className="flex-1 overflow-y-auto p-5 theme-scroll">
-                <div className="max-w-2xl mx-auto">
+                <div className="max-w-xl mx-auto">
                     {(subSection === 'brand' || subSection === 'global') && renderBrandSettings()}
                     {subSection === 'colors' && renderColorSettings()}
+                    {subSection === 'structure' && renderStructureSettings()}
                     {subSection === 'typography' && renderTypographySettings()}
                 </div>
             </div>

@@ -4,6 +4,7 @@ import EditorPanel from './EditorPanel';
 import PreviewPanel from '../PreviewPanel';
 import { Layers, Eye, CheckCircle2 } from 'lucide-react';
 import ErrorBoundary from '../ErrorBoundary';
+import { THEME_CONFIG } from '../../utils/themeConfig';
 
 const WorkbenchLayout = ({ prompt, formData, sections, updateField, toggleSection, updateSectionLayout, updateSectionData, updateSectionStyles, updateSectionStatus, onReset, onExport, onImport }) => {
     // Top-level state for the workbench
@@ -27,6 +28,117 @@ const WorkbenchLayout = ({ prompt, formData, sections, updateField, toggleSectio
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
+    // THEME ENGINE: Inject CSS Variables, Fonts, and Shape Styles
+    useEffect(() => {
+        const { primaryColor, secondaryColor, accentColor, neutralColor, fontPairing, palette, style } = formData;
+
+        // 1. Derive Active Configurations
+        // Use custom inputs if available, else fall back to preset values
+        // Note: formData colors are already updated by GlobalEditor, so we use them directly.
+
+        // Fonts
+        const activeFont = THEME_CONFIG.fonts.find(f => f.id === fontPairing) || THEME_CONFIG.fonts[0];
+
+        // Shapes (New)
+        const activeStyle = THEME_CONFIG.styles.find(s => s.id === style) || THEME_CONFIG.styles[0];
+
+        // 2. Inject CSS Variables (Colors)
+        const root = document.documentElement;
+        root.style.setProperty('--primary', primaryColor || '#000000');
+        root.style.setProperty('--secondary', secondaryColor || '#ffffff');
+        root.style.setProperty('--accent', accentColor || '#3b82f6');
+        root.style.setProperty('--neutral', neutralColor || '#f3f4f6');
+
+        // 3. Inject Font (Google Fonts Link + Variables)
+        if (activeFont) {
+            let link = document.getElementById('dynamic-font-link');
+            if (!link) {
+                link = document.createElement('link');
+                link.id = 'dynamic-font-link';
+                link.rel = 'stylesheet';
+                document.head.appendChild(link);
+            }
+            link.href = activeFont.url;
+
+            root.style.setProperty('--font-heading', `'${activeFont.heading}', serif`);
+            root.style.setProperty('--font-body', `'${activeFont.body}', sans-serif`);
+
+            // Force body font
+            document.body.style.fontFamily = `'${activeFont.body}', sans-serif`;
+        }
+
+        // 4. Inject Shape & Shadow Overrides (The Style Engine)
+        if (activeStyle) {
+            const styleId = 'theme-overrides';
+            let styleTag = document.getElementById(styleId);
+            if (!styleTag) {
+                styleTag = document.createElement('style');
+                styleTag.id = styleId;
+                document.head.appendChild(styleTag);
+            }
+
+            styleTag.innerHTML = `
+                /* Tailwind Utilities */
+                .visual-preview-container .rounded-3xl,
+                .visual-preview-container .rounded-2xl,
+                .visual-preview-container .rounded-xl,
+                .visual-preview-container .rounded-lg,
+                .visual-preview-container .rounded-md,
+                .visual-preview-container .rounded,
+                
+                /* HTML Elements (to override inline styles) */
+                .visual-preview-container button:not(.rounded-full),
+                .visual-preview-container input,
+                .visual-preview-container select,
+                .visual-preview-container textarea {
+                    border-radius: ${activeStyle.radius} !important;
+                }
+                
+                /* Special handling for Pill Buttons (rounded-full) 
+                   Only override if the style is explicitly "Sharp" (0px)
+                   Otherwise keep them pill-shaped as that's usually desired for "Soft" or "Default"
+                */
+                ${activeStyle.radius === '0px' ? `
+                    .visual-preview-container .rounded-full,
+                    .visual-preview-container button.rounded-full {
+                        border-radius: 0px !important;
+                    }
+                ` : ''}
+                
+                .visual-preview-container .shadow-2xl,
+                .visual-preview-container .shadow-xl,
+                .visual-preview-container .shadow-lg,
+                .visual-preview-container .shadow-md,
+                .visual-preview-container .shadow,
+                .visual-preview-container .shadow-sm {
+                    box-shadow: ${activeStyle.shadow} !important;
+                }
+                
+                /* Border Overrides (New) */
+                .visual-preview-container .border,
+                .visual-preview-container .border-2,
+                .visual-preview-container .border-4,
+                .visual-preview-container .border-8,
+                .visual-preview-container input,
+                .visual-preview-container select,
+                .visual-preview-container textarea {
+                    border-width: ${activeStyle.borderWidth} !important;
+                    border-style: ${activeStyle.borderStyle} !important;
+                }
+
+                /* Ensure buttons have borders if the style demands it (e.g. Brutalist) */
+                ${activeStyle.id === 'brutalist' ? `
+                    .visual-preview-container button {
+                        border-width: 2px !important;
+                        border-style: solid !important;
+                        border-color: currentColor !important;
+                    }
+                ` : ''}
+            `;
+        }
+
+    }, [formData.primaryColor, formData.secondaryColor, formData.accentColor, formData.neutralColor, formData.fontPairing, formData.palette, formData.style]);
+
     // Helper to calculate progress (ready/draft)
     const activeSections = sections || {};
     const completedCount = Object.values(activeSections).filter(s => s.status === 'ready').length;
@@ -36,10 +148,12 @@ const WorkbenchLayout = ({ prompt, formData, sections, updateField, toggleSectio
         setActiveSection(sectionId);
         setMobilePanel('details'); // On mobile, go to details when checking a section
 
-        // Auto-switch to Focus mode on desktop if in Overview, to reduce noise?
-        // guideline says "Trigger: Selecting a section" can trigger Focus Mode. 
-        // Let's make it explicit for now or user might get confused if sidebar jumps.
-        // For now, we'll keep the mode user selected.
+        // GUIDELINE COMPLIANCE: "Trigger: Selecting a section" -> Focus Mode
+        // Automatically switch to Focus mode on desktop to reduce cognitive load
+        // EXCEPTION: Global settings (Brand/Colors) should usually stay in Overview context unless explicitly desired.
+        if (!isMobile && !sectionId.startsWith('global-')) {
+            setViewMode('focus');
+        }
     };
 
     // Calculate layout visibility based on viewMode
@@ -56,7 +170,7 @@ const WorkbenchLayout = ({ prompt, formData, sections, updateField, toggleSectio
             <div className="lg:hidden shrink-0 bg-white border-b border-slate-200 p-3 z-20">
                 <div className="flex items-center justify-between gap-3 mb-3">
                     <div>
-                        <div className="font-bold text-slate-900">Copy Workbench</div>
+                        <div className="font-bold text-slate-900">Landing Page Architect</div>
                         <div className="text-xs text-slate-600">Sections → Details → Preview</div>
                     </div>
                     <div className="text-xs font-semibold bg-slate-100 px-2 py-1 rounded-lg text-slate-700">

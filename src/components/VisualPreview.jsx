@@ -78,7 +78,7 @@ const VisualPreview = ({ formData, activeSection }) => {
 
     return (
         <div className="visual-preview-container" style={{
-            fontFamily: 'var(--font-sans)',
+            fontFamily: 'var(--font-body)', // Fixed: was var(--font-sans)
             color: getContrastColor(secondaryColor || '#fff'),
             backgroundColor: '#fff',
             borderRadius: '12px',
@@ -87,6 +87,7 @@ const VisualPreview = ({ formData, activeSection }) => {
             margin: '2rem auto',
             maxWidth: '1200px',
             border: '1px solid rgba(255, 255, 255, 0.5)',
+            // Inject all theme variables here to ensure Child Components pick them up
             '--primary': theme.primaryColor || '#000',
             '--secondary': theme.secondaryColor || '#fff',
             '--accent': theme.accentColor || '#3b82f6',

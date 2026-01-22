@@ -1,4 +1,5 @@
 import { getDataWithDefaults } from './dataHelpers'
+import { THEME_CONFIG } from './themeConfig'
 import { getEffectiveImage } from './mediaUtils'
 import { generateHeroHTML } from '../components/sections/HeroSection'
 import { generateHeaderHTML } from '../components/sections/HeaderSection'
@@ -26,6 +27,14 @@ export const generateCompleteHTML = (formData) => {
         .map(([key, sectionData]) => generateSectionHTML(key, sectionData, theme))
         .join('\n\n')
 
+
+
+    // Calculate Font
+    const fontPairing = THEME_CONFIG.fonts.find(f => f.id === formData.fontPairing) || THEME_CONFIG.fonts[0];
+    const fontUrl = fontPairing.url;
+    const headingFont = fontPairing.heading;
+    const bodyFont = fontPairing.body;
+
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,19 +42,24 @@ export const generateCompleteHTML = (formData) => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${brandName || 'Landing Page'}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="${fontUrl}" rel="stylesheet">
     <style>
         :root {
             --primary: ${primaryColor || '#000000'};
             --secondary: ${secondaryColor || '#ffffff'};
             --accent: ${accentColor || '#3b82f6'};
             --neutral: ${neutralColor || '#f3f4f6'};
+            
+            /* Extended Palette Support if needed */
+            --color-primary: var(--primary);
+            --color-secondary: var(--secondary);
+            --color-accent: var(--accent);
         }
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: '${bodyFont}', sans-serif;
         }
         h1, h2, h3, h4, h5, h6 {
-            font-family: 'Playfair Display', serif;
+            font-family: '${headingFont}', sans-serif;
         }
     </style>
 </head>

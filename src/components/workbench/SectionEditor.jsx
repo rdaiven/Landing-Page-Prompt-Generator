@@ -34,8 +34,9 @@ const SectionEditor = ({ sectionKey, formData, updateSectionLayout, updateSectio
         if (field.type === 'text') {
             return (
                 <div key={field.name} className="space-y-1.5">
-                    <div className="flex items-center justify-between">
-                        <label className="text-sm font-semibold text-slate-900">{field.label}</label>
+                    <div className="flex flex-col gap-1">
+                        <label className="text-sm font-semibold text-slate-900 leading-tight">{field.label}</label>
+                        {field.helperText && <p className="text-xs text-slate-500">{field.helperText}</p>}
                     </div>
                     <input
                         type="text"
@@ -50,8 +51,9 @@ const SectionEditor = ({ sectionKey, formData, updateSectionLayout, updateSectio
         if (field.type === 'textarea') {
             return (
                 <div key={field.name} className="space-y-1.5">
-                    <div className="flex items-center justify-between">
-                        <label className="text-sm font-semibold text-slate-900">{field.label}</label>
+                    <div className="flex flex-col gap-1">
+                        <label className="text-sm font-semibold text-slate-900 leading-tight">{field.label}</label>
+                        {field.helperText && <p className="text-xs text-slate-500">{field.helperText}</p>}
                     </div>
                     <textarea
                         rows={3}
@@ -209,10 +211,33 @@ const SectionEditor = ({ sectionKey, formData, updateSectionLayout, updateSectio
                             />
                         </div>
 
-                        {/* Dynamic Fields */}
+                        {/* Dynamic Fields - Split into Core & Advanced */}
                         <div className="space-y-5">
-                            {currentLayoutConfig.fields && currentLayoutConfig.fields.map(field =>
-                                renderField(field, sectionData.data[field.name])
+                            {currentLayoutConfig.fields && currentLayoutConfig.fields
+                                .filter(f => !['imageUrl', 'videoUrl', 'backgroundUrl'].includes(f.name))
+                                .map(field => renderField(field, sectionData.data[field.name]))
+                            }
+
+                            {/* Advanced Assets Group */}
+                            {currentLayoutConfig.fields && currentLayoutConfig.fields.some(f => ['imageUrl', 'videoUrl', 'backgroundUrl'].includes(f.name)) && (
+                                <details className="group rounded-xl border border-slate-200 bg-slate-50/50 open:bg-white open:shadow-sm transition-all overflow-hidden duration-300">
+                                    <summary className="flex items-center justify-between p-3 cursor-pointer select-none text-xs font-semibold text-slate-500 hover:text-indigo-600 transition-colors">
+                                        <span className="flex items-center gap-2">
+                                            <ExternalLink className="w-3.5 h-3.5" />
+                                            Advanced Assets (URL Overrides)
+                                        </span>
+                                        <div className="relative">
+                                            <span className="group-open:opacity-0 absolute top-1/2 -translate-y-1/2 right-0 transition-opacity">+</span>
+                                            <span className="opacity-0 group-open:opacity-100 absolute top-1/2 -translate-y-1/2 right-0 transition-opacity">−</span>
+                                        </div>
+                                    </summary>
+                                    <div className="p-3 pt-0 space-y-4 animate-in slide-in-from-top-2 border-t border-slate-100/50 mt-1">
+                                        {currentLayoutConfig.fields
+                                            .filter(f => ['imageUrl', 'videoUrl', 'backgroundUrl'].includes(f.name))
+                                            .map(field => renderField(field, sectionData.data[field.name]))
+                                        }
+                                    </div>
+                                </details>
                             )}
                         </div>
 

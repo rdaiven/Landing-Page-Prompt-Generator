@@ -2,13 +2,14 @@ import React from 'react';
 
 export function LayoutCards({ value, onChange, options }) {
     return (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="flex gap-3 overflow-x-auto pb-4 -mx-2 px-2 snap-x theme-scroll">
             {options.map((opt) => (
                 <button
                     key={opt.id}
                     onClick={() => onChange(opt.id)} // Parent passes the ID back
                     className={`
             group relative flex flex-col items-start gap-3 rounded-xl border p-3 text-left transition-all duration-200
+            min-w-[160px] max-w-[160px] snap-start
             ${value === opt.id
                             ? "border-indigo-600 bg-indigo-50/50 ring-1 ring-indigo-600 shadow-sm"
                             : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-md"
@@ -35,12 +36,12 @@ export function LayoutCards({ value, onChange, options }) {
                     </div>
 
                     <div className="w-full">
-                        <span className={`block text-xs font-bold mb-1 ${value === opt.id ? "text-indigo-900" : "text-slate-900"}`}>
+                        <span className={`block text-xs font-bold mb-1 truncate ${value === opt.id ? "text-indigo-900" : "text-slate-900"}`} title={opt.name}>
                             {opt.name || opt.id}
                         </span>
 
                         {opt.description && (
-                            <p className="text-[10px] text-slate-500 leading-snug line-clamp-2">
+                            <p className="text-[10px] text-slate-500 leading-snug line-clamp-2 min-h-[2.5em]">
                                 {opt.description}
                             </p>
                         )}
@@ -48,7 +49,7 @@ export function LayoutCards({ value, onChange, options }) {
 
                     {/* Selection Check */}
                     {value === opt.id && (
-                        <div className="absolute top-3 right-3 w-4 h-4 rounded-full bg-indigo-600 flex items-center justify-center">
+                        <div className="absolute top-3 right-3 w-4 h-4 rounded-full bg-indigo-600 flex items-center justify-center shadow-sm">
                             <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                             </svg>

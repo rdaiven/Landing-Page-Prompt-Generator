@@ -1,4 +1,5 @@
 import { sectionConfigs } from './sectionConfig'
+import { THEME_CONFIG } from './themeConfig'
 
 export const generatePrompt = (data) => {
     const { brandName, topic, vibe, primaryColor, secondaryColor, accentColor, neutralColor, audience, assets, sections } = data
@@ -59,12 +60,26 @@ export const generatePrompt = (data) => {
     const finalBrand = brandName || 'The Clinic';
     const finalTopic = topic || 'Aesthetic Treatments';
 
+    // Get Font Details
+    const fontPairing = THEME_CONFIG.fonts.find(f => f.id === data.fontPairing) || THEME_CONFIG.fonts[0];
+
+    // Get Style Details
+    const visualStyle = THEME_CONFIG.styles.find(s => s.id === data.style) || THEME_CONFIG.styles[0];
+
     let p = `ACT AS A WORLD-CLASS CONVERSION COPYWRITER AND WEB DESIGNER.
   
-GOAL: Create a HIGH-CONVERSION landing page for "${finalBrand}" focusing on "${finalTopic}".
+PARENT GOAL: Create a HIGH-CONVERSION landing page for "${finalBrand}" focusing on "${finalTopic}".
 TARGET AUDIENCE: ${audience || 'General audience interested in ' + finalTopic}
 BRAND VIBE: ${finalVibe}
-BRANDING COLORS: Primary: ${primaryColor || 'AI Decision'}, Secondary: ${secondaryColor || 'AI Decision'}, Accent: ${accentColor || 'AI Decision'}, Neutral: ${neutralColor || 'AI Decision'}
+VISUAL STYLE: ${visualStyle.title} ("${visualStyle.desc}")
+TYPOGRAPHY:
+- Heading Font: "${fontPairing.heading}" (Use Google Font link)
+- Body Font: "${fontPairing.body}" (Use Google Font link)
+BRANDING COLORS: 
+- Primary: ${primaryColor || '#000000'}
+- Secondary: ${secondaryColor || '#ffffff'}
+- Accent: ${accentColor || '#3b82f6'}
+- Neutral: ${neutralColor || '#f3f4f6'}
 ASSETS TO USE:
 ${assets.filter(a => a.url).map(a => `- ${a.type.toUpperCase()}: ${a.url}`).join('\n') || 'None provided. Use relevant placeholders.'}
 

@@ -7,53 +7,53 @@ export const treatmentLogicConfig = {
             tag: "Pure Text",
             description: "Single column text layout. Direct, simple, and confidence-inspiring.",
             fields: [
-                { name: 'heading', label: 'Main Benefit Heading', type: 'text', default: 'Why Choose Us?' },
-                { name: 'description', label: 'The "Secret Sauce" (Explanation)', type: 'textarea', default: 'Our unique approach ensures safety and maximum efficacy.' },
-                { name: 'feature1', label: 'Key Feature 1', type: 'text', default: 'Advanced Technology' },
-                { name: 'feature2', label: 'Key Feature 2', type: 'text', default: 'Expert Care' },
-                { name: 'feature3', label: 'Key Feature 3', type: 'text', default: 'Personalized Plans' }
+                { name: 'heading', label: 'Main Benefit Heading', helperText: "e.g. Why Choose Us?", type: 'text', default: 'Why Choose Us?' },
+                { name: 'description', label: 'The "Secret Sauce" (Explanation)', helperText: "Explain simply.", type: 'textarea', default: 'Our unique approach ensures guaranteed results.' },
+                { name: 'feature1', label: 'Key Feature 1', helperText: "Point 1.", type: 'text', default: 'Advanced Technology' },
+                { name: 'feature2', label: 'Key Feature 2', helperText: "Point 2.", type: 'text', default: 'Expert Team' },
+                { name: 'feature3', label: 'Key Feature 3', helperText: "Point 3.", type: 'text', default: 'Tailored Solutions' }
             ]
         },
         'Story First': {
             tag: "Editorial",
             description: "Two columns: Rich narrative text + supporting visual.",
             fields: [
-                { name: 'heading', label: 'The Science Heading', type: 'text', default: 'The Science Behind It' },
-                { name: 'subheading', label: 'Sub-header', type: 'text', default: 'Advanced Technology' },
-                { name: 'description', label: 'Deep Dive Explanation', type: 'textarea', default: 'Using controlled cooling to eliminate unwanted cells gently and effectively.' },
-                { name: 'imagePrompt', label: 'Visual Description', type: 'text', default: 'Diagram of process' },
+                { name: 'heading', label: 'The Methodology', helperText: "e.g. The Science Behind It", type: 'text', default: 'Our Methodology' },
+                { name: 'subheading', label: 'Sub-header', helperText: "Refine context.", type: 'text', default: 'Innovation meets Execution' },
+                { name: 'description', label: 'Deep Dive Explanation', helperText: "Go deeper here.", type: 'textarea', default: 'We use a data-driven process to identify opportunities and deliver measurable impact.' },
+                { name: 'imagePrompt', label: 'Visual Description', helperText: "e.g. Diagram", type: 'text', default: 'Abstract Process Diagram' },
                 {
-                    name: 'benefits', label: 'Key Benefit Points', type: 'collection', min: 3, max: 3, fields: [
-                        { name: 'text', label: 'Benefit', type: 'text', default: 'Clinically Proven' }
+                    name: 'benefits', label: 'Key Benefit Points', helperText: "List 3 benefits.", type: 'collection', min: 3, max: 3, fields: [
+                        { name: 'text', label: 'Benefit', helperText: "e.g. Proven Results", type: 'text', default: 'Proven Results' }
                     ]
                 }
             ],
             defaultData: {
-                heading: 'The Science Behind It',
-                subheading: 'Advanced Technology',
-                description: 'Using controlled methods to target specific areas gently and effectively.',
-                benefits: [{ text: 'Permanent Reduction' }, { text: 'Non-Surgical & Safe' }, { text: 'Natural-Looking Results' }]
+                heading: 'Our Methodology',
+                subheading: 'Innovation meets Execution',
+                description: 'We use a data-driven process to identify opportunities and deliver measurable impact.',
+                benefits: [{ text: 'Sustainable Growth' }, { text: 'Risk Mitigation' }, { text: 'High Efficiency' }]
             }
         },
         'Step-by-Step Cards': {
             tag: "Process",
             description: "Three sequential cards explaining the mechanism.",
             fields: [
-                { name: 'heading', label: 'Process Heading', type: 'text', default: 'How It Works' },
+                { name: 'heading', label: 'Process Heading', helperText: "e.g. How It Works", type: 'text', default: 'How It Works' },
                 {
-                    name: 'steps', label: 'Mechanism Steps', type: 'collection', min: 3, max: 3, fields: [
-                        { name: 'title', label: 'Phase Name', type: 'text', default: 'Target' },
-                        { name: 'description', label: 'What happens?', type: 'textarea', default: 'We identify the area.' },
-                        { name: 'icon', label: 'Icon', type: 'icon', default: 'Target' }
+                    name: 'steps', label: 'Mechanism Steps', helperText: "Walk them through 3 steps.", type: 'collection', min: 3, max: 3, fields: [
+                        { name: 'title', label: 'Phase Name', helperText: "Step Name", type: 'text', default: 'Discover' },
+                        { name: 'description', label: 'What happens?', helperText: "Short explanation.", type: 'textarea', default: 'We analyze your needs.' },
+                        { name: 'icon', label: 'Icon', helperText: "Select icon.", type: 'icon', default: 'Search' }
                     ]
                 }
             ],
             defaultData: {
                 heading: 'How It Works',
                 steps: [
-                    { title: 'Target', description: 'Precision targeting of problem areas.', icon: 'Target' },
-                    { title: 'Treat', description: 'Advanced energy delivery stimulating collagen.', icon: 'Zap' },
-                    { title: 'Transform', description: 'Natural healing process reveals results.', icon: 'Sparkles' }
+                    { title: 'Discover', description: 'We analyze the current state.', icon: 'Search' },
+                    { title: 'Design', description: 'We build a custom solution.', icon: 'Edit' },
+                    { title: 'Deliver', description: 'We implement and optimize.', icon: 'Rocket' }
                 ]
             }
         },
@@ -61,21 +61,21 @@ export const treatmentLogicConfig = {
             tag: "Visual Heavy",
             description: "Large central diagram with annotated points.",
             fields: [
-                { name: 'heading', label: 'Diagram Title', type: 'text', default: 'Anatomy of Treatment' },
-                { name: 'imagePrompt', label: 'Diagram Description', type: 'text', default: 'Cross-section of skin layers' },
+                { name: 'heading', label: 'Diagram Title', helperText: "e.g. Anatomy", type: 'text', default: 'System Architecture' },
+                { name: 'imagePrompt', label: 'Diagram Description', helperText: "Describe the diagram.", type: 'text', default: 'Tech Stack Diagram' },
                 {
-                    name: 'points', label: 'Annotation Points', type: 'collection', min: 3, max: 4, fields: [
-                        { name: 'label', label: 'Point Label', type: 'text', default: 'Dermis Layer' },
-                        { name: 'desc', label: 'Short Explanation', type: 'text', default: 'Where collagen lives' }
+                    name: 'points', label: 'Annotation Points', helperText: "Label parts of the diagram.", type: 'collection', min: 3, max: 4, fields: [
+                        { name: 'label', label: 'Point Label', helperText: "e.g. Core", type: 'text', default: 'Core Engine' },
+                        { name: 'desc', label: 'Short Explanation', helperText: "What does it do?", type: 'text', default: 'Handles processing' }
                     ]
                 }
             ],
             defaultData: {
-                heading: 'Deep Actions',
+                heading: 'System Architecture',
                 points: [
-                    { label: 'Surface', desc: 'Remains cool and protected' },
-                    { label: 'Target Zone', desc: 'Precision energy delivery' },
-                    { label: 'Deep Structure', desc: 'Structural support renewal' }
+                    { label: 'Layer 1', desc: 'User Interface' },
+                    { label: 'Layer 2', desc: 'Secure Processing' },
+                    { label: 'Layer 3', desc: 'Cloud Storage' }
                 ]
             }
         },
@@ -83,89 +83,89 @@ export const treatmentLogicConfig = {
             tag: "Animation Placeholder",
             description: "Space for a loop/video showing the biological process.",
             fields: [
-                { name: 'heading', label: 'Mechanism Heading', type: 'text', default: 'See It In Action' },
-                { name: 'description', label: 'Process Description', type: 'textarea', default: 'Watch how the treatment targets only the cells you want to remove.' },
-                { name: 'videoPrompt', label: 'Animation Description', type: 'text', default: '3D animation of fat cell reduction' }
+                { name: 'heading', label: 'Mechanism Heading', helperText: "e.g. Look Inside", type: 'text', default: 'See It In Action' },
+                { name: 'description', label: 'Process Description', helperText: "Describe what they are seeing.", type: 'textarea', default: 'Watch how our system integrates seamlessly with your workflow.' },
+                { name: 'videoPrompt', label: 'Animation Description', helperText: "Describe the video.", type: 'text', default: 'UI demo animation' }
             ]
         },
         'Interactive Tabs': {
             tag: "Clickable",
-            description: "Tabbed interface to explore different aspects (Preparation, Action, Result).",
+            description: "Tabbed interface to explore different aspects.",
             fields: [
-                { name: 'heading', label: 'Explore the Process', type: 'text', default: 'Understanding the Tech' },
-                { name: 'tab1', label: 'Tab 1 Title', type: 'text', default: 'Preparation' },
-                { name: 'content1', label: 'Tab 1 Content', type: 'textarea', default: 'No anesthesia required.' },
-                { name: 'tab2', label: 'Tab 2 Title', type: 'text', default: 'The Action' },
-                { name: 'content2', label: 'Tab 2 Content', type: 'textarea', default: 'Painless energy pulses.' },
-                { name: 'tab3', label: 'Tab 3 Title', type: 'text', default: 'The Outcome' },
-                { name: 'content3', label: 'Tab 3 Content', type: 'textarea', default: 'Gradual, natural improvement.' }
+                { name: 'heading', label: 'Explore the Process', helperText: "Header.", type: 'text', default: 'Explore the Platform' },
+                { name: 'tab1', label: 'Tab 1 Title', helperText: "e.g. Onboarding", type: 'text', default: 'Onboarding' },
+                { name: 'content1', label: 'Tab 1 Content', helperText: "Details.", type: 'textarea', default: 'Fast and easy setup.' },
+                { name: 'tab2', label: 'Tab 2 Title', helperText: "e.g. Integration", type: 'text', default: 'Integration' },
+                { name: 'content2', label: 'Tab 2 Content', helperText: "Details.", type: 'textarea', default: 'Connects with everything.' },
+                { name: 'tab3', label: 'Tab 3 Title', helperText: "e.g. Analytics", type: 'text', default: 'Analytics' },
+                { name: 'content3', label: 'Tab 3 Content', helperText: "Details.", type: 'textarea', default: 'Real-time insights.' }
             ]
         },
         'Benefit Stack': {
             tag: "List",
             description: "A stacked list of major technical benefits with detailed icons.",
             fields: [
-                { name: 'heading', label: 'Why It\'s Superior', type: 'text', default: 'The Clinical Advantage' },
+                { name: 'heading', label: 'Why It\'s Superior', helperText: "Comparison Header.", type: 'text', default: 'The Advantage' },
                 {
-                    name: 'benefits', label: 'Major Benefits', type: 'collection', min: 4, max: 5, fields: [
-                        { name: 'title', label: 'Benefit Feature', type: 'text', default: 'FDA Cleared' },
-                        { name: 'desc', label: 'Why it matters', type: 'text', default: 'Proven safety profile.' },
-                        { name: 'icon', label: 'Icon', type: 'icon', default: 'Shield' }
+                    name: 'benefits', label: 'Major Benefits', helperText: "List 4-5 key advantages.", type: 'collection', min: 4, max: 5, fields: [
+                        { name: 'title', label: 'Benefit Feature', helperText: "e.g. Verified", type: 'text', default: 'Certified' },
+                        { name: 'desc', label: 'Why it matters', helperText: "Short explanation.", type: 'text', default: 'Industry standard compliance.' },
+                        { name: 'icon', label: 'Icon', helperText: "Select icon.", type: 'icon', default: 'Shield' }
                     ]
                 }
             ],
             defaultData: {
-                heading: 'The Clinical Advantage',
+                heading: 'The Advantage',
                 benefits: [
-                    { title: 'No Downtime', desc: 'Return to work immediately.', icon: 'Clock' },
-                    { title: 'fda Cleared', desc: 'Proven safety and efficacy.', icon: 'Shield' },
-                    { title: 'Pain Free', desc: 'Most patients read or nap.', icon: 'Smile' },
-                    { title: 'Lasting Results', desc: 'Once treated, cells are gone.', icon: 'Infinity' }
+                    { title: 'Fast', desc: 'Deploy in minutes.', icon: 'Clock' },
+                    { title: 'Secure', desc: 'Bank-level encryption.', icon: 'Shield' },
+                    { title: 'Scalable', desc: 'Grows with you.', icon: 'TrendingUp' },
+                    { title: 'Reliable', desc: '99.9% Uptime.', icon: 'Activity' }
                 ]
             }
         },
         'Comparison (The Science)': {
             tag: "Contrast",
-            description: "Compare 'Generic Method' vs 'Our Method' scientifically.",
+            description: "Compare 'Generic Method' vs 'Our Method'.",
             fields: [
-                { name: 'heading', label: 'The Difference', type: 'text', default: 'Why We Are Different' },
-                { name: 'ourMethod', label: 'Our Method Name', type: 'text', default: 'Cryolipolysis' },
-                { name: 'ourDesc', label: 'Our Mechanism', type: 'textarea', default: 'Selective cooling kills fat cells only.' },
-                { name: 'othersMethod', label: 'Other Methods', type: 'text', default: 'Laser/Heat' },
-                { name: 'othersDesc', label: 'Their Mechanism', type: 'textarea', default: 'Can damage surrounding tissue.' }
+                { name: 'heading', label: 'The Difference', helperText: "Header.", type: 'text', default: 'Why We Are Different' },
+                { name: 'ourMethod', label: 'Our Method Name', helperText: "e.g. Our Platform", type: 'text', default: 'Our Platform' },
+                { name: 'ourDesc', label: 'Our Mechanism', helperText: "How it works.", type: 'textarea', default: 'Integrated, seamless, and automated.' },
+                { name: 'othersMethod', label: 'Other Methods', helperText: "e.g. Spreadsheets", type: 'text', default: 'Spreadsheets' },
+                { name: 'othersDesc', label: 'Their Mechanism', helperText: "Why it's worse.", type: 'textarea', default: 'Manual, error-prone, and slow.' }
             ]
         },
         'Timeline Flow': {
             tag: "Horizontal",
-            description: "A horizontal timeline showing the biological reaction over time.",
+            description: "A horizontal timeline showing the rollout over time.",
             fields: [
-                { name: 'heading', label: 'Biological Timeline', type: 'text', default: 'What Happens Inside' },
+                { name: 'heading', label: 'Timeline', helperText: "Header.", type: 'text', default: 'Implementation Timeline' },
                 {
-                    name: 'events', label: 'Timeline Events', type: 'collection', min: 4, max: 4, fields: [
-                        { name: 'time', label: 'Time', type: 'text', default: 'Immedately' },
-                        { name: 'desc', label: 'Reaction', type: 'text', default: 'Cooling applied' }
+                    name: 'events', label: 'Timeline Events', helperText: "Add key milestones.", type: 'collection', min: 4, max: 4, fields: [
+                        { name: 'time', label: 'Time', helperText: "e.g. Day 0", type: 'text', default: 'Week 1' },
+                        { name: 'desc', label: 'Reaction', helperText: "What happens?", type: 'text', default: 'Kickoff' }
                     ]
                 }
             ],
             defaultData: {
-                heading: 'Biological Timeline',
+                heading: 'Implementation Timeline',
                 events: [
-                    { time: 'Day 0', desc: 'Treatment applied' },
-                    { time: 'Day 3', desc: 'Cell breakdown begins' },
-                    { time: 'Week 4', desc: 'Metabolic flushing' },
-                    { time: 'Month 3', desc: 'Full reduction visible' }
+                    { time: 'Week 1', desc: 'Discovery & Audit' },
+                    { time: 'Week 2', desc: 'Strategy Design' },
+                    { time: 'Week 4', desc: 'Implementation' },
+                    { time: 'Week 8', desc: 'Results Analysis' }
                 ]
             }
         },
         'Expert Explainer': {
             tag: "Authority",
-            description: "A 'Doctor's Perspective' layout explaining the logic.",
+            description: "A 'Leader's Perspective' layout explaining the logic.",
             fields: [
-                { name: 'heading', label: 'Heading', type: 'text', default: 'Doctor\'s Note' },
-                { name: 'doctorName', label: 'Expert Name', type: 'text', default: 'Dr. Smith' },
-                { name: 'explanation', label: 'The Explanation', type: 'textarea', default: 'This technology targets the structural causes of aging, not just the surface symptoms.' },
-                { name: 'quote', label: 'Pull Quote', type: 'text', default: '"It effectively resets the clock."' },
-                { name: 'imagePrompt', label: 'Doctor Photo', type: 'text', default: 'Doctor in lab coat' }
+                { name: 'heading', label: 'Heading', helperText: "e.g. CEO's Note", type: 'text', default: 'Director\'s Note' },
+                { name: 'doctorName', label: 'Expert Name', helperText: "Who is speaking?", type: 'text', default: 'Jane Doe' },
+                { name: 'explanation', label: 'The Explanation', helperText: "Detailed reasoning.", type: 'textarea', default: 'Our philosophy is built on sustainable, long-term impact rather than quick fixes.' },
+                { name: 'quote', label: 'Pull Quote', helperText: "Highlight sentence.", type: 'text', default: '"We build for the future."' },
+                { name: 'imagePrompt', label: 'Photo Description', helperText: "Visual.", type: 'text', default: 'Executive Portrait' }
             ]
         }
     }
